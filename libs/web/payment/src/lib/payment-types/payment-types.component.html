@@ -1,0 +1,55 @@
+<div class="p-[16px] md:p-[30px] border-t border-[#B9C2CD]">
+    <div class="mb-[30px]">
+        <h3 class="text-[20px] text-[#1B2C43] font-bold">{{ 'CHON_PHUONG_THUC_THANH_TOAN' | transloco }}</h3>
+    </div>
+    <nz-collapse nzAccordion [nzBordered]="false" class="!bg-transparent">
+        <nz-collapse-panel
+            *ngFor="let paymentType of paymentTypes$ | async; trackBy: trackByFunc"
+            [nzHeader]="panelTitle1"
+            [nzShowArrow]="false"
+            [nzActive]="paymentType.loaiHinhThanhToan === paymentTypeEnum.THE_NOI_DIA"
+            class="!border-none mb-[14px] bg-[rgba(240,243,245,0.7)] !rounded-[16px]"
+        >
+            <ng-template #panelTitle1>
+                <div class="flex items-center select-none h-[44px]">
+                    <span class="w-[50px] shrink-0 text-center">
+                        <img [src]="paymentTypeImage[paymentType.loaiHinhThanhToan]" alt="thenoidia" class="inline-block" />
+                    </span>
+                    <span class="text-[#1B2C43] text-[16px] font-semibold flex-1">
+                        {{ paymentTypeDescription[paymentType.loaiHinhThanhToan] }}
+                    </span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" fill="none" class="icon-arrow">
+                        <path
+                            d="M7.241 7.005c-.687.66-1.795.66-2.482 0l-3.732-3.58C-.093 2.352.692.5 2.268.5h7.464c1.576 0 2.362 1.851 1.241 2.926l-3.732 3.58Z"
+                            fill="#435267"
+                        />
+                    </svg>
+                </div>
+            </ng-template>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-[18px] flex-wrap">
+                <div
+                    *ngFor="let bank of paymentType.banks; trackBy: trackByFunc"
+                    (click)="onSelectBank(bank)"
+                    [ngClass]="{ 'active-payment': selectedBank?.maNganHang === bank?.maNganHang }"
+                    class="col-span-1 h-[90px] border border-transparent rounded-[8px] flex items-center justify-center cursor-pointer active:border-[#01AA81] hover:border-[#01AA81] bg-white"
+                >
+                    <ng-container [ngSwitch]="bank.id">
+                        <ng-container *ngSwitchCase="bankEnum.BAO_KIM">
+                            <img
+                                [src]="'./assets/web/payment-baokim.png'"
+                                [alt]="bank.tenNganHang"
+                                class="object-scale-down w-full h-full"
+                            />
+                        </ng-container>
+                        <ng-container *ngSwitchCase="bankEnum.VNPAY">
+                            <img [src]="'./assets/web/payment-vnpay.png'" [alt]="bank.tenNganHang" />
+                        </ng-container>
+                        <ng-container *ngSwitchCase="bankEnum.BIDV">
+                            <img [src]="'./assets/web/payment-bidv.png'" [alt]="bank.tenNganHang" />
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+        </nz-collapse-panel>
+    </nz-collapse>
+</div>

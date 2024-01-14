@@ -1,0 +1,59 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <asc-wrap-form (closeForm)="closeForm()" (zoomForm)="zoomForm($event)">
+        <div formTitle [attr.keyLabel]="titleKey">
+            {{ titleKey | transloco }}
+        </div>
+        <div formBody>
+            <div class="form-group grid grid-cols-12 gap-4">
+                <label class="col-span-2 text-[13px] text-[#201e1e] mt-1 font-medium" [attr.keyLabel]="'WEB.TEN_DANH_MUC'">{{
+                    'WEB.TEN_DANH_MUC' | transloco
+                }}</label>
+                <div class="col-span-10">
+                    <asc-form-control formControlName="tenDanhMuc"></asc-form-control>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4 form-group">
+                <label class="col-span-2 text-[13px] text-[#201e1e] mt-1 font-medium" [attr.keyLabel]="'LB.NOTE'">{{
+                    'LB.NOTE' | transloco
+                }}</label>
+                <div class="col-span-10">
+                    <asc-form-control type="textarea" formControlName="ghiChu"></asc-form-control>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4 form-group">
+                <div class="col-start-3 col-span-10">
+                    <label nz-checkbox class="mt-1" formControlName="isHienThi" [attr.keyLabel]="'LB.ISVISIBLE'">
+                        {{ 'LB.ISVISIBLE' | transloco }}</label
+                    >
+                </div>
+            </div>
+        </div>
+        <div formFooter>
+            <asc-button
+                class="mr-[8px]"
+                (click)="closeForm()"
+                [btnClass]="'btn-white'"
+                [btnText]="'BTN.CANCEL' | transloco"
+                [attr.keyLabel]="'BTN.CANCEL'"
+            ></asc-button>
+            <asc-button
+                class="mr-[8px]"
+                *ngIf="isCreateAndAddNew"
+                (click)="onSaveAndAddNew()"
+                [isSubmit]="true"
+                [btnClass]="'btn-outline-primary'"
+                [isLoading]="isLoadingSaveAndCreate"
+                [btnText]="'BTN.SAVE_AND_ADD' | transloco"
+                [attr.keyLabel]="'BTN.SAVE_AND_ADD'"
+            >
+            </asc-button>
+            <asc-button
+                [isSubmit]="true"
+                [btnClass]="'btn-primary'"
+                [isLoading]="isSubmited"
+                [btnText]="'BTN.SAVE' | transloco"
+                [attr.keyLabel]="'BTN.SAVE'"
+            ></asc-button>
+        </div>
+    </asc-wrap-form>
+</form>

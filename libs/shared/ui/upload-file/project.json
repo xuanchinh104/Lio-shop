@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/ui/upload-file",
+    "sourceRoot": "libs/shared/ui/upload-file/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/ui/upload-file"],
+            "options": {
+                "jestConfig": "libs/shared/ui/upload-file/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/ui/upload-file/src/**/*.ts", "libs/shared/ui/upload-file/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

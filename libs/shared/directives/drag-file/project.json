@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/directives/drag-file",
+    "sourceRoot": "libs/shared/directives/drag-file/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/directives/drag-file"],
+            "options": {
+                "jestConfig": "libs/shared/directives/drag-file/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/directives/drag-file/src/**/*.ts", "libs/shared/directives/drag-file/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

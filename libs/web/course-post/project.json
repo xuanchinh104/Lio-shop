@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/web/course-post",
+    "sourceRoot": "libs/web/course-post/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/web/course-post"],
+            "options": {
+                "jestConfig": "libs/web/course-post/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/web/course-post/src/**/*.ts", "libs/web/course-post/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

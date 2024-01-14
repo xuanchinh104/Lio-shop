@@ -1,0 +1,41 @@
+<ng-container [ngSwitch]="type">
+    <ng-container *ngSwitchCase="'grid'">
+        <div [ngClass]="classView">
+            <div class="card-grid" *ngFor="let card of listCard; trackBy: trackByFunc">
+                <div class="card-grid-image">
+                    <div id="image" class="skeleton-loader"></div>
+                </div>
+                <div class="card-grid-loading">
+                    <h3 class="skeleton-loader"></h3>
+                    <p class="skeleton-loader"></p>
+                    <p id="card-grid-ether" class="skeleton-loader"></p>
+                    <div id="button" class="skeleton-loader"></div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="'list'">
+        <ng-container *ngFor="let card of listCard; trackBy: trackByFunc">
+            <div class="card-list">
+                <div class="card-list-loading">
+                    <p id="card-list-ether" class="skeleton-loader"></p>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="'news'">
+        <div [ngClass]="classView">
+            <div class="card-news mb-[24px] flex gap-[24px]" *ngFor="let card of listCard; trackBy: trackByFunc">
+                <div class="card-news-image !w-[215px]">
+                    <div id="image-new" class="skeleton-loader !w-[215px]"></div>
+                </div>
+                <div class="card-news-loading w-full">
+                    <h3 class="skeleton-loader"></h3>
+                    <p class="skeleton-loader"></p>
+                    <p id="card-new-ether" class="skeleton-loader"></p>
+                    <div id="button-new" class="skeleton-loader"></div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</ng-container>

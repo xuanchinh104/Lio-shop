@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/web/payment",
+    "sourceRoot": "libs/web/payment/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/web/payment"],
+            "options": {
+                "jestConfig": "libs/web/payment/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/web/payment/src/**/*.ts", "libs/web/payment/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

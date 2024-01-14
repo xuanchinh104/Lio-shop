@@ -1,0 +1,22 @@
+<ng-container *ngIf="user">
+    <div class="rounded-full overflow-hidden w-[60px] h-[60px] m-auto">
+        <ng-container *ngIf="user.avatar; else noAvatarTpl">
+            <img
+                class="align-middle w-[50px] h-[50px] rounded-full object-cover border border-[#DCDCDC]"
+                *ngIf="user?.avatar as avatar"
+                [src]="avatar | convertUrl"
+            />
+        </ng-container>
+        <ng-template #noAvatarTpl>
+            <div class="flex justify-center items-center bg-[#DCDCDC] leading-[0px] text-[25px] w-[60px] h-[60px] rounded-full">
+                {{ postfixName }}
+            </div>
+        </ng-template>
+    </div>
+    <div class="flex-auto pt-[10px]">
+        <div class="text-[18px] text-[#212121] font-bold" *ngIf="fullname">
+            {{ fullname }}
+        </div>
+        <div class="text-[14px] text-[#212121] opacity-70" *ngIf="user?.email as email">{{ email }}</div>
+    </div>
+</ng-container>

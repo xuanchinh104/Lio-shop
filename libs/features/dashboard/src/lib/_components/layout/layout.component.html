@@ -1,0 +1,18 @@
+<div class="max-h-[50vh] p-[30px] scrollbar scrollbar-hover" *ngIf="config">
+    <div class="mb-[30px]">
+        <ui-sample [config]="config" (selectTheme)="onSelectTheme($event)">
+        </ui-sample>
+    </div>
+    <div class="mb-[30px]" *ngIf="config.theme === themeUIEnum.THEME_2">
+        <ui-color-banner [config]="config" (selectThemeColor)="onSelectThemeColor($event)">
+        </ui-color-banner>
+    </div>
+    <div *ngIf="config.theme === themeUIEnum.THEME_1">
+        <ui-topic [config]="config" (selectTopic)="onSelectTopic($event)">
+        </ui-topic>
+    </div>
+</div>
+<div class="flex justify-end bg-[#f9fafb] p-[20px]">
+    <ui-button (click)="close()" [btnText]="'BTN.CANCEL' | transloco"> </ui-button>
+    <ui-button (click)="onSave()" [btnClass]="'ui-button-primary ml-[8px]'" [btnText]="'BTN.SAVE' | transloco"> </ui-button>
+</div>

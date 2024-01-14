@@ -1,0 +1,26 @@
+{
+    "projectType": "library",
+    "root": "libs/features/setting/feature/setting-theme",
+    "sourceRoot": "libs/features/setting/feature/setting-theme/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/features/setting/feature/setting-theme"],
+            "options": {
+                "jestConfig": "libs/features/setting/feature/setting-theme/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/features/setting/feature/setting-theme/src/**/*.ts",
+                    "libs/features/setting/feature/setting-theme/src/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

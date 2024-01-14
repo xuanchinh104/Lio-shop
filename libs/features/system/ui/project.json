@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/features/system/ui",
+    "sourceRoot": "libs/features/system/ui/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/features/system/ui"],
+            "options": {
+                "jestConfig": "libs/features/system/ui/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/features/system/ui/src/**/*.ts", "libs/features/system/ui/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

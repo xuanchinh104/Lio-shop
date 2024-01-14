@@ -1,0 +1,634 @@
+<div class="box-container-pre" style="display: none" [ngStyle]="{ display: isLoading ? 'block' : 'none' }">
+    <div class="content-wrapper">
+        <ng-container [ngSwitch]="type">
+            <ng-container *ngSwitchCase="'GRID'">
+                <div class="loading-ph loading-content loading-content-list">
+                    <div class="loading-header">
+                        <div class="ph-item">
+                            <div class="loading-view-title"></div>
+                        </div>
+                        <div class="ph-item">
+                            <div class="loading-view-tabs"></div>
+                        </div>
+                    </div>
+                    <div class="loading-grid">
+                        <div class="grid-toolbar"></div>
+                        <div class="grid">
+                            <div class="grid-header">
+                                <div class="ph-item">
+                                    <div class="loading-view-title"></div>
+                                </div>
+                                <div class="ph-item">
+                                    <div class="loading-view-title"></div>
+                                </div>
+                                <div class="ph-item">
+                                    <div class="loading-view-title"></div>
+                                </div>
+                                <div class="ph-item">
+                                    <div class="loading-view-title"></div>
+                                </div>
+                                <div class="ph-item">
+                                    <div class="loading-view-long-title"></div>
+                                </div>
+                            </div>
+                            <div class="grid-content"></div>
+                            <div class="grid-footer">
+                                <div class="ph-item">
+                                    <div class="loading-view-title"></div>
+                                </div>
+                                <div class="ph-item">
+                                    <div class="loading-view-long-title"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="'FORM'">
+                <div class="loading-ph loading-content-default-layout loading-layout">
+                    <div class="dflex-column w-full">
+                        <div class="loading-header">
+                            <div class="ph-item">
+                                <div class="loading-view-title"></div>
+                            </div>
+                            <div class="ph-item">
+                                <div class="loading-view-tabs"></div>
+                            </div>
+                        </div>
+                        <div class="box-content dflex dflex-1 w-full">
+                            <div class="box-container dflex-1 dflex">
+                                <div class="ph-item w-full h-100">
+                                    <div class="loading-content">
+                                        <div class="loading-header">
+                                            <div class="loading-header-text"></div>
+                                        </div>
+                                        <div class="loading-content-group">
+                                            <div class="loading-left-group">
+                                                <div class="loading-sidebar-item"></div>
+                                                <div class="loading-sidebar-item"></div>
+                                                <div class="loading-sidebar-item"></div>
+                                                <div class="loading-sidebar-item"></div>
+                                                <div class="loading-sidebar-item"></div>
+                                                <div class="loading-sidebar-item"></div>
+                                                <div class="loading-sidebar-item"></div>
+                                            </div>
+                                            <div class="loading-right-group">
+                                                <div class="loading-sidebar-item"></div>
+                                                <div class="loading-sidebar-item"></div>
+                                                <div class="loading-sidebar-item"></div>
+                                                <div class="loading-sidebar-item"></div>
+                                                <div class="loading-sidebar-item"></div>
+                                                <div class="loading-sidebar-item"></div>
+                                                <div class="loading-sidebar-item"></div>
+                                                <!---->
+                                            </div>
+                                        </div>
+                                        <div class="loading-header">
+                                            <div class="loading-header-text"></div>
+                                        </div>
+                                        <div class="loading-content-group">
+                                            <div class="group-one-column">
+                                                <div class="loading-sidebar-item"></div>
+                                                <div class="loading-sidebar-item"></div>
+                                                <div class="loading-sidebar-item"></div>
+                                                <div class="loading-sidebar-item"></div>
+                                                <div class="loading-sidebar-item"></div>
+                                                <div class="loading-sidebar-item"></div>
+                                                <div class="loading-sidebar-item"></div>
+                                                <!---->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+        <!--        <div class="loading-ph loading-content loading-content-overview">-->
+        <!--            <div class="loading-header">-->
+        <!--                <div class="ph-item">-->
+        <!--                    <div class="loading-view-title"></div>-->
+        <!--                </div>-->
+        <!--                <div class="ph-item">-->
+        <!--                    <div class="loading-view-tabs"></div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--            <div class="quick-chart-wrapper">-->
+        <!--                <div class="quick-overview box">-->
+        <!--                    <div class="title item bar long-bar ph-item"></div>-->
+        <!--                    <div class="chart item ph-item"></div>-->
+        <!--                </div>-->
+        <!--                <div class="quick-overview box">-->
+        <!--                    <div class="title item bar medium-bar ph-item"></div>-->
+        <!--                    <div class="chart item ph-item"></div>-->
+        <!--                </div>-->
+        <!--                <div class="quick-overview box">-->
+        <!--                    <div class="title item bar long-bar ph-item"></div>-->
+        <!--                    <div class="chart item ph-item"></div>-->
+        <!--                </div>-->
+        <!--                <div class="quick-overview box">-->
+        <!--                    <div class="title item bar medium-bar ph-item"></div>-->
+        <!--                    <div class="chart item ph-item"></div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--            <div class="loading-content-group" style="margin-bottom: 16px;">-->
+        <!--                <div class="box loading-left-group">-->
+        <!--                    <div class="bar long-bar ph-item"></div>-->
+        <!--                    <div class="bar short-bar ph-item"></div>-->
+        <!--                    <div class="chart-content">-->
+        <!--                        <div class="line-chart">-->
+        <!--                            <div class="line"></div>-->
+        <!--                            <div class="line"></div>-->
+        <!--                            <div class="line"></div>-->
+        <!--                            <div class="line"></div>-->
+        <!--                            <div class="line"></div>-->
+        <!--                        </div>-->
+        <!--                        <div class="chart-line">-->
+        <!--                            <svg xmlns="http://www.w3.org/2000/svg" width="336" height="134"-->
+        <!--                                 viewBox="0 0 336 134">-->
+        <!--                                <g transform="translate(-330 -363)">-->
+        <!--                                    <path _ngcontent-toc-c164=""-->
+        <!--                                          d="M-5772.169,10469.313s38.234,48.248,77.386,32.314,43.387-32.476,81.93-39.144,66.543,8.35,92.4,0,77.574-46.971,77.574-46.971"-->
+        <!--                                          transform="translate(6105 -10049)" fill="none" stroke="#e8e8e8"-->
+        <!--                                          stroke-width="2"></path>-->
+        <!--                                    <path _ngcontent-toc-c164=""-->
+        <!--                                          d="M-5771,10531s51.543.872,82.109-8.583,34.82-30.118,82.28-31.862,42.889,21.286,87.515,16.917,76.7-30.571,76.7-30.571"-->
+        <!--                                          transform="translate(6105 -10038)" fill="none" stroke="#e8e8e8"-->
+        <!--                                          stroke-width="2"></path>-->
+        <!--                                    <g transform="translate(330 418)" fill="#fff"-->
+        <!--                                       stroke="#e8e8e8" stroke-width="2">-->
+        <!--                                        <circle cx="4" cy="4" r="4" stroke="none"></circle>-->
+        <!--                                        <circle cx="4" cy="4" r="3" fill="none"></circle>-->
+        <!--                                    </g>-->
+        <!--                                    <g transform="translate(330 489)" fill="#fff"-->
+        <!--                                       stroke="#e8e8e8" stroke-width="2">-->
+        <!--                                        <circle cx="4" cy="4" r="4" stroke="none"></circle>-->
+        <!--                                        <circle cx="4" cy="4" r="3" fill="none"></circle>-->
+        <!--                                    </g>-->
+        <!--                                    <g transform="translate(412 480)" fill="#fff"-->
+        <!--                                       stroke="#e8e8e8" stroke-width="2">-->
+        <!--                                        <circle cx="4" cy="4" r="4" stroke="none"></circle>-->
+        <!--                                        <circle cx="4" cy="4" r="3" fill="none"></circle>-->
+        <!--                                    </g>-->
+        <!--                                    <g transform="translate(494 449)" fill="#fff"-->
+        <!--                                       stroke="#e8e8e8" stroke-width="2">-->
+        <!--                                        <circle cx="4" cy="4" r="4" stroke="none"></circle>-->
+        <!--                                        <circle cx="4" cy="4" r="3" fill="none"></circle>-->
+        <!--                                    </g>-->
+        <!--                                    <g transform="translate(576 466)" fill="#fff"-->
+        <!--                                       stroke="#e8e8e8" stroke-width="2">-->
+        <!--                                        <circle cx="4" cy="4" r="4" stroke="none"></circle>-->
+        <!--                                        <circle cx="4" cy="4" r="3" fill="none"></circle>-->
+        <!--                                    </g>-->
+        <!--                                    <g transform="translate(658 435)" fill="#fff"-->
+        <!--                                       stroke="#e8e8e8" stroke-width="2">-->
+        <!--                                        <circle cx="4" cy="4" r="4" stroke="none"></circle>-->
+        <!--                                        <circle cx="4" cy="4" r="3" fill="none"></circle>-->
+        <!--                                    </g>-->
+        <!--                                    <g transform="translate(412 446)" fill="#fff"-->
+        <!--                                       stroke="#e8e8e8" stroke-width="2">-->
+        <!--                                        <circle cx="4" cy="4" r="4" stroke="none"></circle>-->
+        <!--                                        <circle cx="4" cy="4" r="3" fill="none"></circle>-->
+        <!--                                    </g>-->
+        <!--                                    <g transform="translate(494 408)" fill="#fff"-->
+        <!--                                       stroke="#e8e8e8" stroke-width="2">-->
+        <!--                                        <circle cx="4" cy="4" r="4" stroke="none"></circle>-->
+        <!--                                        <circle cx="4" cy="4" r="3" fill="none"></circle>-->
+        <!--                                    </g>-->
+        <!--                                    <g transform="translate(576 410)" fill="#fff"-->
+        <!--                                       stroke="#e8e8e8" stroke-width="2">-->
+        <!--                                        <circle cx="4" cy="4" r="4" stroke="none"></circle>-->
+        <!--                                        <circle cx="4" cy="4" r="3" fill="none"></circle>-->
+        <!--                                    </g>-->
+        <!--                                    <g transform="translate(658 363)" fill="#fff"-->
+        <!--                                       stroke="#e8e8e8" stroke-width="2">-->
+        <!--                                        <circle cx="4" cy="4" r="4" stroke="none"></circle>-->
+        <!--                                        <circle cx="4" cy="4" r="3" fill="none"></circle>-->
+        <!--                                    </g>-->
+        <!--                                </g>-->
+        <!--                            </svg>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--                <div class="box loading-right-group">-->
+        <!--                    <div class="bar long-bar ph-item"></div>-->
+        <!--                    <div class="bar short-bar ph-item"></div>-->
+        <!--                    <div class="chart-content">-->
+        <!--                        <div class="line-chart">-->
+        <!--                            <div class="line"></div>-->
+        <!--                            <div class="line"></div>-->
+        <!--                            <div class="line"></div>-->
+        <!--                            <div class="line"></div>-->
+        <!--                            <div class="line"></div>-->
+        <!--                        </div>-->
+        <!--                        <div class="col-chart-wrap">-->
+        <!--                            <div class="column-1 chart-col ph-item"></div>-->
+        <!--                            <div class="column-2 chart-col ph-item"></div>-->
+        <!--                            <div class="column-3 chart-col ph-item"></div>-->
+        <!--                            <div class="column-4 chart-col ph-item"></div>-->
+        <!--                            <div class="column-5 chart-col ph-item"></div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--            <div class="loading-content-group">-->
+        <!--                <div class="box loading-left-group">-->
+        <!--                    <div class="bar long-bar ph-item"></div>-->
+        <!--                    <div class="bar short-bar ph-item"></div>-->
+        <!--                    <div class="chart-content">-->
+        <!--                        <div class="doughnut-chart-wrapper ph-item">-->
+        <!--                            <div class="doughnut-chart">-->
+        <!--                                <svg xmlns="http://www.w3.org/2000/svg" width="153.126"-->
+        <!--                                     height="153" viewBox="0 0 153.126 153">-->
+        <!--                                    <g transform="translate(-63.471 -142.5)">-->
+        <!--                                        <g transform="translate(10 53)">-->
+        <!--                                            <path _ngcontent-toc-c164=""-->
+        <!--                                                  d="M129.985,90a76,76,0,0,1,44.777,137.419l-15.666-21.5A49.4,49.4,0,0,0,129.99,116.6Z"-->
+        <!--                                                  fill="#e4e4e5" stroke="#fff" stroke-linejoin="round"-->
+        <!--                                                  stroke-width="1"></path>-->
+        <!--                                            <path _ngcontent-toc-c164=""-->
+        <!--                                                  d="M174.7,227.464a76,76,0,0,1-89.3.071L101.008,206a49.4,49.4,0,0,0,58.048-.046Z"-->
+        <!--                                                  fill="#efefef" stroke="#fff" stroke-linejoin="round"-->
+        <!--                                                  stroke-width="1"></path>-->
+        <!--                                            <path _ngcontent-toc-c164=""-->
+        <!--                                                  d="M85.335,227.49A76,76,0,0,1,103.2,94.882l9.381,24.891a49.4,49.4,0,0,0-11.612,86.2Z"-->
+        <!--                                                  fill="#e4e4e5" stroke="#fff" stroke-linejoin="round"-->
+        <!--                                                  stroke-width="1"></path>-->
+        <!--                                            <path _ngcontent-toc-c164=""-->
+        <!--                                                  d="M103.271,94.855A76,76,0,0,1,129.894,90l.037,26.6a49.4,49.4,0,0,0-17.305,3.156Z"-->
+        <!--                                                  fill="#efefef" stroke="#fff" stroke-linejoin="round"-->
+        <!--                                                  stroke-width="1"></path>-->
+        <!--                                        </g>-->
+        <!--                                    </g>-->
+        <!--                                </svg>-->
+        <!--                            </div>-->
+        <!--                            <div _ngcontent-toc-c164="">-->
+        <!--                                <svg xmlns="http://www.w3.org/2000/svg" width="189" height="104"-->
+        <!--                                     viewBox="0 0 189 104">-->
+        <!--                                    <g transform="translate(-480 -690)">-->
+        <!--                                        <rect width="12" height="12" rx="2"-->
+        <!--                                              transform="translate(480 690)" fill="#efefef"></rect>-->
+        <!--                                        <rect width="12" height="12" rx="2"-->
+        <!--                                              transform="translate(480 751)" fill="#efefef"></rect>-->
+        <!--                                        <rect width="12" height="12" rx="2"-->
+        <!--                                              transform="translate(480 720)" fill="#e4e4e5"></rect>-->
+        <!--                                        <rect width="12" height="12" rx="2"-->
+        <!--                                              transform="translate(480 782)" fill="#e4e4e5"></rect>-->
+        <!--                                        <rect width="165" height="12" rx="6"-->
+        <!--                                              transform="translate(504 690)" fill="#efefef"></rect>-->
+        <!--                                        <rect width="165" height="12" rx="6"-->
+        <!--                                              transform="translate(504 751)" fill="#efefef"></rect>-->
+        <!--                                        <rect width="121" height="12" rx="6"-->
+        <!--                                              transform="translate(504 720)" fill="#e4e4e5"></rect>-->
+        <!--                                        <rect width="121" height="12" rx="6"-->
+        <!--                                              transform="translate(504 782)" fill="#e4e4e5"></rect>-->
+        <!--                                    </g>-->
+        <!--                                </svg>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--                <div class="box loading-right-group">-->
+        <!--                    <div class="bar long-bar ph-item"></div>-->
+        <!--                    <div class="bar short-bar ph-item"></div>-->
+        <!--                    <div class="chart-content">-->
+        <!--                        <div class="doughnut-chart-wrapper ph-item">-->
+        <!--                            <div class="doughnut-chart">-->
+        <!--                                <svg xmlns="http://www.w3.org/2000/svg" width="153.126"-->
+        <!--                                     height="153" viewBox="0 0 153.126 153">-->
+        <!--                                    <g transform="translate(-63.471 -142.5)">-->
+        <!--                                        <g transform="translate(10 53)">-->
+        <!--                                            <path _ngcontent-toc-c164=""-->
+        <!--                                                  d="M129.985,90a76,76,0,0,1,44.777,137.419l-15.666-21.5A49.4,49.4,0,0,0,129.99,116.6Z"-->
+        <!--                                                  fill="#efefef" stroke="#fff" stroke-linejoin="round"-->
+        <!--                                                  stroke-width="1"></path>-->
+        <!--                                            <path _ngcontent-toc-c164=""-->
+        <!--                                                  d="M174.7,227.464a76,76,0,0,1-89.3.071L101.008,206a49.4,49.4,0,0,0,58.048-.046Z"-->
+        <!--                                                  fill="#e4e4e5" stroke="#fff" stroke-linejoin="round"-->
+        <!--                                                  stroke-width="1"></path>-->
+        <!--                                            <path _ngcontent-toc-c164=""-->
+        <!--                                                  d="M85.335,227.49A76,76,0,0,1,103.2,94.882l9.381,24.891a49.4,49.4,0,0,0-11.612,86.2Z"-->
+        <!--                                                  fill="#efefef" stroke="#fff" stroke-linejoin="round"-->
+        <!--                                                  stroke-width="1"></path>-->
+        <!--                                            <path _ngcontent-toc-c164=""-->
+        <!--                                                  d="M103.271,94.855A76,76,0,0,1,129.894,90l.037,26.6a49.4,49.4,0,0,0-17.305,3.156Z"-->
+        <!--                                                  fill="#e4e4e5" stroke="#fff" stroke-linejoin="round"-->
+        <!--                                                  stroke-width="1"></path>-->
+        <!--                                        </g>-->
+        <!--                                    </g>-->
+        <!--                                </svg>-->
+        <!--                            </div>-->
+        <!--                            <div _ngcontent-toc-c164="">-->
+        <!--                                <svg xmlns="http://www.w3.org/2000/svg" width="189" height="104"-->
+        <!--                                     viewBox="0 0 189 104">-->
+        <!--                                    <g transform="translate(-480 -690)">-->
+        <!--                                        <rect width="12" height="12" rx="2"-->
+        <!--                                              transform="translate(480 690)" fill="#efefef"></rect>-->
+        <!--                                        <rect width="12" height="12" rx="2"-->
+        <!--                                              transform="translate(480 751)" fill="#efefef"></rect>-->
+        <!--                                        <rect width="12" height="12" rx="2"-->
+        <!--                                              transform="translate(480 720)" fill="#e4e4e5"></rect>-->
+        <!--                                        <rect width="12" height="12" rx="2"-->
+        <!--                                              transform="translate(480 782)" fill="#e4e4e5"></rect>-->
+        <!--                                        <rect width="165" height="12" rx="6"-->
+        <!--                                              transform="translate(504 690)" fill="#efefef"></rect>-->
+        <!--                                        <rect width="165" height="12" rx="6"-->
+        <!--                                              transform="translate(504 751)" fill="#efefef"></rect>-->
+        <!--                                        <rect width="121" height="12" rx="6"-->
+        <!--                                              transform="translate(504 720)" fill="#e4e4e5"></rect>-->
+        <!--                                        <rect width="121" height="12" rx="6"-->
+        <!--                                              transform="translate(504 782)" fill="#e4e4e5"></rect>-->
+        <!--                                    </g>-->
+        <!--                                </svg>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--        -->
+        <!--        <div class="loading-ph loading-content loading-content-master" style="display: none;">-->
+        <!--            <div class="loading-header">-->
+        <!--                <div class="ph-item">-->
+        <!--                    <div class="loading-view-title"></div>-->
+        <!--                </div>-->
+        <!--                <div class="ph-item">-->
+        <!--                    <div class="loading-view-tabs"></div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--            <div class="loading-master">-->
+        <!--                <div class="master-header">-->
+        <!--                    <div class="ph-item">-->
+        <!--                        <div class="loading-view-tabs"></div>-->
+        <!--                        <div class="loading-square" style="margin-left: 8px;"></div>-->
+        <!--                    </div>-->
+        <!--                    <div class="ph-item">-->
+        <!--                        <div class="loading-view-tabs"></div>-->
+        <!--                        <div class="loading-square" style="margin-left: 16px;"></div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--                <div class="master-content">-->
+        <!--                    <div class="master-content-left">-->
+        <!--                        <div class="content-left-data"></div>-->
+        <!--                        <div class="content-left-paging">-->
+        <!--                            <div class="ph-item">-->
+        <!--                                <div class="loading-view-short-title"></div>-->
+        <!--                            </div>-->
+        <!--                            <div class="ph-item">-->
+        <!--                                <div class="loading-view-title"></div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                    <div class="master-content-right dflex-1 dflex-column">-->
+        <!--                        <div class="content-right-header">-->
+        <!--                            <div class="content-right-header-user">-->
+        <!--                                <div class="header-user-left">-->
+        <!--                                    <div class="ph-item">-->
+        <!--                                        <div class="loading-big-circle"></div>-->
+        <!--                                        <div class="loading-big-view-tabs"-->
+        <!--                                             style="margin-left: 16px;"></div>-->
+        <!--                                    </div>-->
+        <!--                                </div>-->
+        <!--                                <div class="header-user-right">-->
+        <!--                                    <div class="ph-item">-->
+        <!--                                        <div class="loading-view-short-tabs"></div>-->
+        <!--                                    </div>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                            <div class="content-right-header-tab"></div>-->
+        <!--                        </div>-->
+        <!--                        <div class="content-right-data dflex-1"></div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--        <div class="loading-ph loading-content-profile-edit loading-layout"-->
+        <!--             style="display: none;">-->
+        <!--            <div class="dflex-column w-full">-->
+        <!--                <div class="loading-header">-->
+        <!--                    <div class="ph-item">-->
+        <!--                        <div class="loading-view-title"></div>-->
+        <!--                    </div>-->
+        <!--                    <div class="ph-item">-->
+        <!--                        <div class="loading-view-tabs"></div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--                <div class="dflex-1 dflex">-->
+        <!--                    <div class="box-sidebar">-->
+        <!--                        <div class="ph-item w-full h-100">-->
+        <!--                            <div class="loading-sidebar w-full">-->
+        <!--                                <div class="loading-sidebar-search">-->
+        <!--                                    <div class="loading-sidebar-item"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-sidebar-button">-->
+        <!--                                    <div class="loading-sidebar-item"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-sidebar-button">-->
+        <!--                                    <div class="loading-sidebar-item"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-sidebar-button">-->
+        <!--                                    <div class="loading-sidebar-item"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-sidebar-button">-->
+        <!--                                    <div class="loading-sidebar-item"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-sidebar-button">-->
+        <!--                                    <div class="loading-sidebar-item"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-sidebar-button">-->
+        <!--                                    <div class="loading-sidebar-item"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-sidebar-button">-->
+        <!--                                    <div class="loading-sidebar-item"></div>-->
+        <!--                                </div>&lt;!&ndash;&ndash;&gt;</div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                    <div class="box-container dflex-1">-->
+        <!--                        <div class="ph-item w-full h-100">-->
+        <!--                            <div class="loading-content">-->
+        <!--                                <div class="loading-main-infor">-->
+        <!--                                    <div class="loading-avatar"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-header">-->
+        <!--                                    <div class="loading-header-text"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-content-group">-->
+        <!--                                    <div class="loading-left-group">-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>&lt;!&ndash;&ndash;&gt;</div>-->
+        <!--                                    <div class="loading-right-group">-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>&lt;!&ndash;&ndash;&gt;</div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-header">-->
+        <!--                                    <div class="loading-header-text"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-content-group">-->
+        <!--                                    <div class="group-one-column">-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>&lt;!&ndash;&ndash;&gt;</div>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--        <div class="loading-ph loading-content-profile-detail loading-layout"-->
+        <!--             style="display: none;">-->
+        <!--            <div class="dflex-column w-full">-->
+        <!--                <div class="box-header loading">-->
+        <!--                    <div class="ph-item w-full h-100">-->
+        <!--                        <div class="loading-content">-->
+        <!--                            <div class="loading-main-infor">-->
+        <!--                                <div class="loading-avatar"></div>-->
+        <!--                                <div class="loading-name">-->
+        <!--                                    <div class="loading-name-item"></div>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                            <div class="loading-header">-->
+        <!--                                <div class="loading-header-text"></div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--                <div class="box-content dflex dflex-1 w-full">-->
+        <!--                    <div class="box-sidebar">-->
+        <!--                        <div class="ph-item w-full h-100">-->
+        <!--                            <div class="loading-sidebar w-full">-->
+        <!--                                <div class="loading-sidebar-search">-->
+        <!--                                    <div class="loading-sidebar-item"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-sidebar-button">-->
+        <!--                                    <div class="loading-sidebar-item"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-sidebar-button">-->
+        <!--                                    <div class="loading-sidebar-item"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-sidebar-button">-->
+        <!--                                    <div class="loading-sidebar-item"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-sidebar-button">-->
+        <!--                                    <div class="loading-sidebar-item"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-sidebar-button">-->
+        <!--                                    <div class="loading-sidebar-item"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-sidebar-button">-->
+        <!--                                    <div class="loading-sidebar-item"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-sidebar-button">-->
+        <!--                                    <div class="loading-sidebar-item"></div>-->
+        <!--                                </div>&lt;!&ndash;&ndash;&gt;</div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                    <div class="box-container dflex-1 dflex">-->
+        <!--                        <div class="ph-item w-full h-100">-->
+        <!--                            <div class="loading-content">-->
+        <!--                                <div class="loading-header">-->
+        <!--                                    <div class="loading-header-text"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-content-group">-->
+        <!--                                    <div class="loading-left-group">-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>&lt;!&ndash;&ndash;&gt;</div>-->
+        <!--                                    <div class="loading-right-group">-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>&lt;!&ndash;&ndash;&gt;</div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-header">-->
+        <!--                                    <div class="loading-header-text"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-content-group">-->
+        <!--                                    <div class="group-one-column">-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>&lt;!&ndash;&ndash;&gt;</div>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--        <div class="loading-ph loading-content-profile-create loading-layout"-->
+        <!--             style="display: none;">-->
+        <!--            <div class="dflex-column w-full">-->
+        <!--                <div class="loading-header">-->
+        <!--                    <div class="ph-item">-->
+        <!--                        <div class="loading-view-title"></div>-->
+        <!--                    </div>-->
+        <!--                    <div class="ph-item">-->
+        <!--                        <div class="loading-view-tabs"></div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--                <div class="box-header loading">-->
+        <!--                    <div class="ph-item w-full h-100">-->
+        <!--                        <div class="loading-content">-->
+        <!--                            <div class="loading-main-infor">-->
+        <!--                                <div class="loading-avatar"></div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--                <div class="box-content dflex dflex-1 w-full">-->
+        <!--                    <div class="box-container dflex-1 dflex">-->
+        <!--                        <div class="ph-item w-full h-100">-->
+        <!--                            <div class="loading-content">-->
+        <!--                                <div class="loading-header">-->
+        <!--                                    <div class="loading-header-text"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-content-group">-->
+        <!--                                    <div class="loading-left-group">-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>&lt;!&ndash;&ndash;&gt;</div>-->
+        <!--                                    <div class="loading-right-group">-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>&lt;!&ndash;&ndash;&gt;</div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-header">-->
+        <!--                                    <div class="loading-header-text"></div>-->
+        <!--                                </div>-->
+        <!--                                <div class="loading-content-group">-->
+        <!--                                    <div class="group-one-column">-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>-->
+        <!--                                        <div class="loading-sidebar-item"></div>&lt;!&ndash;&ndash;&gt;</div>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+    </div>
+</div>

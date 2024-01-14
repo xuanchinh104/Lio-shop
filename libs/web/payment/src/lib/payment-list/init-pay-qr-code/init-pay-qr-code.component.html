@@ -1,0 +1,55 @@
+<form class="m-form">
+    <div class="p-[20px] flex items-center justify-between">
+        <h4 class="text-[#222] font-bold text-[20px]">
+            {{ titleKey }}
+        </h4>
+        <div
+            class="absolute right-[16px] flex justify-center items-center leading-normal w-[34px] h-[34px] !rounded-full cursor-pointer hover:bg-[#F0F3F5]"
+            (click)="closeForm()"
+        >
+            <i class="icofont-close-line text-[22px] text-[#9197af]"></i>
+        </div>
+    </div>
+    <div class="relative px-[24px] leading-[26px] scrollbar max-h-[75vh]">
+        <div class="w-full h-[55px] flex items-center" *ngIf="minutes || seconds">
+            <div class="ml-auto flex items-center gap-[7px]">
+                <div class="text-[#4D657B]">Giao dịch hết hạn sau</div>
+                <div class="flex items-center justify-center gap-[7px]">
+                    <div
+                        class="flex items-center justify-center rounded-[8px] h-[30px] w-[35px] bg-black shadow-lg text-white text-[18px] select-none"
+                    >
+                        {{ minutes }}
+                    </div>
+                    <div>:</div>
+                    <div
+                        class="flex items-center justify-center rounded-[8px] h-[30px] w-[35px] bg-black shadow-lg text-white text-[18px] select-none"
+                    >
+                        {{ seconds }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <img [src]="'data:image/png;base64,' + _dataQRCode.qrImg" alt="" class="w-[300px] h-[300px] inline-block" />
+            <div class="flex gap-4 justify-center mt-[10px]">
+                <div class="flex items-center flex-col gap-4 font-medium text-[16px]">
+                    <span>Nội dung:</span>
+                    <span>Tổng tiền:</span>
+                </div>
+                <div class="flex items-start flex-col gap-4 font-semibold text-[16px]">
+                    <span>{{ _dataQRCode.description }}</span>
+                    <span>{{ _dataQRCode.totalAmount | number }} VND</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex items-center justify-end p-[16px_24px] bg-[#f2f2f2] border-t border-[#dadce3] rounded-b-[8px] mt-[20px]">
+        <asc-button
+            class="mr-[8px]"
+            (click)="closeForm()"
+            [btnClass]="'p-[8px_14px] text-black bg-white border border-white rounded-[8px] cursor-pointer'"
+            [btnText]="'Đóng'"
+            [attr.keyLabel]="'BTN.CANCEL'"
+        ></asc-button>
+    </div>
+</form>

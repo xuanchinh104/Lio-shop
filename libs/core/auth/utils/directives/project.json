@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/core/auth/utils/directives",
+    "sourceRoot": "libs/core/auth/utils/directives/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/core/auth/utils/directives"],
+            "options": {
+                "jestConfig": "libs/core/auth/utils/directives/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/core/auth/utils/directives/src/**/*.ts", "libs/core/auth/utils/directives/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

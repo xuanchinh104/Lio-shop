@@ -1,0 +1,34 @@
+:host ::ng-deep {
+    .item {
+        &.active {
+            button {
+                border-color: #00a63d;
+                background: #00a63d;
+            }
+        }
+    }
+
+    .swiper {
+        overflow: unset;
+    }
+
+    .swiper-button-prev, .swiper-button-next {
+        width: 40px;
+        height: 40px;
+        box-shadow: 0 0 5px #00000026;
+        border-radius: 100%;
+        background: #fff;
+        opacity: 0.5;
+        &:after {
+            font-size: 16px;
+            color: #333;
+        }
+        &:hover {
+            opacity: 1;
+        }
+    }
+    .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+        bottom: -30px;
+    }
+}
+

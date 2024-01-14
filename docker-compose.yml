@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+    flower-shop:
+        image: ${REGISTRY}/asc.ems.course.fe/flower-shop:${TAG:-latest}
+        labels:
+            - tier=fe
+            - project=course
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.1'
+                    memory: 128M
+        build:
+            context: .
+            dockerfile: apps/flower-shop/Dockerfile
+
+    flower-shop-web:
+        image: ${REGISTRY}/asc.ems.course.fe/flower-shop-web:${TAG:-latest}
+        labels:
+            - tier=fe
+            - project=course
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.1'
+                    memory: 128M
+        build:
+            context: .
+            dockerfile: apps/flower-shop-web/Dockerfile
+
+networks:
+    default:
+        external: true
+        name: ems_default

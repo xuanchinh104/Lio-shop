@@ -1,0 +1,113 @@
+.dashboard_fixed {
+    @apply bg-white fixed top-0 left-0 right-0 z-10 w-full m-0 py-[15px] pl-[106px] pr-[40px];
+}
+
+:host::ng-deep {
+    .module__tab {
+        .ant-tabs {
+            overflow: visible;
+        }
+
+        .ant-tabs-nav {
+            margin: 0;
+            &:before {
+                content: unset;
+            }
+
+            .ant-tabs-nav-wrap {
+                &:after,
+                &:after {
+                    box-shadow: none;
+                }
+            }
+
+            &:hover {
+                .ant-tabs-extra-content {
+                    opacity: 1;
+                }
+            }
+        }
+
+        .ant-tabs-tab {
+            background: #ffffff;
+            border: 1px solid #fff;
+            border-radius: 8px;
+            height: 40px;
+            padding: 8px 12px;
+
+            & + .ant-tabs-tab {
+                margin: 0 0 0 20px;
+            }
+
+            &:hover {
+                background: #f0f3f5;
+                border-color: #d9e1ec;
+                color: inherit;
+            }
+
+            &.ant-tabs-tab-active {
+                background: var(--primary-bg);
+                border-color: var(--primary-bg);
+
+                .ant-tabs-tab-btn {
+                    color: #fff;
+                }
+            }
+        }
+
+        .ant-tabs-ink-bar {
+            background: none;
+        }
+
+        .ant-tabs-nav-more {
+            background: #fff;
+            margin-left: 20px;
+            border-radius: 8px;
+            width: 46px;
+            height: 40px;
+            &:before,
+            &:after,
+            i {
+                content: '';
+                position: absolute;
+                display: block;
+                width: 22px;
+                height: 2px;
+                background: #6b7280;
+                border-radius: 1.5px;
+                left: 12px;
+            }
+            &:before {
+                top: 11px;
+            }
+            &:after {
+                top: 25px;
+            }
+            i {
+                content: unset;
+                top: 19px;
+                svg {
+                    display: none;
+                }
+            }
+        }
+
+        .ant-tabs-extra-content {
+            opacity: 0;
+            transition: opacity 0.3s;
+
+            button {
+                position: absolute;
+                bottom: 5px;
+
+                &:first-child {
+                    left: -15px;
+                }
+
+                &:last-child {
+                    right: 50px;
+                }
+            }
+        }
+    }
+}

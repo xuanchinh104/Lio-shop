@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/features/shell/ui/setting-view",
+    "sourceRoot": "libs/features/shell/ui/setting-view/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/features/shell/ui/setting-view"],
+            "options": {
+                "jestConfig": "libs/features/shell/ui/setting-view/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/features/shell/ui/setting-view/src/**/*.ts", "libs/features/shell/ui/setting-view/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/modules/translate",
+    "sourceRoot": "libs/shared/modules/translate/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/modules/translate"],
+            "options": {
+                "jestConfig": "libs/shared/modules/translate/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/modules/translate/src/**/*.ts", "libs/shared/modules/translate/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

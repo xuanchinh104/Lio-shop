@@ -1,0 +1,39 @@
+<ng-container *ngIf="lopHocs$ | async as lopHocDaMos">
+    <ng-container *ngIf="lopHocDaMos.length > 0">
+        <section class="md:py-[60px] bg-oval">
+            <div class="container">
+                <asc-course-skeleton
+                    *ngIf="(isLoading$ | async)!"
+                    [countItem]="6"
+                    [type]="'grid'"
+                    [classView]="'grid gap-[24px] grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'"
+                >
+                </asc-course-skeleton>
+                <div id="dslop" class="section-title mb-[35px] md:mb-[40px] lg:mb-[50px] text-center max-w-[800px] mx-auto">
+                    <h2 class="font-bold text-[28px] md:text-[30px] lg:text-[35px] xl:text-[40px] mb-6">
+                        <span class="text-[#1B2C43]">SẢN PHẨM MỚI</span>
+                    </h2>
+                </div>
+                <div class="mb-[40px] md:mb-[140px] last:mb-0">
+                    <div class="grid gap-[24px] grid-cols-1 sm:grid-cols-3 xl:grid-cols-4">
+                        <ng-container *ngFor="let item of lopHocDaMos; trackBy: trackByFunc">
+                            <ng-container *ngFor="let hoa of listImg">
+                                <asc-course-item [lopHocDaMo]="item" [viewStyle]="'grid'" [hoa]="hoa"></asc-course-item>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                    <div class="text-center mt-[30px] md:mt-[50px]">
+                        <a
+                            routerLink="/danh-sach-cac-lop-dang-mo"
+                            [attr.keyLabel]="'XEM_TAT_CA'"
+                            type="button"
+                            class="p-[10px_12px] min-w-[150px] rounded-[30px] text-white bg-[#0063E2] transition-all duration-500 hover:bg-[#024cab] hover:text-white"
+                        >
+                            {{ 'XEM_TAT_CA' | transloco }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </ng-container>
+</ng-container>

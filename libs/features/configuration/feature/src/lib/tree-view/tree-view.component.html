@@ -1,0 +1,49 @@
+<div class="flex flex-row justify-between items-center h-[66px] mr-[10px]">
+    <div>
+        <ng-container *ngIf="pageInfo$ | async as pageInfo">
+            <div class="text-xl font-bold">{{ pageInfo.f_Name }}</div>
+            <div class="text-sm h-[36px] flex items-center" *ngIf="pageInfo.f_Notes.length > 0">{{ pageInfo.f_Notes }}</div>
+        </ng-container>
+    </div>
+    <div
+        nz-tooltip
+        [nzTooltipTitle]="'BTN.ADD' | transloco"
+        (click)="addHandler()"
+        class="flex items-center justify-center w-[30px] h-[30px] rounded-full bg-[#fff] cursor-pointer"
+    >
+        <i class="zmdi zmdi-plus text-[24px]"></i>
+    </div>
+</div>
+<div class="px-[10px] pr-0 mr-[10px]" (contextmenu)="contextMenu($event, menu)">
+    <div class="scrollbar scrollbar-hover h-[calc(100vh-155px)]">
+        <kendo-treeview
+            class="pb-[10px]"
+            [nodes]="(treeView$ | async)!"
+            [textField]="['groupName', 'groupName', 'tenModule']"
+            kendoTreeViewExpandable
+            kendoTreeViewHierarchyBinding
+            kendoTreeViewSelectable
+            childrenField="children"
+            [kendoTreeViewCheckable]="checkableSettings"
+            [hasChildren]="hasChildren"
+            [expandBy]="'key'"
+            [(expandedKeys)]="expandedKeys"
+            [(selectedKeys)]="selectedKeys"
+            [(checkedKeys)]="checkedKeys"
+            (nodeClick)="treeClick($event)"
+        >
+        </kendo-treeview>
+    </div>
+</div>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu nzSelectable>
+        <li nz-menu-item class="dropdown-item" (click)="editNode()">
+            <i class="zmdi zmdi-edit mr-2"></i>
+            <a>{{ 'BTN.EDIT' | transloco }}</a>
+        </li>
+        <li nz-menu-item class="dropdown-item" (click)="removeNode()">
+            <i class="zmdi zmdi-delete mr-2"></i>
+            <a>{{ 'BTN.DELETE' | transloco }}</a>
+        </li>
+    </ul>
+</nz-dropdown-menu>

@@ -1,0 +1,107 @@
+{
+    "projectType": "application",
+    "root": "apps/flower-shop-web",
+    "sourceRoot": "apps/flower-shop-web/src",
+    "prefix": "asc",
+    "targets": {
+        "build": {
+            "executor": "@angular-devkit/build-angular:browser",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/apps/flower-shop-web",
+                "index": "apps/flower-shop-web/src/index.html",
+                "main": "apps/flower-shop-web/src/main.ts",
+                "polyfills": "apps/flower-shop-web/src/polyfills.ts",
+                "tsConfig": "apps/flower-shop-web/tsconfig.app.json",
+                "inlineStyleLanguage": "scss",
+                "assets": [
+                    "apps/flower-shop-web/src/favicon.ico",
+                    "apps/flower-shop-web/src/assets",
+                    "apps/flower-shop-web/src/_config",
+                    "apps/flower-shop-web/src/i18n",
+                    {
+                        "glob": "**/*",
+                        "input": "libs/shared/styles/src/lib/assets",
+                        "output": "assets"
+                    },
+                    "apps/flower-shop-web/src/manifest.webmanifest"
+                ],
+                "styles": [
+                    "apps/flower-shop-web/src/styles.scss",
+                    "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+                    "libs/shared/styles/src/lib/styles/toaster.scss",
+                    "libs/shared/styles/src/lib/styles/utilities/_animation.scss"
+                ],
+                "scripts": []
+            },
+            "configurations": {
+                "production": {
+                    "index": "apps/flower-shop-web/src/production/index.html",
+                    "budgets": [
+                        {
+                            "type": "initial",
+                            "maximumWarning": "5mb",
+                            "maximumError": "18mb"
+                        },
+                        {
+                            "type": "anyComponentStyle",
+                            "maximumWarning": "100kb",
+                            "maximumError": "150kb"
+                        }
+                    ],
+                    "fileReplacements": [
+                        {
+                            "replace": "apps/flower-shop-web/src/environments/environment.ts",
+                            "with": "apps/flower-shop-web/src/environments/environment.prod.ts"
+                        }
+                    ],
+                    "serviceWorker": true,
+                    "ngswConfigPath": "apps/flower-shop-web/ngsw-config.json",
+                    "outputHashing": "all"
+                },
+                "development": {
+                    "buildOptimizer": false,
+                    "optimization": false,
+                    "vendorChunk": true,
+                    "extractLicenses": false,
+                    "sourceMap": true,
+                    "namedChunks": true
+                }
+            },
+            "defaultConfiguration": "production"
+        },
+        "serve": {
+            "executor": "@angular-devkit/build-angular:dev-server",
+            "configurations": {
+                "production": {
+                    "browserTarget": "flower-shop-web:build:production"
+                },
+                "development": {
+                    "browserTarget": "flower-shop-web:build:development"
+                }
+            },
+            "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+            "executor": "@angular-devkit/build-angular:extract-i18n",
+            "options": {
+                "browserTarget": "flower-shop-web:build"
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["apps/flower-shop-web/src/**/*.ts", "apps/flower-shop-web/src/**/*.html"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/apps/flower-shop-web"],
+            "options": {
+                "jestConfig": "apps/flower-shop-web/jest.config.js",
+                "passWithNoTests": true
+            }
+        }
+    },
+    "tags": []
+}

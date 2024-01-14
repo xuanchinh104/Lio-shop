@@ -1,0 +1,28 @@
+<div class="px-[12px] py-[32px] h-full flex flex-col justify-between">
+    <ul>
+        <li
+            class="w-[44px] h-[44px] flex items-center justify-center rounded-[8px] my-2.5 hover:bg-white hover:bg-opacity-20 cursor-pointer"
+            nz-dropdown
+            [nzDropdownMenu]="menuUserInfo"
+            [nzOverlayClassName]="'dropdown-user dropdown-user-position'"
+        >
+            <svg-icon key="user2" class="text-white" fontSize="24px"></svg-icon>
+        </li>
+        <nz-dropdown-menu #menuUserInfo="nzDropdownMenu">
+            <div nz-menu>
+                <asc-dropdown-profile></asc-dropdown-profile>
+            </div>
+        </nz-dropdown-menu>
+        <!--        <li-->
+        <!--            class="w-[44px] h-[44px] flex items-center justify-center rounded-[8px] my-2.5 hover:bg-white hover:bg-opacity-20 cursor-pointer"-->
+        <!--        >-->
+        <!--            <svg-icon key="notification" class="text-white" fontSize="24px"></svg-icon>-->
+        <!--        </li>-->
+        <!--        <li-->
+        <!--            class="w-[44px] h-[44px] flex items-center justify-center rounded-[8px] my-2.5 hover:bg-white hover:bg-opacity-20 cursor-pointer"-->
+        <!--        >-->
+        <!--            <svg-icon key="support2" class="text-white" fontSize="24px"></svg-icon>-->
+        <!--        </li>-->
+    </ul>
+    <ui-dropdown-setting classOverlay="dropdown-setting dropdown-setting-position"></ui-dropdown-setting>
+</div>

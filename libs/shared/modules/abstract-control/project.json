@@ -1,0 +1,26 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/modules/abstract-control",
+    "sourceRoot": "libs/shared/modules/abstract-control/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/modules/abstract-control"],
+            "options": {
+                "jestConfig": "libs/shared/modules/abstract-control/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/shared/modules/abstract-control/src/**/*.ts",
+                    "libs/shared/modules/abstract-control/src/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

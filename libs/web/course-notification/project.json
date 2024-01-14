@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/web/course-notification",
+    "sourceRoot": "libs/web/course-notification/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/web/course-notification"],
+            "options": {
+                "jestConfig": "libs/web/course-notification/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/web/course-notification/src/**/*.ts", "libs/web/course-notification/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

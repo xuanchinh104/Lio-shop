@@ -1,0 +1,343 @@
+<ng-template #pageTpl></ng-template>
+<skeleton-list *ngIf="isSkeleton$ | async as loading; else contentLoader" [loading]="loading"></skeleton-list>
+<ng-template #contentLoader>
+    <asc-grid-header (triggerHandler)="addHandler()"></asc-grid-header>
+    <div class="flex">
+        <div [ngClass]="this.isSearchAdvanced ? 'flex-1' : 'basis-full'" class="shadow bg-white rounded overflow-hidden">
+            <div class="shadow bg-white rounded overflow-hidden">
+                <div class="w-full h-[55px] flex items-center flex-nowrap px-[15px] py-[10px] gap-[10px]">
+                    <ng-container *ngIf="selectionIds && selectionIds.length > 0; else searchTpl">
+                        <label [attr.keyLabel]="'LB.SELECTED'"
+                            ><b>{{ selectionIds.length }}</b> {{ 'LB.SELECTED' | transloco }}
+                        </label>
+                        <label class="cursor-pointer text-[#2a7efc]" (click)="onDeselectedAll()" [attr.keyLabel]="'LB.UNSELECTED'">{{
+                            'LB.UNSELECTED' | transloco
+                        }}</label>
+                        <button
+                            class="!inline-flex items-center btn border !border-[#e0e0e0] min-h-[35px] text-[#333] hover:!border-[#296fc9]"
+                            (click)="onChangePassword()"
+                            [attr.keyLabel]="'BTN.CHANGE_PASSWORD'"
+                        >
+                            <i class="mr-2 zmdi zmdi-key"></i>
+                            {{ 'BTN.CHANGE_PASSWORD' | transloco }}
+                        </button>
+                    </ng-container>
+                    <ng-template #searchTpl>
+                        <asc-grid-search [formControl]="searchControl"></asc-grid-search>
+                        <button
+                            class="!inline-flex items-center btn border !border-[#e0e0e0] min-h-[35px] text-[#333] hover:!border-[#296fc9]"
+                            (click)="onToggleSearchAdvanced()"
+                        >
+                            <i class="icofont-filter text-[#6e757d]"></i>
+                        </button>
+                        <div class="relative w-[340px]">
+                            <nz-select
+                                nzShowSearch
+                                nzAllowClear
+                                [(ngModel)]="userType"
+                                [nzPlaceHolder]="'HRM.LOAI_NHAN_SU' | transloco"
+                                (ngModelChange)="onChangeUserType($event)"
+                                [ngModelOptions]="{ standalone: true }"
+                            >
+                                <nz-option
+                                    *ngFor="let item of userTypeList"
+                                    [nzLabel]="userTypeDescription[item]"
+                                    [nzValue]="item"
+                                ></nz-option>
+                            </nz-select>
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="grid-wrapper grid-none-border" [ngStyle]="{ 'height.px': pageHeight }">
+                    <kendo-grid
+                        [data]="(gridView$ | async)!"
+                        [loading]="(isLoading$ | async)!"
+                        [pageSize]="gridState.take!"
+                        [skip]="gridState.skip!"
+                        [pageable]="(pageSetting$ | async)!"
+                        [resizable]="true"
+                        [columnMenu]="false"
+                        [sortable]="true"
+                        [selectable]="true"
+                        [navigable]="true"
+                        kendoGridFocusable
+                        kendoGridSelectBy="id"
+                        [selectedKeys]="selectionIds"
+                        [sort]="gridState.sort!"
+                        [style.height]="'100%'"
+                        (dataStateChange)="onStateChange($event)"
+                    >
+                        <ng-template kendoGridNoRecordsTemplate>
+                            <div [attr.keyLabel]="'LB.NO_DATA'">
+                                {{ 'LB.NO_DATA' | transloco }}
+                            </div>
+                        </ng-template>
+                        <kendo-grid-checkbox-column
+                            [showSelectAll]="true"
+                            [width]="45"
+                            [locked]="true"
+                            [columnMenu]="false"
+                            class="text-center"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                        </kendo-grid-checkbox-column>
+                        <kendo-grid-column
+                            [title]="'LB.ACTION' | transloco"
+                            [width]="80"
+                            [locked]="true"
+                            [sortable]="false"
+                            [columnMenu]="false"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                <div class="text-center">
+                                    <button nz-dropdown [nzDropdownMenu]="menu">
+                                        <svg-icon fontSize="24px" key="menu-action"></svg-icon>
+                                    </button>
+                                </div>
+
+                                <nz-dropdown-menu #menu="nzDropdownMenu">
+                                    <ul nz-menu nzSelectable>
+                                        <li nz-menu-item class="dropdown-item" (click)="editHandler(dataItem)">
+                                            <i class="zmdi zmdi-edit mr-2"></i>
+                                            <a [attr.keyLabel]="'BTN.EDIT'">{{ 'BTN.EDIT' | transloco }}</a>
+                                        </li>
+                                        <!--                                    <li nz-menu-item class="dropdown-item" (click)="removeHandler(dataItem)">-->
+                                        <!--                                        <i class="zmdi zmdi-delete mr-2"></i>-->
+                                        <!--                                        <a>{{ 'BTN.DELETE' | transloco }}</a>-->
+                                        <!--                                    </li>-->
+                                    </ul>
+                                </nz-dropdown-menu>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            [title]="'LB.STT' | transloco"
+                            [width]="50"
+                            [locked]="true"
+                            [columnMenu]="false"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                <div class="text-center">
+                                    {{ rowIndex + 1 }}
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            [columnMenu]="false"
+                            field="userName"
+                            [title]="'USER.USERNAME' | transloco"
+                            [width]="200"
+                            [locked]="true"
+                            [headerStyle]="{ 'text-align': 'left' }"
+                            [style]="{ 'text-align': 'left' }"
+                        >
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            [title]="'LB.HO_TEN' | transloco"
+                            field="lastName"
+                            [locked]="true"
+                            headerClass="text-left"
+                            class="text-left"
+                            [width]="200"
+                            [columnMenu]="false"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="dark">
+                                    <b>{{ dataItem?.lastName }} {{ dataItem?.firstName }}</b>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            [columnMenu]="false"
+                            field="idGioiTinh"
+                            [title]="'USER.GENDER' | transloco"
+                            [width]="100"
+                            [headerStyle]="{ 'text-align': 'left' }"
+                            [style]="{ 'text-align': 'left' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div>{{ dataItem.tenGioiTinh ? dataItem.tenGioiTinh : '-' }}</div>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            [columnMenu]="false"
+                            field="ngaySinh"
+                            [title]="'USER.BIRTH_DAY' | transloco"
+                            [width]="120"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                            [style]="{ 'text-align': 'center' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div>{{ dataItem.ngaySinh ? (dataItem.ngaySinh | date : 'dd/MM/yyyy') : '-' }}</div>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            [columnMenu]="false"
+                            field="phoneNumber"
+                            [title]="'USER.PHONE_NUMBER' | transloco"
+                            [width]="150"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                            [style]="{ 'text-align': 'left' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="truncate text-left">
+                                    {{ dataItem.phoneNumber ? dataItem.phoneNumber : '-' }}
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column [columnMenu]="false" field="email" [width]="200" [title]="'USER.EMAIL' | transloco">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="truncate text-left">
+                                    {{ dataItem.email ? dataItem.email : '-' }}
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            field="tenChucVu"
+                            [headerStyle]="{ 'text-align': 'left' }"
+                            [style]="{ 'text-align': 'left' }"
+                            [title]="'USER.ROLE' | transloco"
+                            [width]="150"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="truncate text-left">
+                                    {{ dataItem.tenChucVu ? dataItem.tenChucVu : '-' }}
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            field="tenPhongBan"
+                            [headerStyle]="{ 'text-align': 'left' }"
+                            [style]="{ 'text-align': 'left' }"
+                            [title]="'LB.PHONG_BAN' | transloco"
+                            [width]="200"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="truncate text-left">
+                                    {{ dataItem.tenPhongBan ? dataItem.tenPhongBan : '-' }}
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            field="tenCoSo"
+                            [headerStyle]="{ 'text-align': 'left' }"
+                            [style]="{ 'text-align': 'left' }"
+                            [title]="'LB.DON_VI' | transloco"
+                            [width]="300"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="truncate text-left">
+                                    {{ dataItem.tenCoSo ? dataItem.tenCoSo : '-' }}
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            [columnMenu]="false"
+                            field="isActive"
+                            [title]="'USER.ACTIVE' | transloco"
+                            [width]="100"
+                            class="text-center"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                            [sortable]="false"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="text-center">
+                                    <i class="zmdi zmdi-check-circle text-[18px] text-green-500"></i>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            [columnMenu]="false"
+                            [title]="'USER.CHANGE_PW' | transloco"
+                            [width]="120"
+                            class="text-center"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                            [sortable]="false"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="text-center">
+                                    <a href="javascript:void(0)" (click)="onChangePassword(dataItem)">
+                                        <i class="zmdi zmdi-key" [ngStyle]="{ 'font-size': '18px' }"></i>
+                                    </a>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                    </kendo-grid>
+                </div>
+            </div>
+        </div>
+        <div
+            *ngIf="isSearchFirsttime"
+            [formGroup]="formSearch"
+            [ngClass]="this.isSearchAdvanced ? 'w-[270px]' : 'hidden'"
+            class="rounded bg-white transition duration-500 shadow-[0_1px_3px_rgba(0,0,0,0.1)] ml-[15px]"
+        >
+            <div class="flex flex-col">
+                <div class="flex justify-between items-center relative h-[50px] px-[15px]">
+                    <div class="text-lg font-bold" [attr.keyLabel]="'LB.BO_LOC'">{{ 'LB.BO_LOC' | transloco }}</div>
+                    <div
+                        (click)="onToggleSearchAdvanced()"
+                        class="grid place-content-center w-[30px] h-[30px] text-[#666] transition-all duration-300 ease-in-out rounded-full cursor-pointer hover:bg-gray-100"
+                    >
+                        <svg-icon key="close" fontSize="22px"></svg-icon>
+                    </div>
+                </div>
+                <div
+                    class="flex-auto scrollbar scrollbar-hover py-[10px] px-[15px] h-[calc(100%-50px)]"
+                    [ngStyle]="{ 'height.px': pageHeight - 45 }"
+                >
+                    <div class="form-group">
+                        <label class="inline-block mb-[.5rem]" [attr.keyLabel]="'LB.FIRSTNAME'">{{ 'LB.FIRSTNAME' | transloco }}</label>
+                        <asc-form-control formControlName="lastName"></asc-form-control>
+                    </div>
+                    <div class="form-group">
+                        <label class="inline-block mb-[.5rem]" [attr.keyLabel]="'LB.LASTNAME'">{{ 'LB.LASTNAME' | transloco }}</label>
+                        <asc-form-control formControlName="firstName"></asc-form-control>
+                    </div>
+                    <div class="form-group">
+                        <label class="inline-block mb-[.5rem]" [attr.keyLabel]="'USER.EMAIL'">{{ 'USER.EMAIL' | transloco }}</label>
+                        <asc-form-control formControlName="email"></asc-form-control>
+                    </div>
+                    <div class="form-group">
+                        <label class="inline-block mb-[.5rem]" [attr.keyLabel]="'USER.PHONE_NUMBER'">{{
+                            'USER.PHONE_NUMBER' | transloco
+                        }}</label>
+                        <asc-form-control formControlName="phoneNumber"></asc-form-control>
+                    </div>
+                    <div class="form-group">
+                        <label class="inline-block mb-[.5rem]" [attr.keyLabel]="'LB.DON_VI'">{{ 'LB.DON_VI' | transloco }}</label>
+                        <select-control formControlName="idCoSo" [placeholder]="''"></select-control>
+                    </div>
+                    <div class="form-group">
+                        <label class="inline-block mb-[.5rem]" [attr.keyLabel]="'LB.PHONG_BAN'">{{ 'LB.PHONG_BAN' | transloco }}</label>
+                        <nz-select formControlName="idPhongBan" nzShowSearch nzAllowClear>
+                            <nz-option *ngFor="let item of phongBans$ | async" [nzValue]="item.id" [nzLabel]="item.tenPhongBan"></nz-option>
+                        </nz-select>
+                    </div>
+                    <div class="form-group">
+                        <label class="inline-block mb-[.5rem]" [attr.keyLabel]="'LB.CHUC_VU'">{{ 'LB.CHUC_VU' | transloco }}</label>
+                        <select-control formControlName="idChucVu" [placeholder]="''"></select-control>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between h-[50px] p-[15px]">
+                    <asc-button
+                        (click)="refreshHandler()"
+                        [btnClass]="'btn btn-light'"
+                        [btnText]="'BTN.RESET' | transloco"
+                        [attr.keyLabel]="'BTN.RESET'"
+                    ></asc-button>
+                    <asc-button
+                        (click)="onSearchChange()"
+                        [btnClass]="'btn btn-primary'"
+                        [btnText]="'BTN.SEARCH' | transloco"
+                        [attr.keyLabel]="'BTN.SEARCH'"
+                    >
+                    </asc-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<div *ngIf="error$ | async"></div>

@@ -1,0 +1,30 @@
+<h3 class="text-lg capitalize block font-medium text-[#111827]">{{ 'LB.SELECT_COLOR' | transloco }}</h3>
+<div class="mt-[30px] overflow-x-clip">
+    <swiper [config]="configSwiper">
+        <ng-template swiperSlide *ngFor="let item of (themeColors)!" data-swiper-autoplay="6000">
+            <div
+                class="item group rounded-[8px] p-[20px] cursor-pointer border border-[#e5e7eb] hover:border-[#00a63d]"
+                [ngClass]="{ active: item === configUI?.color }"
+                (click)="onSelectThemeColor(item)"
+            >
+                <div class="flex items-center justify-between mb-[16px]">
+                    <h3 class="flex capitalize text-lg font-medium text-[#111827]">
+                        {{ themeColorName[item] | transloco }}
+                        <span
+                            class="inline-block w-[24px] h-[24px] rounded-[1.5px] mx-[16px]"
+                            [ngStyle]="{ 'background-color': themeColorCode[item] }"
+                        >
+                                            </span>
+                    </h3>
+                    <button
+                        class="flex items-center justify-center w-[28px] h-[28px] rounded-full text-white border border-[#e5e7eb] p-0 group-hover:bg-[#00a63d] group-hover:border-[#00a63d]"
+                    >
+                        <i class="zmdi zmdi-check"></i>
+                    </button>
+                </div>
+                <img [src]="themeColorBanner[item]" alt="banner" class="w-full"/>
+            </div>
+        </ng-template>
+    </swiper>
+</div>
+

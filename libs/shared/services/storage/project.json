@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/services/storage",
+    "sourceRoot": "libs/shared/services/storage/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/services/storage"],
+            "options": {
+                "jestConfig": "libs/shared/services/storage/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/services/storage/src/**/*.ts", "libs/shared/services/storage/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

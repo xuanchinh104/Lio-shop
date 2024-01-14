@@ -1,0 +1,44 @@
+.shadowBox {
+    @apply w-[30px] h-[30px] block absolute top-[8px] left-[5px] z-[1] bg-white;
+    &.orange {
+        filter: drop-shadow(0 8px 8px rgba(255, 133, 79, 0.5));
+    }
+    &.violet {
+        filter: drop-shadow(0 8px 8px rgba(128, 96, 255, 0.5));
+    }
+    &.yellow {
+        filter: drop-shadow(0 8px 8px rgba(255, 198, 53, 0.5));
+    }
+    &.red {
+        filter: drop-shadow(0 8px 8px rgba(227, 49, 60, 0.5));
+    }
+    &.green {
+        filter: drop-shadow(0 8px 8px rgba(1, 170, 129, 0.5));
+    }
+    &.blue {
+        filter: drop-shadow(0 8px 8px rgba(0, 99, 226, 0.5));
+    }
+}
+
+.item:hover i.zmdi {
+    display: block;
+}
+
+.app-content {
+    animation-name: slideInFrames;
+    transform-origin: top left;
+    animation-duration: .18s;
+    animation-timing-function: ease;
+    user-select: none;
+}
+
+@keyframes slideInFrames {
+    0% {
+        opacity: 0;
+        transform: scale(.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

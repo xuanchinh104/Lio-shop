@@ -1,0 +1,94 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <asc-wrap-form (closeForm)="closeForm()" (zoomForm)="zoomForm($event)">
+        <div formTitle [attr.keyLabel]="titleKey">
+            {{ titleKey | transloco }}
+        </div>
+        <div formBody>
+            <div class="form-group grid grid-cols-12 gap-4">
+                <label class="col-span-2 text-[13px] text-[#201e1e] mt-1 font-medium" [attr.keyLabel]="'LB.TITLE'">{{
+                    'LB.TITLE' | transloco
+                }}</label>
+                <div class="col-span-10">
+                    <asc-form-control formControlName="tieuDe"></asc-form-control>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4 form-group">
+                <label class="col-span-2 text-[13px] text-[#201e1e] mt-1 font-medium" [attr.keyLabel]="'LB.CONTENT'">{{
+                    'LB.CONTENT' | transloco
+                }}</label>
+                <div class="col-span-10">
+                    <div class="relative valid__Editor">
+                        <ckeditor [editor]="Editor" [config]="configCkeditor" (ready)="onReady($event)" formControlName="noiDung">
+                        </ckeditor>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4 form-group">
+                <label class="col-span-2 text-[13px] text-[#201e1e] mt-1 font-medium" [attr.keyLabel]="'DM.PHONG_BAN'">{{
+                    'DM.PHONG_BAN' | transloco
+                }}</label>
+                <div class="col-span-10 relative">
+                    <nz-select formControlName="idPhongBan" nzShowSearch nzAllowClear>
+                        <nz-option *ngFor="let item of phongBan$ | async" [nzLabel]="item.tenPhongBan" [nzValue]="item.id"></nz-option>
+                    </nz-select>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4 form-group">
+                <label class="col-span-2 text-[13px] text-[#201e1e] mt-1 font-medium" [attr.keyLabel]="'WEB.ANH_BAI_VIET'">{{
+                    'WEB.ANH_BAI_VIET' | transloco
+                }}</label>
+                <div class="col-span-10">
+                    <asc-upload-avatar
+                        [rounded]="4"
+                        [(avatarUrl)]="avatarUrl"
+                        [height]="200"
+                        [width]="300"
+                        (avatarUrlChange)="getUrlAvatarChange($event)"
+                    ></asc-upload-avatar>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4 form-group">
+                <div class="col-start-3 col-span-3">
+                    <label nz-checkbox class="mt-1" formControlName="isHienThi" [attr.keyLabel]="'LB.ISVISIBLE'">
+                        {{ 'LB.ISVISIBLE' | transloco }}</label
+                    >
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4 form-group">
+                <label class="col-span-2 text-[13px] text-[#201e1e] mt-1 font-medium" [attr.keyLabel]="'ROLE.DESC'">{{
+                    'ROLE.DESC' | transloco
+                }}</label>
+                <div class="col-span-10">
+                    <asc-form-control type="textarea" formControlName="moTa"></asc-form-control>
+                </div>
+            </div>
+        </div>
+        <div formFooter>
+            <asc-button
+                class="mr-[8px]"
+                (click)="closeForm()"
+                [btnClass]="'btn-white'"
+                [btnText]="'BTN.CANCEL' | transloco"
+                [attr.keyLabel]="'BTN.CANCEL'"
+            ></asc-button>
+            <asc-button
+                class="mr-[8px]"
+                *ngIf="isCreateAndAddNew"
+                (click)="onSaveAndAddNew()"
+                [isSubmit]="true"
+                [btnClass]="'btn-outline-primary'"
+                [isLoading]="isLoadingSaveAndCreate"
+                [btnText]="'BTN.SAVE_AND_ADD' | transloco"
+                [attr.keyLabel]="'BTN.SAVE_AND_ADD'"
+            >
+            </asc-button>
+            <asc-button
+                [isSubmit]="true"
+                [btnClass]="'btn-primary'"
+                [isLoading]="isSubmited"
+                [btnText]="'BTN.SAVE' | transloco"
+                [attr.keyLabel]="'BTN.SAVE'"
+            ></asc-button>
+        </div>
+    </asc-wrap-form>
+</form>

@@ -1,0 +1,26 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/directives/time-transcript",
+    "sourceRoot": "libs/shared/directives/time-transcript/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/directives/time-transcript"],
+            "options": {
+                "jestConfig": "libs/shared/directives/time-transcript/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/shared/directives/time-transcript/src/**/*.ts",
+                    "libs/shared/directives/time-transcript/src/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

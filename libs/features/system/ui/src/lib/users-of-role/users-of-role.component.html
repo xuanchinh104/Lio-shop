@@ -1,0 +1,76 @@
+<div class="search-backdrop"></div>
+<div class="shadow bg-white rounded overflow-hidden">
+    <div class="rounded overflow-hidden bg-white shadow">
+        <div *ngIf="selectionIds.length > 0" class="w-full h-[55px] flex items-center px-[15px] py-2.5">
+            <label class="mr-2.5" [attr.keyLabel]="'LB.SELECTED'"
+                ><b>{{ selectionIds.length }}</b> {{ 'LB.SELECTED' | transloco }}
+            </label>
+            <label class="cursor-pointer text-[#2a7efc] mr-2.5" (click)="onDeselectedAll()" [attr.keyLabel]="'LB.UNSELECTED'">{{
+                'LB.UNSELECTED' | transloco
+            }}</label>
+            <button class="btn btn-outline-danger" (click)="removeHandler()" [attr.keyLabel]="'BTN.DELETE'">
+                <i class="zmdi zmdi-delete mr-[5px]"></i>
+                {{ 'BTN.DELETE' | transloco }}
+            </button>
+        </div>
+        <div class="bg-white rounded overflow-hidden">
+            <kendo-grid
+                [data]="(gridView$ | async)!"
+                [loading]="(isLoading$ | async)!"
+                [pageSize]="gridState.take!"
+                [skip]="gridState.skip!"
+                [pageable]="pageConfig"
+                [resizable]="true"
+                [sortable]="true"
+                [selectable]="true"
+                [navigable]="true"
+                kendoGridFocusable
+                kendoGridSelectBy="id"
+                [selectedKeys]="selectionIds"
+                [sort]="gridState.sort!"
+                [style.height]="'100%'"
+                (dataStateChange)="onStateChange($event)"
+            >
+                <kendo-grid-checkbox-column
+                    [width]="45"
+                    [columnMenu]="false"
+                    [showSelectAll]="true"
+                    [headerStyle]="{ 'text-align': 'center' }"
+                    [style]="{ 'text-align': 'center' }"
+                >
+                </kendo-grid-checkbox-column>
+
+                <kendo-grid-column
+                    [title]="'LB.STT' | transloco"
+                    [width]="60"
+                    [columnMenu]="false"
+                    [headerStyle]="{ 'text-align': 'center' }"
+                >
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <div class="text-center">
+                            {{ rowIndex + 1 }}
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="userName" [title]="'USER.USERNAME' | transloco"></kendo-grid-column>
+                <kendo-grid-column [title]="'USER.FULLNAME' | transloco" [columnMenu]="false">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <div>{{ dataItem?.lastName }} {{ dataItem?.firstName }}</div>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="email" [title]="'USER.EMAIL' | transloco"></kendo-grid-column>
+                <kendo-grid-column field="mobileNumber" [title]="'USER.PHONE_NUMBER' | transloco"></kendo-grid-column>
+                <kendo-grid-column [width]="60" [columnMenu]="false" [headerStyle]="{ 'text-align': 'center' }" *ngIf="isCreate">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <div class="text-center block w-full">
+                            <a (click)="removeHandler(dataItem)">
+                                <i class="zmdi zmdi-delete text-red-500"></i>
+                            </a>
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+            </kendo-grid>
+        </div>
+    </div>
+</div>

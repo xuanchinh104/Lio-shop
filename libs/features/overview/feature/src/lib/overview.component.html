@@ -1,0 +1,637 @@
+<div overflowBody>
+    <div class="flex items-center justify-between mb-[24px]">
+        <div class="flex items-center text-[20px] font-bold mb-0">
+            Tổng quan
+        </div>
+    </div>
+    <div class="dashboard-content grid grid-rows-[minmax(0,_1fr)_500px] gap-[15px]">
+        <div class="grid grid-cols-[75%_minmax(0,_1fr)] gap-[15px]">
+            <div class="grid grid-rows-[120px_150px_minmax(0,_1fr)] gap-[15px]">
+                <div class="flex h-[120px] rounded bg-gradient-to-r from-cyan-500 to-blue-500">
+                    <div class="flex justify-center items-center w-[200px]">
+                        <img class="h-[150px] w-[120px]" src="./assets/images/chart-logo.png" alt="alt">
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <p class="text-[16px] font-medium text-[#fff]" *ngIf="userInfo$ | async as user">
+                            Xin chào {{ user.lastname }} {{ user.firstname }},</p>
+                        <p class="text-[14px] text-[#fff]">Bạn đang xem dữ liệu tổng quan về tình hình nhân sự tại.</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-[15px]">
+                    <div
+                        class="flex flex-col justify-center w-full p-[6px_16px] rounded bg-white min-h-[150px] border-l-[5px] border-[#74CB2F]">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center text-[16px] font-bold text-[#1f1f20] h-[19px]">Nhân
+                                viên mới
+                            </div>
+                            <div class="box-dropdown">
+                                <a nz-dropdown nzTrigger="click" nzPlacement="bottomRight"
+                                   [nzDropdownMenu]="menuDropdown1">
+                                    Tuần này
+                                    <i class="zmdi zmdi-chevron-down"></i>
+                                </a>
+                                <nz-dropdown-menu #menuDropdown1="nzDropdownMenu">
+                                    <ul nz-menu>
+                                        <li nz-menu-item>Tuần này</li>
+                                        <li nz-menu-item>Tháng này</li>
+                                    </ul>
+                                </nz-dropdown-menu>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center p-[10px]">
+                                <div class="text-[32px] font-semibold mr-[16px]">0</div>
+                                <span> 0.0% </span>
+                            </div>
+                            <div class="text-[#65696e]"><span>Tuần trước: 0</span></div>
+                        </div>
+                    </div>
+                    <div
+                        class="flex flex-col justify-center w-full p-[6px_16px] rounded bg-white min-h-[150px] border-l-[5px] border-[#03A9F2]">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center text-[16px] font-bold text-[#1f1f20] h-[19px]">Thử
+                                việc thành
+                                công
+                            </div>
+                            <div class="box-dropdown">
+                                <a nz-dropdown nzTrigger="click" nzPlacement="bottomRight"
+                                   [nzDropdownMenu]="menuDropdown2">
+                                    Tuần này
+                                    <i class="zmdi zmdi-chevron-down"></i>
+                                </a>
+                                <nz-dropdown-menu #menuDropdown2="nzDropdownMenu" nzNoAnimation>
+                                    <ul nz-menu>
+                                        <li nz-menu-item>Tuần này</li>
+                                        <li nz-menu-item>Tháng này</li>
+                                    </ul>
+                                </nz-dropdown-menu>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center p-[10px]">
+                                <div class="text-[32px] font-semibold mr-[16px]">0</div>
+                                <span> 0.0% </span>
+                            </div>
+                            <div class="text-[#65696e]"><span>Tuần trước: 0</span></div>
+                        </div>
+                    </div>
+                    <div
+                        class="flex flex-col justify-center w-full p-[6px_16px] rounded bg-white min-h-[150px] border-l-[5px] border-[#FF8956]">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center text-[16px] font-bold text-[#1f1f20] h-[19px]">Nghỉ
+                                việc
+                            </div>
+                            <div class="box-dropdown">
+                                <a nz-dropdown nzTrigger="click" nzPlacement="bottomRight"
+                                   [nzDropdownMenu]="menuDropdown3">
+                                    Tuần này
+                                    <i class="zmdi zmdi-chevron-down"></i>
+                                </a>
+                                <nz-dropdown-menu #menuDropdown3="nzDropdownMenu" nzNoAnimation>
+                                    <ul nz-menu>
+                                        <li nz-menu-item>Tuần này</li>
+                                        <li nz-menu-item>Tháng này</li>
+                                    </ul>
+                                </nz-dropdown-menu>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center p-[10px]">
+                                <div class="text-[32px] font-semibold mr-[16px]">0</div>
+                                <span> 0.0% </span>
+                            </div>
+                            <div class="text-[#65696e]"><span>Tuần trước: 0</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-[15px]">
+                    <div class="w-full p-[20px] rounded bg-white flex flex-col">
+                        <div class="flex mb-[10px]">
+                            <div>
+                                <div class="text-[16px] font-bold text-[#1f1f20] h-[19px] flex items-center">Cấu
+                                    hình nhân sự theo phòng ban
+                                </div>
+                                <div class="text-[#65696e] cursor-pointer h-[17px]">Tất cả đơn vị - Đến ngày
+                                    09/06/2022
+                                </div>
+                            </div>
+                            <div class="flex-1"></div>
+                            <div class="flex justify-center">
+                                <div
+                                    class="w-[30px] h-[30px] text-[22px] text-[#686c7b] text-center cursor-pointer"
+                                    nzType="primary"
+                                    nz-popover [nzPopoverTitle]="tplTitle"
+                                    [(nzPopoverVisible)]="visible" (nzPopoverVisibleChange)="change($event)"
+                                    nzPopoverTrigger="click" nzPopoverPlacement="bottomRight"
+                                    [nzPopoverContent]="contentTemplate">
+                                    <i class="icofont-settings-alt" [ngClass]="visible ? 'text-[#0075E1]' : ''"></i>
+                                </div>
+                                <ng-template #tplTitle>
+                                    <div class="px-0 py-[10px] flex justify-between">
+                                        <div class="text-[16px]">
+                                            Tham số
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-center cursor-pointer h-[25px] w-[25px] rounded-full hover:bg-[#f3f3f3]"
+                                            (click)="closeForm()">
+                                            <i class="icofont-close-line"></i>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template #contentTemplate>
+                                    <form class="w-[450px]" novalidate [formGroup]="form"
+                                          (ngSubmit)="onSubmit()">
+                                        <div>
+                                            <div>
+                                                <div>
+                                                    <div
+                                                        class="form-group grid grid-cols-[30%_minmax(0,_1fr)] gap-[15px]">
+                                                        <label class="col-form-label">Cơ cấu tổ</label>
+                                                        <div>
+                                                            <select-control formControlName="donVi"
+                                                                            [placeholder]="'Tất cả đơn vị'">
+                                                            </select-control>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="form-group grid grid-cols-[30%_minmax(0,_1fr)] gap-[15px]">
+                                                        <label class="col-form-label">{{
+                                                            'Thống kê theo' | transloco }}</label>
+                                                        <div>
+                                                            <select-control formControlName="loaiThongKe"
+                                                                            [placeholder]="'Loại thống kê'">
+                                                            </select-control>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="form-group grid grid-cols-[30%_minmax(0,_1fr)] gap-[15px]">
+                                                        <label class="col-form-label">{{
+                                                            'Hiển thị' | transloco }}</label>
+                                                        <div
+                                                            class="grid grid-cols-[70%_minmax(0,_1fr)] gap-[15px]">
+                                                            <select-control formControlName="hienThi"
+                                                                            [placeholder]="'Hiển thị' | transloco">
+                                                            </select-control>
+                                                            <div>
+                                                                <input class="form-control" [min]="1"
+                                                                       formControlName="soLuong" type="number"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="box__button flex justify-end">
+                                            <button class="btn btn-default mr-2" (click)="closeForm()">
+                                                <span class="button__text">{{ 'BTN.CANCEL' | transloco }}</span>
+                                            </button>
+                                            <button class="btn btn-primary">
+                                                <span class="button__text">{{ 'BTN.SAVE' | transloco }}</span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <div class="h-[calc(100% - 53px)] mt-[17px]">
+                            <div class="flex items-center justify-center h-[250px]">
+                                <kendo-chart>
+                                    <kendo-chart-legend [visible]="false"></kendo-chart-legend>
+                                    <kendo-chart-area background="none"></kendo-chart-area>
+                                    <kendo-chart-tooltip>
+                                        <ng-template kendoChartSeriesTooltipTemplate let-value="value"
+                                                     let-category="category" let-series="series">
+                                            {{ category }} ({{ series.name }}): {{ value }}%
+                                        </ng-template>
+                                    </kendo-chart-tooltip>
+                                    <kendo-chart-series>
+                                        <kendo-chart-series-item
+                                            *ngFor="let series of internetGrowthData; let outermost = last"
+                                            type="donut" [startAngle]="150" [name]="series.name"
+                                            [data]="series.data" field="value" categoryField="category"
+                                            colorField="color">
+                                        </kendo-chart-series-item>
+                                    </kendo-chart-series>
+                                </kendo-chart>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full p-[20px] rounded bg-white flex flex-col">
+                        <div class="flex mb-[10px]">
+                            <div>
+                                <div class="text-[16px] font-bold text-[#1f1f20] h-[19px] flex items-center">
+                                    Thống kê hợp đồng theo đơn vị
+                                </div>
+                                <div class="text-[#65696e] cursor-pointer h-[17px]">Tất cả đơn vị</div>
+                            </div>
+                            <div class="flex-1"></div>
+                            <div class="flex justify-center">
+                                <div
+                                    class="w-[30px] h-[30px] text-[22px] text-[#686c7b] text-center cursor-pointer"
+                                    nzType="primary"
+                                    nz-popover [nzPopoverTitle]="tplTitle1"
+                                    [(nzPopoverVisible)]="visible1" (nzPopoverVisibleChange)="change1($event)"
+                                    nzPopoverTrigger="click" nzPopoverPlacement="bottomRight"
+                                    [nzPopoverContent]="contentTemplate1">
+                                    <i class="icofont-settings-alt" [ngClass]="visible1 ? 'text-[#0075E1]' : ''"></i>
+                                </div>
+                                <ng-template #tplTitle1>
+                                    <div class="px-0 py-[10px] flex justify-between">
+                                        <div class="text-[16px]">
+                                            Tham số
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-center cursor-pointer h-[25px] w-[25px] rounded-full hover:bg-[#f3f3f3]"
+                                            (click)="closeForm1()">
+                                            <i class="icofont-close-line"></i>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template #contentTemplate1>
+                                    <form class="w-[450px]" novalidate [formGroup]="form"
+                                          (ngSubmit)="onSubmit()">
+                                        <div>
+                                            <div>
+                                                <div>
+                                                    <div
+                                                        class="form-group grid grid-cols-[30%_minmax(0,_1fr)] gap-[15px]">
+                                                        <label class="col-form-label">Cơ cấu tổ</label>
+                                                        <div>
+                                                            <select-control formControlName="donVi"
+                                                                            [placeholder]="'Tất cả đơn vị'">
+                                                            </select-control>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="form-group grid grid-cols-[30%_minmax(0,_1fr)] gap-[15px]">
+                                                        <label class="col-form-label">{{
+                                                            'Thống kê theo' | transloco }}</label>
+                                                        <div>
+                                                            <select-control formControlName="loaiThongKe"
+                                                                            [placeholder]="'Loại thống kê'">
+                                                            </select-control>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="form-group grid grid-cols-[30%_minmax(0,_1fr)] gap-[15px]">
+                                                        <label class="col-form-label">{{
+                                                            'Hiển thị' | transloco }}</label>
+                                                        <div
+                                                            class="grid grid-cols-[70%_minmax(0,_1fr)] gap-[15px]">
+                                                            <select-control formControlName="hienThi"
+                                                                            [placeholder]="'Hiển thị' | transloco">
+                                                            </select-control>
+                                                            <div>
+                                                                <input class="form-control" [min]="1"
+                                                                       formControlName="soLuong" type="number"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="box__button flex justify-end">
+                                            <button class="btn btn-default mr-2" (click)="closeForm1()">
+                                                <span class="button__text">{{ 'BTN.CANCEL' | transloco }}</span>
+                                            </button>
+                                            <button class="btn btn-primary">
+                                                <span class="button__text">{{ 'BTN.SAVE' | transloco }}</span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <div class="h-[calc(100% - 53px)] mt-[17px]">
+                            <div class="flex items-center justify-center h-[250px]">
+                                <kendo-chart>
+                                    <kendo-chart-legend [visible]="false"></kendo-chart-legend>
+                                    <kendo-chart-area background="none"></kendo-chart-area>
+                                    <kendo-chart-tooltip>
+                                        <ng-template kendoChartSeriesTooltipTemplate let-value="value"
+                                                     let-category="category" let-series="series">
+                                            {{ category }} ({{ series.name }}): {{ value }}%
+                                        </ng-template>
+                                    </kendo-chart-tooltip>
+                                    <kendo-chart-series>
+                                        <kendo-chart-series-item
+                                            *ngFor="let series of internetGrowthData; let outermost = last"
+                                            type="donut" [startAngle]="150" [name]="series.name"
+                                            [data]="series.data" field="value" categoryField="category"
+                                            colorField="color">
+                                        </kendo-chart-series-item>
+                                    </kendo-chart-series>
+                                </kendo-chart>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-row-span-3 gap-[15px]">
+                <div class="h-full bg-white rounded p-[15px]">
+                    <div class="mb-[5px] text-[16px] font-bold">
+                        Tình hình kiểm duyệt hồ sơ
+                    </div>
+                    <ng-container
+                        [ngTemplateOutlet]="itemTpl"
+                        [ngTemplateOutletContext]="{ title: 'Chưa cập nhật', data: 10 }">
+                    </ng-container>
+                    <ng-container
+                        [ngTemplateOutlet]="itemTpl"
+                        [ngTemplateOutletContext]="{ title: 'Chờ duyệt', data: 5 }">
+                    </ng-container>
+                    <ng-container
+                        [ngTemplateOutlet]="itemTpl"
+                        [ngTemplateOutletContext]="{ title: 'Không duyệt', data: 6 }">
+                    </ng-container>
+                    <ng-container
+                        [ngTemplateOutlet]="itemTpl"
+                        [ngTemplateOutletContext]="{ title: 'Đã duyệt', data: 10 }">
+                    </ng-container>
+                </div>
+                <div class="h-full bg-white rounded p-[15px]">
+                    <div class="mb-[5px] text-[16px] font-bold">
+                        Học viên
+                    </div>
+                    <ng-container
+                        [ngTemplateOutlet]="itemTpl"
+                        [ngTemplateOutletContext]="{ title: 'Mới đăng ký', data: 10 }">
+                    </ng-container>
+                    <ng-container
+                        [ngTemplateOutlet]="itemTpl"
+                        [ngTemplateOutletContext]="{ title: 'Chưa xếp lớp', data: 10 }">
+                    </ng-container>
+                    <ng-container
+                        [ngTemplateOutlet]="itemTpl"
+                        [ngTemplateOutletContext]="{ title: 'Sinh nhật trong tháng', data: 5 }">
+                    </ng-container>
+                </div>
+                <div class="h-full bg-white rounded p-[15px]">
+                    <div class="mb-[5px] text-[16px] font-bold">
+                        Lớp học
+                    </div>
+                    <ng-container
+                        [ngTemplateOutlet]="itemTpl"
+                        [ngTemplateOutletContext]="{ title: 'Đang lên kế hoạch', data: 10 }">
+                    </ng-container>
+                    <ng-container
+                        [ngTemplateOutlet]="itemTpl"
+                        [ngTemplateOutletContext]="{ title: 'Chờ xếp lớp', data: 5 }">
+                    </ng-container>
+                    <ng-container
+                        [ngTemplateOutlet]="itemTpl"
+                        [ngTemplateOutletContext]="{ title: 'Chấp nhận mở lớp', data: 3 }">
+                    </ng-container>
+                    <ng-container
+                        [ngTemplateOutlet]="itemTpl"
+                        [ngTemplateOutletContext]="{ title: 'Đã khóa', data: 5 }">
+                    </ng-container>
+                    <ng-container
+                        [ngTemplateOutlet]="itemTpl"
+                        [ngTemplateOutletContext]="{ title: 'Hoàn thành', data: 10 }">
+                    </ng-container>
+                    <ng-container
+                        [ngTemplateOutlet]="itemTpl"
+                        [ngTemplateOutletContext]="{ title: 'Hủy', data: 1 }">
+                    </ng-container>
+                </div>
+            </div>
+            <ng-template #itemTpl let-title="title" let-data="data">
+                <div class="flex justify-between py-[5px]">
+                    <div class="flex">
+                        <div
+                            class="flex items-center justify-center h-[25px] w-[25px] rounded-full bg-[#F1FBEC] text-[#74CB2F]">
+                            <i class="zmdi zmdi-accounts-alt"></i>
+                        </div>
+                        <div class="flex items-center justify-center pl-[10px]">
+                            {{ title }}
+                        </div>
+                    </div>
+                    <div class="text-[16px] font-medium text-[#74CB2F]"> {{ data }}</div>
+                </div>
+            </ng-template>
+        </div>
+        <div class="grid grid-cols-2 gap-[15px]">
+            <div class="w-full p-[20px] rounded bg-white min-h-[312px] flex flex-col">
+                <div class="flex mb-[10px]">
+                    <div>
+                        <div class="text-[16px] font-bold text-[#1f1f20] h-[19px] flex items-center">Biến động nhân sự
+                        </div>
+                        <div class="text-[#65696e] cursor-pointer h-[17px]">Tất cả đơn vị</div>
+                    </div>
+                    <div class="flex-1"></div>
+                    <div class="flex justify-center">
+                        <div
+                            class="w-[30px] h-[30px] text-[22px] text-[#686c7b] text-center cursor-pointer rounded-full"
+                            nzType="primary"
+                            nz-popover [nzPopoverTitle]="tplTitle2"
+                            [(nzPopoverVisible)]="visible2" (nzPopoverVisibleChange)="change2($event)"
+                            nzPopoverTrigger="click" nzPopoverPlacement="bottomRight"
+                            [nzPopoverContent]="contentTemplate2">
+                            <i class="icofont-settings-alt" [ngClass]="visible2 ? 'text-[#0075E1]' : ''"></i>
+                        </div>
+                        <ng-template #tplTitle2>
+                            <div class="px-0 py-[10px] flex justify-between">
+                                <div class="text-[16px]">
+                                    Tham số
+                                </div>
+                                <div
+                                    class="flex items-center justify-center cursor-pointer h-[25px] w-[25px] rounded-full hover:bg-[#f3f3f3]"
+                                    (click)="closeForm2()">
+                                    <i class="icofont-close-line"></i>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template #contentTemplate2>
+                            <form class="w-[450px]" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+                                <div>
+                                    <div>
+                                        <div>
+                                            <div
+                                                class="form-group grid grid-cols-[30%_minmax(0,_1fr)] gap-[15px]">
+                                                <label class="col-form-label">Cơ cấu tổ</label>
+                                                <div>
+                                                    <select-control formControlName="donVi"
+                                                                    [placeholder]="'Tất cả đơn vị'">
+                                                    </select-control>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="form-group grid grid-cols-[30%_minmax(0,_1fr)] gap-[15px]">
+                                                <label class="col-form-label">{{
+                                                    'Thống kê theo' | transloco }}</label>
+                                                <div>
+                                                    <select-control formControlName="loaiThongKe"
+                                                                    [placeholder]="'Loại thống kê'">
+                                                    </select-control>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="form-group grid grid-cols-[30%_minmax(0,_1fr)] gap-[15px]">
+                                                <label class="col-form-label">{{
+                                                    'Hiển thị' | transloco }}</label>
+                                                <div class="grid grid-cols-[70%_minmax(0,_1fr)] gap-[15px]">
+                                                    <select-control formControlName="hienThi"
+                                                                    [placeholder]="'Hiển thị' | transloco">
+                                                    </select-control>
+                                                    <div>
+                                                        <input class="form-control" [min]="1"
+                                                               formControlName="soLuong" type="number"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box__button flex justify-end">
+                                    <button class="btn btn-default mr-2" (click)="closeForm2()">
+                                        <span class="button__text">{{ 'BTN.CANCEL' | transloco }}</span>
+                                    </button>
+                                    <button class="btn btn-primary">
+                                        <span class="button__text">{{ 'BTN.SAVE' | transloco }}</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <kendo-chart [categoryAxis]="{ categories: months }">
+                        <kendo-chart-tooltip>
+                            <ng-template kendoChartSeriesTooltipTemplate let-value="value"
+                                         let-category="category" let-series="series">
+                                {{ category }}: {{ value }} học viên đăng ký
+                            </ng-template>
+                        </kendo-chart-tooltip>
+                        <kendo-chart-series type="bar">
+                            <kendo-chart-series-defaults-labels></kendo-chart-series-defaults-labels>
+                        </kendo-chart-series>
+
+                        <kendo-chart-series>
+                            <kendo-chart-series-item [data]="count"></kendo-chart-series-item>
+                        </kendo-chart-series>
+                    </kendo-chart>
+                    <!--                    <div class="flex items-center h-[200px]">-->
+                    <!--                        <div class="w-full text-[#9fa4b4] italic mt-[8px] text-center">Không có dữ liệu</div>-->
+                    <!--                    </div>-->
+                </div>
+            </div>
+            <div class="w-full p-[20px] rounded bg-white min-h-[312px] flex flex-col">
+                <div class="flex mb-[10px]">
+                    <div>
+                        <div class="text-[16px] font-bold text-[#1f1f20] h-[19px] flex items-center">Biến động nhân sự
+                        </div>
+                        <div class="text-[#65696e] cursor-pointer h-[17px]">Tất cả đơn vị</div>
+                    </div>
+                    <div class="flex-1"></div>
+                    <div class="flex justify-center">
+                        <div class="w-[30px] h-[30px] text-[22px] text-[#686c7b] text-center cursor-pointer"
+                             nzType="primary"
+                             nz-popover [nzPopoverTitle]="tplTitle3"
+                             [(nzPopoverVisible)]="visible3" (nzPopoverVisibleChange)="change3($event)"
+                             nzPopoverTrigger="click" nzPopoverPlacement="bottomRight"
+                             [nzPopoverContent]="contentTemplate3">
+                            <i class="icofont-settings-alt" [ngClass]="visible3 ? 'text-[#0075E1]' : ''"></i>
+                        </div>
+                        <ng-template #tplTitle3>
+                            <div class="px-0 py-[10px] flex justify-between">
+                                <div class="text-[16px]">
+                                    Tham số
+                                </div>
+                                <div
+                                    class="flex items-center justify-center cursor-pointer h-[25px] w-[25px] rounded-full hover:bg-[#f3f3f3]"
+                                    (click)="closeForm3()">
+                                    <i class="icofont-close-line"></i>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template #contentTemplate3>
+                            <form class="w-[450px]" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+                                <div>
+                                    <div>
+                                        <div>
+                                            <div
+                                                class="form-group grid grid-cols-[30%_minmax(0,_1fr)] gap-[15px]">
+                                                <label class="col-form-label">Cơ cấu tổ</label>
+                                                <div>
+                                                    <select-control formControlName="donVi"
+                                                                    [placeholder]="'Tất cả đơn vị'">
+                                                    </select-control>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="form-group grid grid-cols-[30%_minmax(0,_1fr)] gap-[15px]">
+                                                <label class="col-form-label">{{
+                                                    'Thống kê theo' | transloco }}</label>
+                                                <div>
+                                                    <select-control formControlName="loaiThongKe"
+                                                                    [placeholder]="'Loại thống kê'">
+                                                    </select-control>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="form-group grid grid-cols-[30%_minmax(0,_1fr)] gap-[15px]">
+                                                <label class="col-form-label">{{
+                                                    'Hiển thị' | transloco }}</label>
+                                                <div class="grid grid-cols-[70%_minmax(0,_1fr)] gap-[15px]">
+                                                    <select-control formControlName="hienThi"
+                                                                    [placeholder]="'Hiển thị' | transloco">
+                                                    </select-control>
+                                                    <div>
+                                                        <input class="form-control" [min]="1"
+                                                               formControlName="soLuong" type="number"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box__button flex justify-end">
+                                    <button class="btn btn-default mr-2" (click)="closeForm3()">
+                                        <span class="button__text">{{ 'BTN.CANCEL' | transloco }}</span>
+                                    </button>
+                                    <button class="btn btn-primary">
+                                        <span class="button__text">{{ 'BTN.SAVE' | transloco }}</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <!--                    <div class="flex items-center h-[200px]">-->
+                    <!--                        <div class="w-full text-[#9fa4b4] italic mt-[8px] text-center">Không có dữ liệu</div>-->
+                    <!--                    </div>-->
+                    <kendo-chart>
+                        <!--                        <kendo-chart-title text="Units sold"></kendo-chart-title>-->
+                        <kendo-chart-tooltip>
+                            <ng-template kendoChartSeriesTooltipTemplate let-value="value"
+                                         let-category="category" let-series="series">
+                                {{ category }}: {{ value }} học viên đăng ký
+                            </ng-template>
+                        </kendo-chart-tooltip>
+                        <kendo-chart-category-axis>
+                            <kendo-chart-category-axis-item
+                                [categories]="months">
+                            </kendo-chart-category-axis-item>
+                        </kendo-chart-category-axis>
+                        <kendo-chart-series>
+                            <kendo-chart-series-item
+                                type="line"
+                                [data]="count">
+                            </kendo-chart-series-item>
+                            <kendo-chart-series-item
+                                type="line"
+                                [data]="count1">
+                            </kendo-chart-series-item>
+                            <kendo-chart-series-item
+                                type="line"
+                                [data]="count2">
+                            </kendo-chart-series-item>
+                        </kendo-chart-series>
+                    </kendo-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

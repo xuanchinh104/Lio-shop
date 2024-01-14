@@ -1,0 +1,171 @@
+<ng-template #pageTpl> </ng-template>
+<ng-container>
+    <ng-container *ngIf="layoutRoleState === layoutRoleEnum.PageList">
+        <skeleton-list *ngIf="isSkeleton$ | async as loading; else contentLoader" [loading]="loading"></skeleton-list>
+        <ng-template #contentLoader>
+            <asc-empty *ngIf="empty$ | async; else main" (action)="createNewRole()"></asc-empty>
+            <ng-template #main>
+                <asc-grid-header (triggerHandler)="createNewRole()"></asc-grid-header>
+                <div class="shadow bg-white rounded overflow-hidden">
+                    <div class="w-full h-[55px] flex items-center flex-nowrap px-[15px] py-[10px]">
+                        <ng-container *ngIf="selectionIds && selectionIds.length > 0; else searchTpl">
+                            <label class="mr-[10px]" [attr.keyLabel]="'LB.SELECTED'"
+                                ><b>{{ selectionIds.length }}</b> {{ 'LB.SELECTED' | transloco }}
+                            </label>
+                            <label
+                                [attr.keyLabel]="'LB.UNSELECTED'"
+                                class="cursor-pointer text-[#2a7efc] mr-[10px]"
+                                (click)="onDeselectedAll()"
+                                >{{ 'LB.UNSELECTED' | transloco }}</label
+                            >
+                        </ng-container>
+                        <ng-template #searchTpl>
+                            <div class="w-[340px] relative">
+                                <span class="absolute left-0 p-[8px] cursor-pointer" (click)="onSearchChange()">
+                                    <svg-icon key="search"></svg-icon>
+                                </span>
+                                <input
+                                    type="text"
+                                    class="w-full h-[35px] rounded border border-solid border-[#e4e9f4] px-[38px]"
+                                    [formControl]="searchControl"
+                                    (keyup.enter)="onSearchChange()"
+                                    [placeholder]="'LB.SEARCH_PLACEHOLDER' | transloco"
+                                />
+                            </div>
+                        </ng-template>
+                    </div>
+                    <div class="grid-wrapper grid-none-border" [ngStyle]="{ 'height.px': pageHeight }">
+                        <kendo-grid
+                            [data]="(gridView$ | async)!"
+                            [loading]="(isLoading$ | async)!"
+                            [pageSize]="gridState.take!"
+                            [skip]="gridState.skip!"
+                            [pageable]="(pageSetting$ | async)!"
+                            [resizable]="true"
+                            [columnMenu]="true"
+                            [sortable]="true"
+                            [selectable]="true"
+                            [navigable]="true"
+                            kendoGridFocusable
+                            kendoGridSelectBy="id"
+                            [selectedKeys]="selectionIds"
+                            [sort]="gridState.sort!"
+                            [style.height]="'100%'"
+                            (detailExpand)="onDetailExpand($event)"
+                            (dataStateChange)="onStateChange($event)"
+                        >
+                            <ng-template kendoGridNoRecordsTemplate>
+                                <div [attr.keyLabel]="'LB.NO_DATA'">
+                                    {{ 'LB.NO_DATA' | transloco }}
+                                </div>
+                            </ng-template>
+                            <kendo-grid-checkbox-column
+                                [showSelectAll]="true"
+                                [width]="45"
+                                [columnMenu]="false"
+                                [headerStyle]="{ 'text-align': 'center' }"
+                                [style]="{ 'text-align': 'center' }"
+                            ></kendo-grid-checkbox-column>
+                            <kendo-grid-column
+                                [title]="'LB.ACTION' | transloco"
+                                [width]="80"
+                                [columnMenu]="false"
+                                [headerStyle]="{ 'text-align': 'center' }"
+                            >
+                                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                    <div class="text-center">
+                                        <nz-button-group *ngIf="dataItem.isCreated">
+                                            <button nz-button nz-dropdown [nzDropdownMenu]="menu" class="w-[24px] h-[24px]">
+                                                <svg-icon class="icon-svg" key="menu" fontSize="20px"></svg-icon>
+                                            </button>
+                                        </nz-button-group>
+                                    </div>
+                                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                                        <ul nz-menu nzSelectable>
+                                            <li
+                                                nz-menu-item
+                                                class="dropdown-item"
+                                                (click)="showFormSetPermissionToGroup(dataItem)"
+                                                [attr.keyLabel]="'ROLE.SETTING'"
+                                            >
+                                                <i class="icofont-gear"></i>
+                                                {{ 'ROLE.SETTING' | transloco }}
+                                            </li>
+                                            <li
+                                                nz-menu-item
+                                                class="dropdown-item"
+                                                (click)="showFormAddToCreateGroup(dataItem)"
+                                                [attr.keyLabel]="'ROLE.ADD'"
+                                            >
+                                                <i class="icofont-plus"></i>
+                                                {{ 'ROLE.ADD' | transloco }}
+                                            </li>
+                                            <li nz-menu-item class="dropdown-item" (click)="editRole(dataItem)" [attr.keyLabel]="'LB.EDIT'">
+                                                <i class="icofont-eye-dropper"></i>
+                                                {{ 'LB.EDIT' | transloco }}
+                                            </li>
+                                            <li
+                                                *ngIf="dataItem.totalUserAssignedRole === 0"
+                                                nz-menu-item
+                                                class="dropdown-item"
+                                                (click)="removeHandler(dataItem)"
+                                                [attr.keyLabel]="'LB.DELETE'"
+                                            >
+                                                <i class="icofont-delete"></i>
+                                                {{ 'LB.DELETE' | transloco }}
+                                            </li>
+                                        </ul>
+                                    </nz-dropdown-menu>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column [title]="'STT'" [width]="60" [headerStyle]="{ 'text-align': 'center' }" [columnMenu]="false">
+                                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                    <div class="text-center">
+                                        {{ rowIndex + 1 }}
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column
+                                field="name"
+                                [title]="'ROLE.NAME' | transloco"
+                                [width]="250"
+                                [columnMenu]="false"
+                            ></kendo-grid-column>
+                            <kendo-grid-column field="notes" [title]="'ROLE.DESC' | transloco" [columnMenu]="false">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    {{ dataItem.notes ? dataItem.notes : '-' }}
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column
+                                field="totalUserAssignedRole"
+                                [title]="'ROLE.TOTAL_USER' | transloco"
+                                [width]="200"
+                                [sortable]="false"
+                                [headerStyle]="{ 'text-align': 'center' }"
+                                [style]="{ 'text-align': 'center' }"
+                                [columnMenu]="false"
+                            ></kendo-grid-column>
+
+                            <!--                DETAIL GRID-->
+                            <ng-template kendoGridDetailTemplate let-dataItem>
+                                <asc-users-of-role
+                                    [idRole]="dataItem.id"
+                                    [isCreate]="dataItem.isCreated"
+                                    (isDelete)="removeRole($event)"
+                                ></asc-users-of-role>
+                            </ng-template>
+                        </kendo-grid>
+                    </div>
+                </div>
+            </ng-template>
+        </ng-template>
+
+        <div *ngIf="error$ | async"></div>
+    </ng-container>
+    <ng-container *ngIf="layoutRoleState === layoutRoleEnum.GridPermission">
+        <asc-grid-permission *ngIf="roleOfUser" [role]="roleOfUser" (back)="onReload($event)"></asc-grid-permission>
+    </ng-container>
+    <ng-container *ngIf="layoutRoleState === layoutRoleEnum.AddUserToRole">
+        <asc-add-user-to-role *ngIf="roleOfUser" [role]="roleOfUser" (back)="onReload($event)"></asc-add-user-to-role>
+    </ng-container>
+</ng-container>

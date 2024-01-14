@@ -1,0 +1,10 @@
+<!--<section class="bg-[linear-gradient(220.57deg,#0099F9_27.61%,#0065E4_84.46%)] z-[1] overflow-hidden">-->
+<section class="relative z-[20] overflow-hidden">
+    <swiper [config]="config" class="mySwiper">
+        <ng-template swiperSlide *ngFor="let item of listBanner; trackBy: trackByFunc">
+            <a>
+                <img [src]="item.img | convertUrl" alt="banner" class="w-full max-h-[600px]" />
+            </a>
+        </ng-template>
+    </swiper>
+</section>

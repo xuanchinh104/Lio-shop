@@ -1,0 +1,206 @@
+<ng-container *ngIf="roles.isView">
+    <skeleton-list *ngIf="isSkeleton$ | async as loading; else contentLoader" [loading]="loading"></skeleton-list>
+    <ng-template #contentLoader>
+        <asc-empty *ngIf="empty$ | async; else main" (action)="addHandler()" [isHasAction]="roles.isCreate"></asc-empty>
+        <ng-template #main>
+            <asc-grid-header (triggerHandler)="addHandler()"></asc-grid-header>
+            <div class="shadow bg-white rounded overflow-hidden">
+                <div class="w-full h-[55px] flex gap-[10px] items-center flex-nowrap px-[15px] py-[10px]">
+                    <ng-container *ngIf="selectionIds && selectionIds.length > 0; else searchTpl">
+                        <label [attr.keyLabel]="'LB.SELECTED'">
+                            <b>{{ selectionIds.length }}</b> {{ 'LB.SELECTED' | transloco }}
+                        </label>
+                        <label [attr.keyLabel]="'LB.UNSELECTED'" (click)="onDeselectedAll()" class="cursor-pointer text-[#2a7efc]">{{
+                            'LB.UNSELECTED' | transloco
+                        }}</label>
+                        <button
+                            [HideIfUnauthorized]="roleAction.Delete"
+                            (click)="removeHandler()"
+                            class="btn btn-outline-danger hover:bg-[#dc3545] hover:!text-white"
+                            [attr.keyLabel]="'BTN.DELETE'"
+                        >
+                            <i class="zmdi zmdi-delete mr-[5px]"></i>{{ 'BTN.DELETE' | transloco }}
+                        </button>
+                    </ng-container>
+                    <ng-template #searchTpl>
+                        <asc-grid-search [formControl]="searchControl"></asc-grid-search>
+                    </ng-template>
+                    <div class="flex gap-[10px] ml-auto">
+                        <button
+                            (click)="refreshView()"
+                            class="h-[35px] px-3 py-1.5 border border-[#e0e0e0] text-[#848c95] rounded hover:!border-[#296fc9]"
+                            [nzTooltipTitle]="'BTN.RESET' | transloco"
+                            [attr.keyLabel]="'BTN.RESET'"
+                            nz-tooltip
+                        >
+                            <i class="icofont-refresh text-[18px] text-[#6e757d]"></i>
+                        </button>
+                        <div>
+                            <button
+                                class="h-[35px] px-3 py-1.5 border border-[#e0e0e0] text-[#848c95] rounded hover:!border-[#296fc9]"
+                                nz-tooltip
+                                [nzTooltipTitle]="'LB.TUY_CHINH_COT' | transloco"
+                                [attr.keyLabel]="'LB.TUY_CHINH_COT'"
+                                nz-popover
+                                nzPopoverTrigger="click"
+                                [(nzPopoverVisible)]="visible"
+                                nzPopoverPlacement="bottomRight"
+                                [nzPopoverContent]="contentTemplate"
+                            >
+                                <i class="icofont-settings text-[18px] text-[#6e757d]"></i>
+                            </button>
+                            <ng-template #contentTemplate>
+                                <asc-setting-view
+                                    [columnKey]="this.columnKey"
+                                    [columnKendo]="(columnKendo$ | async)!"
+                                    [columnDefaults]="columnDefault"
+                                    (saveSetting)="onSaveSetting($event)"
+                                    (closeSet)="closeSetting($event)"
+                                >
+                                </asc-setting-view>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-wrapper grid-none-border" [ngStyle]="{ 'height.px': pageHeight }">
+                    <kendo-grid
+                        [data]="(gridView$ | async)!"
+                        [loading]="(isLoading$ | async)!"
+                        [pageSize]="gridState.take!"
+                        [skip]="gridState.skip!"
+                        [pageable]="(pageSetting$ | async)!"
+                        [resizable]="true"
+                        [columnMenu]="false"
+                        [sortable]="true"
+                        [selectable]="{ enabled: true, checkboxOnly: true }"
+                        [navigable]="true"
+                        kendoGridFocusable
+                        kendoGridSelectBy="id"
+                        [selectedKeys]="selectionIds"
+                        [sort]="gridState.sort!"
+                        [style.height]="'100%'"
+                        (dataStateChange)="onStateChange($event)"
+                    >
+                        <ng-template kendoGridNoRecordsTemplate>
+                            <div [attr.keyLabel]="'LB.NO_DATA'">
+                                {{ 'LB.NO_DATA' | transloco }}
+                            </div>
+                        </ng-template>
+                        <kendo-grid-checkbox-column
+                            [locked]="isLocked"
+                            [showSelectAll]="true"
+                            [width]="45"
+                            [columnMenu]="false"
+                            *ngIf="roles.isDelete"
+                        ></kendo-grid-checkbox-column>
+                        <kendo-grid-column
+                            [locked]="isLocked"
+                            [title]="'LB.ACTION' | transloco"
+                            class="text-center"
+                            [width]="80"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                            [columnMenu]="false"
+                            *ngIf="roles.isUpdate || roles.isDelete"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                <div class="text-center" [HideIfUnauthorized]="[roleAction.Update || roleAction.Delete]">
+                                    <button nz-dropdown [nzDropdownMenu]="menu">
+                                        <svg-icon fontSize="24px" key="menu-action"></svg-icon>
+                                    </button>
+                                </div>
+
+                                <nz-dropdown-menu #menu="nzDropdownMenu">
+                                    <ul nz-menu nzSelectable>
+                                        <li nz-menu-item class="dropdown-item" *ngIf="roles.isUpdate" (click)="editHandler(dataItem)">
+                                            <i class="zmdi zmdi-edit"></i>
+                                            <a [attr.keyLabel]="'BTN.EDIT'">{{ 'BTN.EDIT' | transloco }}</a>
+                                        </li>
+                                        <li nz-menu-item class="dropdown-item" (click)="removeHandler(dataItem)">
+                                            <i class="zmdi zmdi-delete"></i>
+                                            <a [attr.keyLabel]="'BTN.DELETE'" *ngIf="roles.isDelete">{{ 'BTN.DELETE' | transloco }}</a>
+                                        </li>
+                                    </ul>
+                                </nz-dropdown-menu>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            [locked]="isLocked"
+                            [title]="'LB.STT' | transloco"
+                            [width]="50"
+                            [columnMenu]="false"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+                                <div class="text-center">
+                                    {{ rowIndex + 1 }}
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <ng-container *ngFor="let column of columnKendo$ | async; trackBy: trackByColumn">
+                            <ng-container *ngIf="column.isChecked">
+                                <kendo-grid-column
+                                    [field]="column.field!"
+                                    [width]="column.width!"
+                                    [sortable]="column.sortable!"
+                                    [locked]="column.isLocked!"
+                                    class="!text-left"
+                                >
+                                    <ng-template kendoGridHeaderTemplate>
+                                        <div class="group relative flex w-full" [ngStyle]="{ 'justify-content': column.headerStyle }">
+                                            {{ column.title | transloco }}
+                                            <span
+                                                *ngIf="!(isPinColumn$ | async)!"
+                                                (click)="pinColumn(column); $event.stopPropagation()"
+                                                [ngClass]="column.isLocked ? 'rotate-[30deg] opacity-200' : 'rotate-[120deg] opacity-0'"
+                                                class="ml-[10px] cursor-pointer group-hover:opacity-100"
+                                            >
+                                                <i class="icofont-tack-pin"></i>
+                                            </span>
+                                        </div>
+                                    </ng-template>
+                                    <ng-container [ngSwitch]="column.type">
+                                        <ng-container *ngSwitchCase="'primary'">
+                                            <ng-template kendoGridCellTemplate let-dataItem>
+                                                <ng-container *ngIf="roles.isUpdate; else tmplNoUpdate">
+                                                    <div class="text-left text-link" (click)="editHandler(dataItem)">
+                                                        {{ dataItem[column.field] }}
+                                                    </div>
+                                                </ng-container>
+                                                <ng-template #tmplNoUpdate>{{ dataItem[column.field] }}</ng-template>
+                                            </ng-template>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'date'">
+                                            <ng-template kendoGridCellTemplate let-dataItem>
+                                                <div class="text-center">{{ dataItem[column.field] | date : 'dd/MM/yyyy' }}</div>
+                                            </ng-template>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'boolean'">
+                                            <ng-template kendoGridCellTemplate let-dataItem>
+                                                <div class="text-center" *ngIf="dataItem[column.field]">
+                                                    <i class="zmdi zmdi-check-circle text-[18px] text-green-500"></i>
+                                                </div>
+                                            </ng-template>
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'number'">
+                                            <ng-template kendoGridCellTemplate let-dataItem>
+                                                <div class="text-center">
+                                                    {{ dataItem[column.field] ?? 0 }}
+                                                </div>
+                                            </ng-template>
+                                        </ng-container>
+                                        <ng-container *ngSwitchDefault>
+                                            <ng-template kendoGridCellTemplate let-dataItem>
+                                                {{ dataItem[column.field] ? dataItem[column.field] : '-' }}
+                                            </ng-template>
+                                        </ng-container>
+                                    </ng-container>
+                                </kendo-grid-column>
+                            </ng-container>
+                        </ng-container>
+                    </kendo-grid>
+                </div>
+            </div>
+        </ng-template>
+    </ng-template>
+    <div *ngIf="error$ | async"></div>
+</ng-container>

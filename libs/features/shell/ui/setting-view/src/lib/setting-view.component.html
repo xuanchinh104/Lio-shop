@@ -1,0 +1,62 @@
+<div class="p-[10px]">
+    <div class="flex justify-between header-filter">
+        <div class="font-semibold text-[16px]">{{ 'LB.TUY_CHINH_COT' | transloco }}</div>
+        <div
+            nz-tooltip
+            [nzTooltipTitle]="'BTN.CANCEL' | transloco"
+            (click)="closeSetting()"
+            class="flex justify-center items-center leading-normal w-[22px] h-[22px] !rounded-full cursor-pointer hover:bg-[#F0F3F5]"
+        >
+            <i class="icofont-close-line text-[19px] text-[#9197af]"></i>
+        </div>
+    </div>
+    <div class="relative w-[240px] my-2">
+        <span class="absolute left[0] p-2 cursor-pointer" (click)="onSearchColumn()">
+            <svg-icon key="search"></svg-icon>
+        </span>
+        <input
+            (keyup)="onSearchColumn()"
+            [formControl]="keyword"
+            [placeholder]="'LB.SEARCH_PLACEHOLDER' | transloco"
+            class="w-full h-[35px] rounded border border-[#e4e9f4] px-[38px]"
+            type="text"
+        />
+    </div>
+    <div class="scrollbar scrollbar-hover h-[calc(100vh-400px)] drop-list" cdkDropList (cdkDropListDropped)="drop($event)">
+        <label
+            *ngFor="let item of columnSetting"
+            [ngClass]="item.isLocked ? 'bg-[#f5f5f5]' : ''"
+            class="drop-item flex flex-row items-center justify-between items-center bg-white p-[10px] mb-[5px] rounded hover:bg-[#f5f5f5]"
+            cdkDrag
+            cdkDragBoundary=".drop-list"
+            [cdkDragDisabled]="item.isLocked"
+        >
+            <label
+                class="checkbox"
+                [nzDisabled]="item.isLocked"
+                [(ngModel)]="item.isChecked"
+                (ngModelChange)="change($event, item)"
+                nz-checkbox
+                >{{ item.title | transloco }}</label
+            >
+            <span [ngClass]="item.isLocked ? 'cursor-no-drop' : 'cursor-move'" class="flex" cdkDragHandle>
+                <svg-icon fontSize="19px" key="drag"></svg-icon>
+            </span>
+        </label>
+    </div>
+    <div class="form-group-action flex items-center justify-between pt-[12px] border-t border-[#ebecef]">
+        <asc-button
+            (click)="onDefaultSetting()"
+            class="mr-[8px]"
+            [btnClass]="'btn-white'"
+            [btnText]="'LB.MAC_DINH' | transloco"
+        ></asc-button>
+        <asc-button
+            [isDisabled]="keyword.value"
+            (click)="onSaveSetting()"
+            [btnClass]="'btn-primary'"
+            [btnText]="'ROLE.AP_DUNG' | transloco"
+        >
+        </asc-button>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/modules/document-viewer",
+    "sourceRoot": "libs/shared/modules/document-viewer/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/modules/document-viewer"],
+            "options": {
+                "jestConfig": "libs/shared/modules/document-viewer/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/modules/document-viewer/src/**/*.ts", "libs/shared/modules/document-viewer/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

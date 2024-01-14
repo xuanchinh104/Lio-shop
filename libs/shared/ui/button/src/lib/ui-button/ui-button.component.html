@@ -1,0 +1,12 @@
+<button [attr.type]="isSubmit ? 'submit' : 'button'" class="ui-button" [disabled]="isDisabled" [ngClass]="btnClass">
+    <ng-container *ngIf="iconPosition === 'left'">
+        <ng-content select="i"></ng-content>
+    </ng-container>
+    <ng-container *ngIf="_isLoading">
+        <i nz-icon nzType="loading" nzTheme="outline"></i>
+    </ng-container>
+    {{ btnText }}
+    <ng-container *ngIf="iconPosition === 'right'">
+        <ng-content select="i"></ng-content>
+    </ng-container>
+</button>

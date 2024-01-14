@@ -1,0 +1,48 @@
+<div class="shadow bg-white rounded overflow-hidden">
+    <div class="w-full h-[55px] flex items-center text-[20px] font-bold flex-nowrap px-[15px] py-[10px]"
+         [attr.keyLabel]="'LB.VAI_TRO_QUYEN_HAN'">
+        {{ 'LB.VAI_TRO_QUYEN_HAN' | transloco }}
+    </div>
+    <div class="grid-wrapper grid-none-border" [ngStyle]="{ 'height.px': pageHeight }">
+        <kendo-grid
+            [data]="(gridView$ | async)!"
+            [loading]="(isLoading$ | async)!"
+            [pageSize]="gridState.take!"
+            [skip]="gridState.skip!"
+            [pageable]="(pageSetting$ | async)!"
+            [resizable]="true"
+            [columnMenu]="false"
+            [sortable]="true"
+            [selectable]="{ enabled: true, checkboxOnly: true }"
+            [navigable]="true"
+            kendoGridFocusable
+            kendoGridSelectBy="id"
+            [selectedKeys]="idsRoleSelected"
+            [sort]="gridState.sort!"
+            [style.height]="'100%'"
+            (selectionChange)="selectedRows($event)"
+            (dataStateChange)="onStateChange($event)"
+        >
+            <ng-template kendoGridNoRecordsTemplate>
+                <div [attr.keyLabel]="'LB.NO_DATA'">
+                    {{ 'LB.NO_DATA' | transloco }}
+                </div>
+            </ng-template>
+            <kendo-grid-checkbox-column [showSelectAll]="true" [width]="45"
+                                        [columnMenu]="false"></kendo-grid-checkbox-column>
+            <kendo-grid-column [title]="'LB.STT' | transloco" [width]="50" [columnMenu]="false"
+                               [headerStyle]="{ 'text-align': 'center' }">
+                <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+                    <div class="text-center">
+                        {{ rowIndex + 1 }}
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column [title]="'ROLE.NAME' | transloco">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    {{ dataItem.name }}
+                </ng-template>
+            </kendo-grid-column>
+        </kendo-grid>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/core/auth/utils/interceptors",
+    "sourceRoot": "libs/core/auth/utils/interceptors/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/core/auth/utils/interceptors"],
+            "options": {
+                "jestConfig": "libs/core/auth/utils/interceptors/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/core/auth/utils/interceptors/src/**/*.ts", "libs/core/auth/utils/interceptors/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

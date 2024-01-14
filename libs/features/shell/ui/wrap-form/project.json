@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/features/shell/ui/wrap-form",
+    "sourceRoot": "libs/features/shell/ui/wrap-form/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/features/shell/ui/wrap-form"],
+            "options": {
+                "jestConfig": "libs/features/shell/ui/wrap-form/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/features/shell/ui/wrap-form/src/**/*.ts", "libs/features/shell/ui/wrap-form/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

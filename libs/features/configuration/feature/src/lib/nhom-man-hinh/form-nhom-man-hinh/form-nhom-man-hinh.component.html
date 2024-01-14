@@ -1,0 +1,75 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <asc-wrap-form (closeForm)="close()" (zoomForm)="zoomForm($event)">
+        <ng-container ngProjectAs="[formTitle]">
+            {{ 'MODULE.NHOM_MAN_HINH' | transloco }}
+        </ng-container>
+        <ng-container ngProjectAs="[formBody]">
+            <div class="form-group grid grid-cols-12 gap-4 mb-4">
+                <label class="col-span-4 text-[13px] text-[#201e1e] mt-1 font-medium">{{ 'MODULE.TITLE' | transloco }}</label>
+                <div class="col-span-8 relative">
+                    <div class="select">
+                        <nz-select formControlName="idModule" [nzShowSearch]="true">
+                            <nz-option *ngFor="let item of module$ | async" [nzValue]="item.id" [nzLabel]="item.tenModule"></nz-option>
+                        </nz-select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group grid grid-cols-12 gap-4 mb-4">
+                <label class="col-span-4 text-[13px] text-[#201e1e] mt-1 font-medium">{{ 'MODULE.NHOM_MAN_HINH' | transloco }}</label>
+                <div class="col-span-8 relative">
+                    <input class="form-control" formControlName="name" />
+                </div>
+            </div>
+            <div class="form-group grid grid-cols-12 gap-4 mb-4">
+                <label class="col-span-4 text-[13px] text-[#201e1e] mt-1 font-medium">{{ 'LB.NAME_ABBREVIATIONS' | transloco }}</label>
+                <div class="col-span-8 relative">
+                    <input class="form-control" formControlName="name" />
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4 mb-4">
+                <label class="col-span-4 text-[13px] text-[#201e1e] mt-1 font-medium">Mô tả</label>
+                <div class="col-span-8">
+                    <textarea class="form-control h-auto" formControlName="notes" rows="4"></textarea>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4 mb-4">
+                <label class="col-span-4 text-[13px] text-[#201e1e] mt-1 font-medium">{{ 'MODULE.CONTROLLER' | transloco }}</label>
+                <div class="col-span-8">
+                    <input class="form-control" formControlName="controllerName" />
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4 mb-4">
+                <label class="col-span-4 text-[13px] text-[#201e1e] mt-1 font-medium">{{ 'MODULE.URL' | transloco }}</label>
+                <div class="col-span-8">
+                    <input class="form-control" formControlName="path" />
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4 mb-4">
+                <label class="col-span-4 text-[13px] text-[#201e1e] mt-1 font-medium">{{ 'MODULE.ONLY' | transloco }}</label>
+                <div class="col-span-8">
+                    <input class="form-control" formControlName="cssBadge" />
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4 mb-4">
+                <label class="col-span-4 text-[13px] text-[#201e1e] mt-1 font-medium">{{ 'MODULE.CSS_ICON' | transloco }}</label>
+                <div class="col-span-8">
+                    <input class="form-control" formControlName="cssClass" />
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4 mb-4">
+                <label class="col-span-4 text-[13px] text-[#201e1e] mt-1 font-medium">{{ 'LB.ORDER' | transloco }}</label>
+                <div class="col-span-4">
+                    <nz-input-number class="form-control" [nzMin]="0" formControlName="order"></nz-input-number>
+                </div>
+                <div class="col-span-4">
+                    <label nz-checkbox formControlName="isActive" class="mt-1">{{ 'LB.ISVISIBLE' | transloco }}</label>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container ngProjectAs="[formFooter]">
+            <asc-button (click)="close()" [btnClass]="'btn-white'" [btnText]="'BTN.CANCEL' | transloco" class="mr-[8px]"> </asc-button>
+            <asc-button [isSubmit]="true" [isLoading]="isSubmited" [btnClass]="'btn-primary'" [btnText]="'BTN.SAVE' | transloco">
+            </asc-button>
+        </ng-container>
+    </asc-wrap-form>
+</form>

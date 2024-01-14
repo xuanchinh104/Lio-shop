@@ -1,0 +1,25 @@
+<div
+    class="p-[10px] flex flex-row justify-center items-center"
+    *ngIf="userInfo$ | async as user"
+    nz-dropdown
+    nzTrigger="click"
+    [nzDropdownMenu]="menuUserInfo"
+    [nzOverlayClassName]="'dropdown-user'"
+>
+    <ng-container *ngIf="user.avatar; else tmplNoAvatar">
+        <img class="w-[24px] h-[24px] rounded-full object-cover align-middle border border-[#DCDCDC]" src=""/>
+    </ng-container>
+    <ng-template #tmplNoAvatar>
+        <div class="user-name w-[30px] h-[30px] flex bg-[#dcdcdc] rounded-full items-center justify-center">
+            {{ user?.firstname ? user.firstname[0] : 'A' }}
+        </div>
+    </ng-template>
+    <div class="ml-2 h-full text-white">
+        <span>{{ user?.lastname + ' ' + user?.firstname }}</span>
+    </div>
+</div>
+<nz-dropdown-menu #menuUserInfo="nzDropdownMenu">
+    <div nz-menu>
+        <asc-dropdown-profile></asc-dropdown-profile>
+    </div>
+</nz-dropdown-menu>

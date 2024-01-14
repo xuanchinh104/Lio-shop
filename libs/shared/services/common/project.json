@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/services/common",
+    "sourceRoot": "libs/shared/services/common/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/services/common"],
+            "options": {
+                "jestConfig": "libs/shared/services/common/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/services/common/src/**/*.ts", "libs/shared/services/common/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

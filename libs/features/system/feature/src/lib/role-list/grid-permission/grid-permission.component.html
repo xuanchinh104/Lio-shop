@@ -1,0 +1,229 @@
+<div class="flex items-center justify-between mb-6">
+    <h4 class="flex flex-auto items-center mb-0 font-bold text-[20px]">
+        <a
+            (click)="rollBackView()"
+            class="!rounded-full flex items-center justify-center cursor-pointer w-[32px] h-[32px] text-[#1B2C43] dark:text-[#D9E1EC] transition-all duration-300 ease-in-out hover:bg-gray-50"
+        >
+            <i class="zmdi zmdi-long-arrow-left cursor-pointer"></i>
+        </a>
+        <span class="ml-2" [attr.keyLabel]="'ROLE.SETTING'">{{ 'ROLE.SETTING' | transloco }}:: {{ _role?.name }}</span>
+    </h4>
+    <div class="box__button">
+        <asc-button
+            [isLoading]="isSubmited"
+            btnClass="btn-primary"
+            (click)="savePermission()"
+            [attr.keyLabel]="'PER.SAVE'"
+            [btnText]="'PER.SAVE' | transloco"
+        ></asc-button>
+    </div>
+</div>
+<div class="">
+    <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-3 shadow bg-white rounded overflow-hidden">
+            <div class="scrollbar scrollbar-hover" [ngStyle]="{ 'height.px': pageHeight + 66 }">
+                <ng-container *ngFor="let module of parentModule$ | async; trackBy: trackByFunc">
+                    <div class="p-3">
+                        <div class="text-[16px] font-bold uppercase mb-[15px] text-[#222]">
+                            {{ module.groupName }}
+                        </div>
+                        <div class="">
+                            <div
+                                class="group feature-item bg-[rgba(243,243,243,0.7)] p-[10px] flex items-center transition-all cursor-pointer mb-[10px] rounded-[10px]"
+                                *ngFor="let item of module.childs; trackBy: trackByFunc"
+                                (click)="onSelectModule(item)"
+                                [ngClass]="{ active: (module$ | async)?.key === item.key }"
+                            >
+                                <img
+                                    [src]="'./assets/images/dashboard/' + item?.icon"
+                                    alt="img"
+                                    width="50px"
+                                    height="50px"
+                                    class="transition-all duration-500 group-hover:translate-y-[-6px]"
+                                />
+                                <div class="pl-[10px]">
+                                    <div class="text-[14px] font-bold">{{ item.value }}</div>
+                                    <div class="text-[12px]" *ngIf="item?.desc" [innerHTML]="item.desc | safeHtml : 'html'"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="col-span-9 shadow bg-white rounded overflow-hidden">
+            <div class="flex flex-row justify-between items-center h-[66px] mx-[15px]">
+                <div>
+                    <div class="flex justify-between" *ngIf="module$ | async as asModule">
+                        <label nz-checkbox [(ngModel)]="moduleChecked" (ngModelChange)="onCheckAll($event, asModule)"></label>
+                        <b *ngIf="asModule" class="ml-2">{{ asModule?.value }}</b>
+                    </div>
+                </div>
+                <div>
+                    <asc-button
+                        (click)="collapseGroups(gridPermission)"
+                        [btnText]="'BTN.COLLAPSE_ALL' | transloco"
+                        [btnClass]="'btn-outline-primary'"
+                        [attr.keyLabel]="'BTN.COLLAPSE_ALL'"
+                    >
+                    </asc-button>
+                    <asc-button
+                        (click)="expandGroups(gridPermission)"
+                        [btnText]="'BTN.EXPAND_ALL' | transloco"
+                        [btnClass]="'btn-outline-primary ml-2'"
+                        [attr.keyLabel]="'BTN.EXPAND_ALL'"
+                    >
+                    </asc-button>
+                </div>
+            </div>
+            <div class="grid-init" [ngStyle]="{ 'height.px': pageHeight }">
+                <kendo-grid
+                    #gridPermission
+                    [groupable]="false"
+                    [data]="(gridView$ | async)!"
+                    [loading]="(isLoading$ | async)!"
+                    [group]="groups"
+                    scrollable="virtual"
+                    [style.height]="'100%'"
+                >
+                    <kendo-grid-column [width]="40" class="text-center">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="text-center">
+                                <ng-container *ngIf="!isCurrentUser">
+                                    <label
+                                        nz-checkbox
+                                        [(ngModel)]="dataItem.isHasRole"
+                                        (ngModelChange)="setPermission($event, dataItem)"
+                                    ></label>
+                                </ng-container>
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="f_Name" [title]="'PER.FEATURE' | transloco" [width]="200">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <ng-container>{{ dataItem.f_Name ? dataItem.f_Name : dataItem.g_Name }}</ng-container>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        field="isView"
+                        [title]="'PER.VIEW' | transloco"
+                        [width]="60"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="text-center">
+                                <ng-container *ngIf="!isCurrentUser">
+                                    <div *ngIf="dataItem.isView !== null" [attr.id]="dataItem.f_Id">
+                                        <label nz-checkbox [(ngModel)]="dataItem.isView"></label>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="isCurrentUser && dataItem.isView">
+                                    <i class="fa fa-check-circle text-success"></i>
+                                </ng-container>
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        field="isAdd"
+                        [title]="'PER.ADD' | transloco"
+                        [width]="60"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="text-center">
+                                <ng-container *ngIf="!isCurrentUser">
+                                    <div *ngIf="dataItem.isAdd !== null">
+                                        <label nz-checkbox [(ngModel)]="dataItem.isAdd"></label>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="isCurrentUser && dataItem.isAdd">
+                                    <i class="fa fa-check-circle text-green-600"></i>
+                                </ng-container>
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        field="isEdit"
+                        [title]="'PER.EDIT' | transloco"
+                        [width]="60"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="text-center">
+                                <ng-container *ngIf="!isCurrentUser">
+                                    <div *ngIf="dataItem.isEdit !== null">
+                                        <label nz-checkbox [(ngModel)]="dataItem.isEdit"></label>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="isCurrentUser && dataItem.isEdit">
+                                    <i class="fa fa-check-circle text-green-600"></i>
+                                </ng-container>
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        field="isDelete"
+                        [title]="'PER.DELETE' | transloco"
+                        [width]="60"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="text-center">
+                                <ng-container *ngIf="!isCurrentUser">
+                                    <div *ngIf="dataItem.isDelete !== null">
+                                        <label nz-checkbox [(ngModel)]="dataItem.isDelete"></label>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="isCurrentUser && dataItem.isDelete">
+                                    <i class="fa fa-check-circle text-green-600"></i>
+                                </ng-container>
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        field="TuyChon"
+                        [title]="'PER.OPTION' | transloco"
+                        [width]="150"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="m-checkbox-list">
+                                <ng-container *ngFor="let item of dataItem.listOfOption">
+                                    <ng-container *ngIf="!isCurrentUser">
+                                        <div *ngIf="item.isCheck !== null">
+                                            <label nz-checkbox [(ngModel)]="item.isCheck" class="text-[12px]">{{ item.a_Name }}</label>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="isCurrentUser && item.isCheck">
+                                        <i class="fa fa-check-circle text-green-600"></i> {{ item.a_Name }}
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="fG_Name" title="Screen" [hidden]="true">
+                        <ng-template kendoGridGroupHeaderTemplate let-dataItem let-value="value" let-index="index" let-expanded="expanded">
+                            <ng-container *ngIf="!isCurrentUser; else disabled">
+                                <div class="flex justify-start w-full">
+                                    <div>
+                                        <!-- (ngModelChange)="setPermissionOfGroup($event, dataItem)" -->
+                                        <label
+                                            nz-checkbox
+                                            [(ngModel)]="dataItem.isChecked"
+                                            (ngModelChange)="setPermissionOfGroup($event, dataItem)"
+                                        >
+                                            {{ value }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-template #disabled>
+                                {{ value }}
+                            </ng-template>
+                        </ng-template>
+                    </kendo-grid-column>
+                </kendo-grid>
+            </div>
+        </div>
+    </div>
+</div>

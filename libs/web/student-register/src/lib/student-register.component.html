@@ -1,0 +1,421 @@
+<div class="bg-gradient min-h-[500px] pt-[30px] pb-[130px]">
+    <div class="container">
+        <ul class="flex mb-[30px]">
+            <li>
+                <a routerLink="/" class="flex items-center text-[#6F7A8A] font-semibold hover:text-[#0063E2]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none" class="w-[23px]">
+                        <path
+                            d="M14.2726 21.9419H16.0931C17.709 21.9419 19.2281 21.3127 20.3708 20.1701C21.5132 19.0271 22.1423 17.5079 22.1423 15.8922V9.97797C22.1423 7.99024 21.1727 6.11918 19.5486 4.97304L13.7187 0.857878C12.9233 0.29655 11.9883 -0.00012207 11.0147 -0.00012207C10.0296 -0.00012207 9.08559 0.302925 8.28445 0.876253L2.56017 4.97402C0.957093 6.12143 0 7.98368 0 9.95547V15.8922C0 17.5079 0.629156 19.0271 1.77164 20.1701C2.91408 21.3127 4.4332 21.9419 6.04917 21.9419H7.72718V14.2728C7.72718 12.4653 9.19243 11.0001 10.9999 11.0001C12.8074 11.0001 14.2726 12.4653 14.2726 14.2728V21.9419Z"
+                            fill="currentColor"
+                        />
+                    </svg>
+                    <span [attr.keyLabel]="'TRANG_CHU'" class="ml-2">{{ 'TRANG_CHU' | transloco }}</span>
+                </a>
+            </li>
+            <li class="mx-[15px]">
+                <span class="text-[#6F7A8A]">/</span>
+            </li>
+            <li>
+                <span class="text-[#0063E2] font-semibold" [attr.keyLabel]="'DANG_KY_HOC_VIEN'">
+                    {{ 'DANG_KY_HOC_VIEN' | transloco }}
+                </span>
+            </li>
+        </ul>
+        <div class="bg-white shadow-[0_4px_20px_rgba(0,52,99,0.1)] rounded-[22px] p-[30px]">
+            <ng-container *ngIf="!isNotification; else notiTmpl">
+                <div class="italic text-[16px] font-semibold text-red-500 underline underline-offset-[4px] decoration-[3px] mb-[10px]">
+                    Để tiếp tục đăng ký lớp học, vui lòng đăng ký học viên và nhập chính xác đầy đủ thông tin bên dưới:
+                </div>
+                <form class="m-form" novalidate (ngSubmit)="onSubmit()" [formGroup]="form">
+                    <div
+                        [attr.keyLabel]="'DANG_KY_HOC_VIEN'"
+                        class="flex justify-center items-center text-[#1B2C43] text-[34px] leading-[42px] font-bold mb-[28px] text-left"
+                    >
+                        {{ 'DANG_KY_HOC_VIEN' | transloco }}
+                    </div>
+                    <div class="grid gap-4 grid-cols-1 sm:grid-cols-2">
+                        <div class="col-span-1 flex justify-center items-center">
+                            <asc-upload-avatar (avatar)="getAvatar($event)"></asc-upload-avatar>
+                        </div>
+                        <div class="col-span-1">
+                            <div
+                                class="grid gap-4 grid-cols-1 md:grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-2 mb-4"
+                            >
+                                <div class="col-span-1">
+                                    <label class="label-control mb-[0.5rem]">
+                                        Họ đệm
+                                        <sup class="text-[#e54848]">(*)</sup>
+                                    </label>
+                                    <asc-form-control formControlName="hoDem"></asc-form-control>
+                                </div>
+
+                                <div class="col-span-1">
+                                    <label class="label-control mb-[0.5rem]">
+                                        {{ 'TEN' | transloco }}
+                                        <sup class="text-[#e54848]">(*)</sup>
+                                    </label>
+                                    <asc-form-control formControlName="ten"></asc-form-control>
+                                </div>
+                            </div>
+                            <div
+                                class="grid gap-4 grid-cols-1 md:grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-2 mb-4"
+                            >
+                                <div class="form-group col-span-1">
+                                    <label class="label-control mb-[0.5rem]">{{ 'GIOI_TINH' | transloco }}</label>
+                                    <nz-radio-group class="!flex items-center h-[40px]" formControlName="idGioiTinh">
+                                        <label nz-radio [nzValue]="gioiTinhEnum.NAM"> {{ 'NAM' | transloco }} </label>
+                                        <label nz-radio [nzValue]="gioiTinhEnum.NU"> {{ 'NU' | transloco }} </label>
+                                    </nz-radio-group>
+                                </div>
+                                <div class="col-span-1 relative">
+                                    <label class="label-control mb-[0.5rem]">
+                                        {{ 'NGAY_SINH' | transloco }}
+                                        <sup class="text-[#e54848]">(*)</sup>
+                                    </label>
+                                    <div class="relative">
+                                        <asc-form-control type="date" formControlName="ngaySinh"></asc-form-control>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-2 mb-4">
+                        <div class="col-span-1">
+                            <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-2">
+                                <div class="col-span-1 md:col-span-2 lg:col-span-1">
+                                    <label class="label-control mb-[0.5rem]">
+                                        {{ 'CMND/CCCD' | transloco }}
+                                        <sup class="text-red-500">(*)</sup>
+                                    </label>
+                                    <asc-form-control formControlName="soCMND"></asc-form-control>
+                                </div>
+                                <div class="col-span-1 md:col-span-2 lg:col-span-1">
+                                    <label class="label-control mb-[0.5rem]">
+                                        {{ 'NGAY_CAP' | transloco }}
+                                        <sup class="text-red-500">(*)</sup>
+                                    </label>
+                                    <div class="relative">
+                                        <asc-form-control type="date" formControlName="ngayCapCMND"></asc-form-control>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-1">
+                            <div class="grid gap-4 grid-cols-1 md:grid-cols-2 sm:grid-cols-2 lg:grid-cols-2">
+                                <div class="col-span-1 md:col-span-2 lg:col-span-1">
+                                    <label class="label-control mb-[0.5rem]">
+                                        Nơi sinh (Tỉnh/thành phố)
+                                        <sup class="text-[#e54848]">(*)</sup>
+                                    </label>
+                                    <div class="relative">
+                                        <nz-select [nzPlaceHolder]="'Chọn'" nzShowSearch nzAllowClear formControlName="idTinhTPNoiSinh">
+                                            <nz-option
+                                                *ngFor="let item of (tinhThanhLL$ | async)!"
+                                                [nzLabel]="item.ten"
+                                                [nzValue]="item.id"
+                                            >
+                                            </nz-option>
+                                        </nz-select>
+                                    </div>
+                                </div>
+                                <div class="col-span-1 md:col-span-2 lg:col-span-1">
+                                    <label class="label-control mb-[0.5rem]"> Quốc tịch </label>
+                                    <div class="relative">
+                                        <nz-select [nzPlaceHolder]="'Chọn'" nzShowSearch nzAllowClear formControlName="idQuocTich">
+                                            <nz-option
+                                                *ngFor="let item of (quocTichs$ | async)!"
+                                                [nzLabel]="item.tenQuocGia"
+                                                [nzValue]="item.id"
+                                            >
+                                            </nz-option>
+                                        </nz-select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-2 mb-4">
+                        <div class="col-span-1">
+                            <label class="label-control mb-[0.5rem]"> Dân tộc </label>
+                            <div class="relative">
+                                <nz-select [nzPlaceHolder]="'Chọn'" nzShowSearch nzAllowClear formControlName="idDanToc">
+                                    <nz-option *ngFor="let item of (danToc$ | async)!" [nzLabel]="item.tenDanToc" [nzValue]="item.id">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                        <div class="col-span-1">
+                            <label class="label-control mb-[0.5rem]">
+                                {{ 'Tôn giáo' }}
+                            </label>
+                            <div class="relative">
+                                <nz-select nzShowSearch nzAllowClear formControlName="idTonGiao">
+                                    <nz-option
+                                        *ngFor="let item of tonGiaos$ | async"
+                                        [nzValue]="item.id"
+                                        [nzLabel]="item.tenTonGiao"
+                                    ></nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                        <div class="col-span-1">
+                            <label class="label-control mb-[0.5rem]">
+                                {{ 'SDT' | transloco }}
+                                <i class="font-normal">{{ 'CO_DUNG_ZALO' | transloco }}</i>
+                                <sup class="text-red-500">(*)</sup>
+                            </label>
+                            <asc-form-control formControlName="soDienThoai"></asc-form-control>
+                        </div>
+                        <div class="col-span-1">
+                            <label class="label-control mb-[0.5rem]">
+                                {{ 'EMAIL' | transloco }}
+                                <sup class="text-red-500">(*)</sup>
+                            </label>
+                            <asc-form-control formControlName="email"></asc-form-control>
+                        </div>
+                    </div>
+
+                    <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-2 mb-4">
+                        <div class="col-span-2">
+                            <label class="label-control mb-[0.5rem] !text-[#1B2C43]" nz-checkbox formControlName="isXuatHDCoQuan">
+                                {{ 'XUAT_CO_QUAN_CONG_TAC' | transloco }}
+                                <i class="font-normal">{{ 'NHAP_THONG_TIN_CHINH_XAC' | transloco }}</i>
+                            </label>
+                        </div>
+                        <ng-container *ngIf="form.get('isXuatHDCoQuan')?.value">
+                            <div class="form-group col-span-2 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
+                                <label class="label-control mb-[0.5rem]">{{ 'TEN_CO_QUAN_CONG_TAC' | transloco }}</label>
+                                <asc-form-control
+                                    formControlName="coQuanCongTac"
+                                    [placeHolder]="'THONG_TIN_NHAP_CHINH_XAC' | transloco"
+                                ></asc-form-control>
+                            </div>
+                            <div class="form-group col-span-2 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
+                                <label class="label-control mb-[0.5rem]">{{ 'MA_SO_THUE_CO_QUAN' | transloco }}</label>
+                                <asc-form-control
+                                    formControlName="maSoThueCoQuan"
+                                    [placeHolder]="'THONG_TIN_NHAP_CHINH_XAC' | transloco"
+                                ></asc-form-control>
+                            </div>
+                            <div class="form-group col-span-2 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
+                                <label class="label-control mb-[0.5rem]">Quốc gia công tác</label>
+                                <div class="relative">
+                                    <nz-select [nzPlaceHolder]="'Chọn'" nzShowSearch nzAllowClear formControlName="idQuocGiaCoQuan">
+                                        <nz-option
+                                            *ngFor="let item of (quocGiaCoQuans$ | async)!"
+                                            [nzLabel]="item.tenQuocGia"
+                                            [nzValue]="item.id"
+                                        ></nz-option>
+                                    </nz-select>
+                                </div>
+                            </div>
+                            <div class="form-group col-span-2 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
+                                <label class="label-control mb-[0.5rem]">Tỉnh/Thành phố công tác</label>
+                                <div class="relative">
+                                    <nz-select [nzPlaceHolder]="'Chọn'" nzShowSearch nzAllowClear formControlName="idTinhTPCoQuan">
+                                        <nz-option
+                                            *ngFor="let item of (tinhThanhCoQuans$ | async)!"
+                                            [nzLabel]="item.ten"
+                                            [nzValue]="item.id"
+                                        ></nz-option>
+                                    </nz-select>
+                                </div>
+                            </div>
+                            <div class="form-group col-span-2 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
+                                <label class="label-control mb-[0.5rem]">{{ 'DIA_CHI_CO_QUAN_CONG_TAC' | transloco }}</label>
+                                <asc-form-control formControlName="diaChiCoQuan" [placeHolder]="'THONG_TIN_NHAP_CHINH_XAC' | transloco">
+                                </asc-form-control>
+                            </div>
+                            <div class="form-group col-span-2 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
+                                <label class="label-control mb-[0.5rem]">Email cơ quan công tác</label>
+                                <asc-form-control formControlName="emailCoQuan" [placeHolder]="'THONG_TIN_NHAP_CHINH_XAC' | transloco">
+                                </asc-form-control>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-2 mb-4">
+                        <div class="col-span-2">
+                            <label class="label-control mb-[0.5rem]">{{ 'DIA_CHI_LL' | transloco }}</label>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
+                            <label class="label-control mb-[0.5rem]">
+                                {{ 'TINH_TP' | transloco }}
+                                <sup class="text-[#e54848]">(*)</sup>
+                            </label>
+                            <div class="relative">
+                                <nz-select [nzPlaceHolder]="'Chọn'" nzShowSearch nzAllowClear formControlName="idTinhTPLienLac">
+                                    <nz-option
+                                        *ngFor="let item of (tinhThanhLL$ | async)!"
+                                        [nzLabel]="item.ten"
+                                        [nzValue]="item.id"
+                                    ></nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
+                            <label class="label-control mb-[0.5rem]">
+                                {{ 'QUAN/HUYEN' | transloco }}
+                                <sup class="text-[#e54848]">(*)</sup>
+                            </label>
+                            <div class="relative">
+                                <nz-select [nzPlaceHolder]="'Chọn'" nzShowSearch nzAllowClear formControlName="idQuanHuyenLienLac">
+                                    <nz-option
+                                        *ngFor="let item of (qHuyenLL$ | async)!"
+                                        [nzLabel]="item.ten"
+                                        [nzValue]="item.id"
+                                    ></nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
+                            <label class="label-control mb-[0.5rem]">
+                                {{ 'PHUONG/XA' | transloco }}
+                                <sup class="text-[#e54848]">(*)</sup>
+                            </label>
+                            <div class="relative">
+                                <nz-select [nzPlaceHolder]="'Chọn'" nzShowSearch nzAllowClear formControlName="idPhuongXaLienLac">
+                                    <nz-option *ngFor="let item of (phuongXaLL$ | async)!" [nzLabel]="item.ten" [nzValue]="item.id">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
+                            <label class="label-control mb-[0.5rem]">
+                                {{ 'SO_NHA_TEN_DUONG' | transloco }}
+                                <sup class="text-[#e54848]">(*)</sup>
+                            </label>
+                            <asc-form-control formControlName="soNhaLienLac"></asc-form-control>
+                        </div>
+                    </div>
+                    <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 sm:grid-cols-2 mb-4">
+                        <div class="col-span-2">
+                            <label class="label-control mb-[0.5rem]">{{ 'DIA_CHI_TT' | transloco }}</label>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
+                            <label class="label-control mb-[0.5rem]">
+                                {{ 'TINH_TP' | transloco }}
+                                <sup class="text-[#e54848]">(*)</sup>
+                            </label>
+                            <div class="relative">
+                                <nz-select [nzPlaceHolder]="'Chọn'" nzShowSearch nzAllowClear formControlName="idTinhThuongTru">
+                                    <nz-option
+                                        *ngFor="let item of (tinhThanhTT$ | async)!"
+                                        [nzLabel]="item.ten"
+                                        [nzValue]="item.id"
+                                    ></nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
+                            <label class="label-control mb-[0.5rem]">
+                                {{ 'QUAN/HUYEN' | transloco }}
+                                <sup class="text-[#e54848]">(*)</sup>
+                            </label>
+                            <div class="relative">
+                                <nz-select [nzPlaceHolder]="'Chọn'" nzShowSearch nzAllowClear formControlName="idHuyenThuongTru">
+                                    <nz-option
+                                        *ngFor="let item of (qHuyenTT$ | async)!"
+                                        [nzLabel]="item.ten"
+                                        [nzValue]="item.id"
+                                    ></nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
+                            <label class="label-control mb-[0.5rem]">
+                                {{ 'PHUONG/XA' | transloco }}
+                                <sup class="text-[#e54848]">(*)</sup>
+                            </label>
+                            <div class="relative">
+                                <nz-select [nzPlaceHolder]="'Chọn'" nzShowSearch nzAllowClear formControlName="idXaThuongTru">
+                                    <nz-option *ngFor="let item of (phuongXaTT$ | async)!" [nzLabel]="item.ten" [nzValue]="item.id">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
+                            <label class="label-control mb-[0.5rem]">
+                                {{ 'SO_NHA_TEN_DUONG' | transloco }}
+                                <sup class="text-[#e54848]">(*)</sup>
+                            </label>
+                            <asc-form-control formControlName="soNhaThuongTru"></asc-form-control>
+                        </div>
+                    </div>
+                    <div class="">
+                        <label class="label-control mb-[0.5rem]">
+                            {{ 'DOI_TUONG' | transloco }}
+                            <sup class="text-[#e54848]">(*)</sup>
+                        </label>
+                        <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 mb-4 items-center">
+                            <div class="col-span-1 relative">
+                                <nz-select class="w-full" nzShowSearch nzAllowClear [nzPlaceHolder]="'Chọn'" formControlName="loaiDoiTuong">
+                                    <nz-option
+                                        *ngFor="let item of loaiDoiTuongList"
+                                        [nzValue]="item"
+                                        [nzLabel]="loaiDoiTuongDescription[item]"
+                                    >
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+                            <div class="form-group col-span-1 relative">
+                                <input #ipMaDoiTuong type="text" class="form-control" formControlName="maDoiTuong" />
+                            </div>
+                            <div
+                                class="form-group col-span-1 w-full"
+                                *ngIf="form.get('loaiDoiTuong')?.value && form.get('loaiDoiTuong')?.value !== loaiDoiTuongEnum.KHAC"
+                            >
+                                <label class="label-control mb-[0.5rem]"> Ảnh thẻ </label>
+                                <div class="grid items-center w-full border border-[#D9E1EC] h-[40px] rounded">
+                                    <asc-upload-card-photo-web
+                                        [tenAnhThePreview]="form.get('tenAnhThe')?.value"
+                                        [anhTheUrl]="form.get('anhTheUrl')?.value"
+                                        [loaiDoiTuong]="form.get('loaiDoiTuong')?.value"
+                                        (anhTheUrlChange)="changeAnhThe($event)"
+                                        (tenAnhThe)="getTenAnhThe($event)"
+                                    ></asc-upload-card-photo-web>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mb-4">
+                        <label nz-checkbox formControlName="isConfirmInfo">{{ 'CAM_KET_DUNG_THONG_TIN' | transloco }}</label>
+                    </div>
+                    <div class="captcha-area flex items-center justify-center gap-[10px] mb-4">
+                        <div class="">
+                            <input class="form-control" formControlName="captCha" placeholder="Nhập mã" />
+                        </div>
+                        <i (click)="generateRandomCaptcha()" class="icofont-refresh text-red-500 text-[25px] cursor-pointer"></i>
+                        <div
+                            class="captcha-img h-[40px] w-[150px] relative select-none bg-[url('/assets/web/captcha-bg.png')] bg-cover flex items-center justify-center"
+                        >
+                            <span class="captcha tracking-[10px] text-[30px] text-black drop-shadow-xl">
+                                {{ generatedCaptcha }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <asc-button
+                            [isSubmit]="false"
+                            (click)="resetForm()"
+                            [btnClass]="'btn-outline-primary sm:mr-[20px] md:mr-[20px] lg:mr-[20px] xl:mr-[20px]'"
+                            [btnText]="'NHAP_LAI' | transloco"
+                        >
+                        </asc-button>
+                        <asc-button
+                            [attr.keyLabel]="'DANG_KY'"
+                            [isLoading]="isSubmited"
+                            [isDisabled]="isConfirmInfo"
+                            [isSubmit]="true"
+                            [btnClass]="'btn-primary sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0'"
+                            [btnText]="'DANG_KY' | transloco"
+                        >
+                        </asc-button>
+                    </div>
+                </form>
+            </ng-container>
+            <ng-template #notiTmpl>
+                <asc-notifications [infoHocVien]="infoHocVien" (isClose)="closeNotification($event)"></asc-notifications>
+            </ng-template>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+{
+    "projectType": "library",
+    "root": "libs/web/shared/ui/course-exemptions",
+    "sourceRoot": "libs/web/shared/ui/course-exemptions/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/web/shared/ui/course-exemptions"],
+            "options": {
+                "jestConfig": "libs/web/shared/ui/course-exemptions/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/web/shared/ui/course-exemptions/src/**/*.ts",
+                    "libs/web/shared/ui/course-exemptions/src/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

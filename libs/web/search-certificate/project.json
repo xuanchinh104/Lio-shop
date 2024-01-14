@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/web/search-certificate",
+    "sourceRoot": "libs/web/search-certificate/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/web/search-certificate"],
+            "options": {
+                "jestConfig": "libs/web/search-certificate/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/web/search-certificate/src/**/*.ts", "libs/web/search-certificate/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

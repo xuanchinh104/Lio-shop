@@ -1,0 +1,82 @@
+<div class="dashboard-wrap" overflowBody>
+    <div class="fixed inset-y-0 left-0 z-50 bg-[color:var(--primary-bg)]">
+        <ui-menu-left></ui-menu-left>
+    </div>
+    <div class="wrapper bg-[#F9FBFF] pr-[40px] pl-[108px] py-[40px] w-full min-h-screen">
+        <div class="relative animated fadeInUp faster">
+            <img [src]="backgroundUrl$ | async" alt="banner" class="w-full h-full object-cover" />
+            <div class="absolute top-[30px] left-[30px] w-[710px]">
+                <p class="text-[color:var(--primary-text)] text-[40px] mb-3">
+                    {{ 'HELLO' | transloco }}
+                    <strong *ngIf="user$ | async as user">
+                        <ng-container *ngIf="user.firstname; else userTpl">{{ user?.lastname }} {{ user?.firstname }}</ng-container>
+                        <ng-template #userTpl>{{ user.username }}</ng-template>
+                    </strong>
+                </p>
+                <p class="text-[color:var(--primary-text)] opacity-90">
+                    <!--                    {{ appConfig.descriptionDashboard ?? ''}}-->
+                </p>
+            </div>
+        </div>
+        <div class="mt-7 mb-9 grid transition-all grid-cols-12 animated fadeInUp fast" [ngClass]="{ dashboard_fixed: scrolled }">
+            <div class="module__tab col-span-9">
+                <div class="module__tab-group">
+                    <nz-tabset [nzTabPosition]="'top'" [(nzSelectedIndex)]="selectedIndex" [nzTabBarExtraContent]="btnActionTpl">
+                        <nz-tab
+                            *ngFor="let tab of parentModules$ | async; trackBy: trackByFunction"
+                            [nzTitle]="tab.title"
+                            (nzSelect)="onSelectModule(tab)"
+                        >
+                        </nz-tab>
+                    </nz-tabset>
+                    <ng-template #btnActionTpl>
+                        <button
+                            (click)="onPrevious()"
+                            class="w-[30px] h-[30px] flex items-center justify-center rounded-full bg-white opacity-80 transition-all shadow text-[#212A3D] hover:opacity-100"
+                        >
+                            <svg-icon key="prev"></svg-icon>
+                        </button>
+                        <button
+                            (click)="onNext()"
+                            class="w-[30px] h-[30px] flex items-center justify-center rounded-full bg-white opacity-80 transition-all shadow text-[#212A3D] hover:opacity-100"
+                        >
+                            <svg-icon key="next"></svg-icon>
+                        </button>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="col-span-3 text-right">
+                <div class="relative inline-block">
+                    <span class="absolute top-3 left-3">
+                        <svg-icon key="search"></svg-icon>
+                    </span>
+                    <input
+                        type="text"
+                        class="bg-white border border-solid border-[#D0D5DD] w-[198px] h-[40px] rounded-[8px] px-[8px] pl-[36px] pr-[10px]"
+                        [formControl]="keyword"
+                        [placeholder]="'LB.APPS_SEARCH' | transloco"
+                    />
+                </div>
+            </div>
+        </div>
+        <div class="dashboard-module">
+            <div class="grid gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 animated fadeInUp fast">
+                <ng-container *ngFor="let item of data$ | async; trackBy: trackByFunction">
+                    <div
+                        class="transition-all flex items-center px-[18px] pt-[18px] pb-[22px] rounded-lg bg-white cursor-pointer shadow-[2px_4px_9px_rgba(31,115,190,0.08)] hover:shadow-[rgba(45,45,45,5%)_0_2px_2px,_rgba(49,49,49,5%)_0_4px_4px,_rgba(42,42,42,5%)_0_8px_8px,_rgba(32,32,32,5%)_0_16px_16px,_rgba(49,49,49,5%)_0_32px_32px,_rgba(35,35,35,5%)_0_64px_64px] hover:translate-y-[-4px]"
+                        (click)="redirectModule(item)"
+                    >
+                        <div class="relative shrink-0 mr-[16px]">
+                            <img class="z-[2] relative" [src]="item.icon" [alt]="item.title" />
+                            <div class="shadowBox {{ item.shadow }}"></div>
+                        </div>
+                        <div style="width: calc(100% - 86px)">
+                            <div class="text-[#1B2C43] text-base font-semibold">{{ item.title }}</div>
+                            <div class="text-[#6F7A8A] font-normal truncate" [innerHTML]="item.desc"></div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

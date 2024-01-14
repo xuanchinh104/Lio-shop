@@ -1,0 +1,59 @@
+.sidebar {
+    .navbar-nav {
+        .nav-item {
+            .nav-link {
+                &:before {
+                    content: attr(data-text);
+                    @apply absolute overflow-hidden top-0 left-[-100%] w-full h-full bg-[rgba(255,255,255,0.1)] border-l-[3px] transition-all;
+                }
+                &:hover {
+                    color: #fff;
+                }
+            }
+            :hover:before {
+                @apply left-[-98%] duration-[0.2s];
+            }
+            &.active {
+                :before {
+                    @apply left-0 duration-[0.3s];
+                }
+            }
+        }
+    }
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+@media only screen and (max-width: 1366px) {
+    .container {
+        max-width: 50%;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .navbar-brand {
+        display: none !important;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .container {
+        max-width: 60% !important;
+        margin-right: 20px;
+    }
+    .date-time {
+        display: none;
+    }
+}
+
+:host::ng-deep {
+    .icon-svg {
+        color: #fff;
+    }
+}

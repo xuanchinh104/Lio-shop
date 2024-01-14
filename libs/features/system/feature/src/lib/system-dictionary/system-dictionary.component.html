@@ -1,0 +1,196 @@
+<skeleton-list *ngIf="isSkeleton$ | async as loading; else contentLoader" [loading]="loading"></skeleton-list>
+<ng-template #contentLoader>
+    <asc-grid-header (triggerHandler)="addHandler()"
+                     [isHiddenAction]="!isMultiUpdate">
+        <ng-container ngProjectAs="[extraTemplate]">
+            <ng-container *ngIf="!isMultiUpdate;else editTpl">
+                <div nz-button nz-dropdown
+                     [nzDropdownMenu]="menu">
+                    <button class="btn btn-primary mr-[5px] ml-[5px]"
+                            [attr.keyLabel]="'BTN.UPDATE_MUL'">
+                        {{ 'BTN.UPDATE_MUL' | transloco }}
+                    </button>
+                </div>
+                <nz-dropdown-menu #menu="nzDropdownMenu">
+                    <ul nz-menu>
+                        <li nz-menu-item (click)="muiltiUpdate(eLanguageResouce.VI)">{{ 'VI' | transloco}}</li>
+                        <li nz-menu-item (click)="muiltiUpdate(eLanguageResouce.EN)">{{ 'EN' | transloco}}</li>
+                    </ul>
+                </nz-dropdown-menu>
+                <div nz-button nz-dropdown
+                     [nzDropdownMenu]="menuImport">
+                    <button class="btn btn-primary mr-[5px]">
+                        Import
+                    </button>
+                </div>
+                <nz-dropdown-menu #menuImport="nzDropdownMenu">
+                    <ul nz-menu>
+                        <li nz-menu-item (click)="formInport(eLanguageResouce.VI)">{{ 'VI' | transloco}}</li>
+                        <li nz-menu-item (click)="formInport(eLanguageResouce.EN)">{{ 'EN' | transloco}}</li>
+                    </ul>
+                </nz-dropdown-menu>
+                <div nz-button nz-dropdown
+                     [nzDropdownMenu]="menuExport">
+                    <button class="btn btn-primary mr-[5px]">
+                        Export
+                    </button>
+                </div>
+                <nz-dropdown-menu #menuExport="nzDropdownMenu">
+                    <ul nz-menu>
+                        <li nz-menu-item (click)="download(eLanguageResouce.VI)">{{ 'VI' | transloco}}</li>
+                        <li nz-menu-item (click)="download(eLanguageResouce.EN)">{{ 'EN' | transloco}}</li>
+                    </ul>
+                </nz-dropdown-menu>
+                <div nz-button nz-dropdown
+                     [nzDropdownMenu]="menuSync">
+                    <button class="btn btn-primary mr-[5px]"
+                            [attr.keyLabel]="'BTN.SYNC'">
+                        {{ 'BTN.SYNC' | transloco }}
+                    </button>
+                </div>
+                <nz-dropdown-menu #menuSync="nzDropdownMenu">
+                    <ul nz-menu>
+                        <li nz-menu-item (click)="syncResource(eLanguageResouce.VI)">{{ 'VI' | transloco}}</li>
+                        <li nz-menu-item (click)="syncResource(eLanguageResouce.EN)">{{ 'EN' | transloco}}</li>
+                    </ul>
+                </nz-dropdown-menu>
+            </ng-container>
+            <ng-template #editTpl>
+                <asc-button [btnClass]="'btn-primary'"
+                            [isLoading]="isLoadingUpdate"
+                            (click)="submitMuiltiUpdate()"
+                            [attr.keyLabel]="'BTN.SAVE'"
+                            [btnText]="'BTN.SAVE' | transloco">
+                </asc-button>
+            </ng-template>
+        </ng-container>
+    </asc-grid-header>
+    <div class="shadow bg-white rounded overflow-hidden">
+        <div class="w-full h-[55px] flex items-center flex-nowrap px-[15px] py-[10px]">
+            <ng-container *ngIf="selectionIds && selectionIds.length > 0; else searchTpl">
+                <label class="mr-[10px]" [attr.keyLabel]="'LB.SELECTED'"
+                ><b>{{ selectionIds.length }}</b> {{ 'LB.SELECTED' | transloco }}
+                </label>
+                <label class="cursor-pointer text-[#2a7efc] mr-[10px]" (click)="onDeselectedAll()" [attr.keyLabel]="'LB.UNSELECTED'">{{
+                    'LB.UNSELECTED' | transloco
+                    }}</label>
+            </ng-container>
+            <ng-template #searchTpl>
+                <div class="w-[340px] relative">
+                                <span class="absolute left-0 p-[8px] cursor-pointer" (click)="onSearchChange()">
+                                    <svg-icon key="search"></svg-icon>
+                                </span>
+                    <input
+                        type="text"
+                        class="w-full h-[35px] rounded border border-solid border-[#e4e9f4] px-[38px]"
+                        [formControl]="searchControl"
+                        (keyup.enter)="onSearchChange()"
+                        [placeholder]="'LB.SEARCH_PLACEHOLDER' | transloco"
+                    />
+                </div>
+            </ng-template>
+            <div class="min-w-[300px] p-0 ml-2">
+                <nz-select class="search-type-exam"
+                           [(ngModel)]="projectType"
+                           (ngModelChange)="onChangeModule($event)">
+                    <nz-option [nzLabel]="projectTypeName[projectTypeE.DTNN]"
+                               [nzValue]="projectTypeE.DTNN"></nz-option>
+                </nz-select>
+            </div>
+        </div>
+        <div class="grid-wrapper grid-none-border" [ngStyle]="{ 'height.px': pageHeight }">
+            <kendo-grid
+                [data]="(gridView$ | async)!"
+                [loading]="(isLoading$ | async)!"
+                [pageSize]="gridState.take!"
+                [skip]="gridState.skip!"
+                [pageable]="(pageSetting$ | async)!"
+                [resizable]="true"
+                [columnMenu]="false"
+                [sortable]="true"
+                [selectable]="true"
+                [navigable]="true"
+                kendoGridFocusable
+                kendoGridSelectBy="id"
+                [selectedKeys]="selectionIds"
+                [sort]="gridState.sort!"
+                [style.height]="'100%'"
+                (dataStateChange)="onStateChange($event)"
+            >
+                <ng-template kendoGridNoRecordsTemplate>
+                    <div [attr.keyLabel]="'LB.NO_DATA'">
+                        {{ 'LB.NO_DATA' | transloco }}
+                    </div>
+                </ng-template>
+                <kendo-grid-column
+                    [title]="'LB.ACTION' | transloco"
+                    [width]="80"
+                    [headerStyle]="{'text-align':'center'}">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="text-center">
+                            <button nz-dropdown [nzDropdownMenu]="menu">
+                                <svg-icon fontSize="24px" key="menu-action"></svg-icon>
+                            </button>
+                        </div>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                            <ul nz-menu nzSelectable>
+                                <li nz-menu-item class="dropdown-item"
+                                    (click)="editHandler(dataItem)"
+                                    [attr.keyLabel]="'LB.EDIT'">
+                                    <i class="zmdi zmdi-edit mr-2"></i>
+                                    {{ 'LB.EDIT' | transloco }}
+                                </li>
+                                <li nz-menu-item class="dropdown-item"
+                                    (click)="removeHandler(dataItem)"
+                                    [attr.keyLabel]="'LB.DELETE'">
+                                    <i class="zmdi zmdi-delete mr-2"></i>
+                                    {{ 'LB.DELETE' | transloco }}
+                                </li>
+                            </ul>
+                        </nz-dropdown-menu>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column
+                    [title]="'STT'"
+                    [width]="60"
+                    [headerStyle]="{'text-align':'center'}">
+                    <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+                        <div class="text-center">
+                            {{ rowIndex + 1 }}
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="keyName"
+                                   [title]="'CODE'"
+                                   [width]="250">
+                </kendo-grid-column>
+                <kendo-grid-column field="valueVI"
+                                   [title]="'VI' | transloco">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <ng-container
+                            *ngIf="isMultiUpdate && languageResouceUpdate === eLanguageResouce.VI; else viTemplate">
+                            <asc-form-control [(ngModel)]="dataItem.valueVI"></asc-form-control>
+                        </ng-container>
+                        <ng-template #viTemplate>
+                            {{ dataItem.valueVI }}
+                        </ng-template>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="valueEN"
+                                   [title]="'EN' | transloco">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <ng-container
+                            *ngIf="isMultiUpdate && languageResouceUpdate === eLanguageResouce.EN; else enTemplate">
+                            <asc-form-control [(ngModel)]="dataItem.valueEN"></asc-form-control>
+                        </ng-container>
+                        <ng-template #enTemplate>
+                            {{ dataItem.valueEN }}
+                        </ng-template>
+                    </ng-template>
+                </kendo-grid-column>
+            </kendo-grid>
+        </div>
+    </div>
+</ng-template>
+
+<div *ngIf="error$ | async"></div>

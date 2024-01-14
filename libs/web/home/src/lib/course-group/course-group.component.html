@@ -1,0 +1,75 @@
+<section class="py-[50px] md:py-[140px] bg-oval">
+    <div class="container mb-[40px] sm:mb-0 md:mb-0 lg:mb-0">
+        <asc-course-skeleton
+            *ngIf="(isLoading$ | async)!"
+            [countItem]="6"
+            [type]="'grid'"
+            [classView]="'grid gap-[24px] grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'"
+        >
+        </asc-course-skeleton>
+        <ng-container *ngFor="let group of courses$ | async">
+            <div class="section-title mb-[35px] md:mb-[40px] lg:mb-[50px] text-center max-w-[800px] mx-auto">
+                <h2 class="font-bold text-[28px] md:text-[30px] lg:text-[35px] xl:text-[40px] mb-6">
+                    <span [id]="group.alias" class="text-[#1B2C43]">{{ group.tenNhom }}</span>
+                </h2>
+                <div
+                    class="flex flex-col md:flex-row lg:flex-row xl:flex-row justify-center items-center gap-[5px] text-[#1C88ED] font-bold text-[18px] mb-6"
+                >
+                    Nếu bạn có nhu cầu học lớp khác, vui lòng click vào đây >
+                    <button
+                        (click)="onSubscribeInfo(group.alias)"
+                        class="flex items-center justify-center px-[10px] text-white transition-all rounded-[4px] bg-[#007BE0] border border-[#007BE0]"
+                    >
+                        Đăng ký nhận thông tin
+                    </button>
+                </div>
+                <p class="text-[#435267] lg:text-[16px] md:text-[15px] text-[13px] lg:max-w-2xl lg:mx-auto">
+                    {{ group.ghiChu }}
+                </p>
+            </div>
+            <div class="mb-[40px] md:mb-[140px] md:last:mb-0">
+                <div
+                    class="px-[20px] grid grid-cols-[minmax(0,1fr)_100px] sm:grid-cols-[minmax(0,1fr)_162px] mb-[10px] rounded-[11px] text-[16px] text-[#0063E2] font-semibold"
+                >
+                    <div
+                        class="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_137px_121px_140px] lg:grid-cols-[minmax(0,1fr)_170px_200px_140px]"
+                    >
+                        <div [attr.keyLabel]="'TEN_LOP_DAO_TAO'" class="flex items-center justify-start">
+                            {{ 'TEN_LOP_DAO_TAO' | transloco }}
+                        </div>
+                        <div
+                            [attr.keyLabel]="'NGAY_BAT_DAU_KHAI_GIANG'"
+                            class="sm:px-[8px] text-[14px] sm:text-[16px] sm:flex items-center justify-center hidden"
+                        >
+                            {{ 'NGAY_BAT_DAU_KHAI_GIANG' | transloco }}
+                        </div>
+                        <div
+                            [attr.keyLabel]="'NGAY_KET_THUC_DANG_KY'"
+                            class="sm:px-[8px] text-[14px] sm:text-[16px] sm:flex items-center justify-center hidden"
+                        >
+                            {{ 'NGAY_KET_THUC_DANG_KY' | transloco }}
+                        </div>
+                        <div class="text-[14px] sm:px-[16px] sm:text-[16px] sm:flex items-center justify-end hidden">
+                            {{ 'HOC_PHI' | transloco }}
+                        </div>
+                    </div>
+                    <div [attr.keyLabel]="'DANG_KY'" class="flex items-center justify-center">
+                        {{ 'DANG_KY' | transloco }}
+                    </div>
+                </div>
+                <asc-course-item *ngFor="let item of group.lopHocs; trackBy: trackByFunc" [item]="item" [alias]="group.alias">
+                </asc-course-item>
+                <div class="text-center mt-[30px] md:mt-[50px]">
+                    <button
+                        [attr.keyLabel]="'XEM_TAT_CA'"
+                        type="button"
+                        class="p-[10px_12px] min-w-[150px] rounded-[30px] text-white bg-[#0063E2] transition-all duration-500 hover:bg-[#024cab] hover:text-white"
+                        (click)="showListCourse(group.alias)"
+                    >
+                        {{ 'XEM_TAT_CA' | transloco }}
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</section>

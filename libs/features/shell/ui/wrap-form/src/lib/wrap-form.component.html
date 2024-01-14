@@ -1,0 +1,26 @@
+<div class="form-header">
+    <div class="p-[20px] flex items-center justify-between">
+        <h4 class="text-[#222] font-bold text-[20px]">
+            <ng-content select="[formTitle]"></ng-content>
+        </h4>
+        <div
+            *ngIf="showZoom"
+            class="absolute right-[54px] flex justify-center items-center leading-normal w-[34px] h-[34px] !rounded-full cursor-pointer hover:bg-[#F0F3F5]"
+            (click)="onZoom()"
+        >
+            <svg-icon [key]="isZoom ? 'zoom-out' : 'zoom-in'" color="#9197af" fontSize="20px"></svg-icon>
+        </div>
+        <div
+            class="absolute right-[16px] flex justify-center items-center leading-normal w-[34px] h-[34px] !rounded-full cursor-pointer hover:bg-[#F0F3F5]"
+            (click)="onClose()"
+        >
+            <i class="icofont-close-line text-[22px] text-[#9197af]"></i>
+        </div>
+    </div>
+</div>
+<div class="relative px-[24px] leading-[26px] scrollbar" [ngClass]="!isZoom ? 'max-h-[75vh]' : 'max-h-[calc(100vh-140px)]'">
+    <ng-content select="[formBody]"></ng-content>
+</div>
+<div class="flex items-center justify-end p-[16px_24px] bg-[#f2f2f2] border-t border-[#dadce3]" [ngClass]="isZoom ? 'modal-footer' : ''">
+    <ng-content select="[formFooter]"></ng-content>
+</div>

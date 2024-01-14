@@ -1,0 +1,5 @@
+:host ::ng-deep {
+    .required-asterisk:not(:first-child) {
+        visibility: hidden;
+    }
+}

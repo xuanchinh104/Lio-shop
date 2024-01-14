@@ -1,0 +1,77 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <asc-wrap-form (closeForm)="closeForm()" (zoomForm)="zoomForm($event)">
+        <div formTitle [attr.keyLabel]="titleKey">
+            {{ titleKey | transloco }}
+        </div>
+        <div formBody>
+            <div class="grid grid-cols-12 gap-4">
+                <div class="col-span-6 form-group">
+                    <div class="grid grid-cols-12 gap-4">
+                        <label class="col-span-4 text-[13px] text-[#201e1e] mt-1 font-medium" [attr.keyLabel]="'LPB.MAPB'">{{
+                            'LPB.MAPB' | transloco
+                        }}</label>
+                        <div class="col-span-8">
+                            <asc-form-control
+                                [isDisabled]="_formState.action === actionEnum.UPDATE"
+                                formControlName="ma"
+                            ></asc-form-control>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-6 form-group">
+                    <div class="grid grid-cols-12 gap-4">
+                        <label class="col-span-3 text-[13px] text-[#201e1e] mt-1 font-medium" [attr.keyLabel]="'LB.TEN'">{{
+                            'LB.TEN' | transloco
+                        }}</label>
+                        <div class="col-span-9">
+                            <asc-form-control formControlName="ten"></asc-form-control>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group grid grid-cols-12 gap-4 mb-4">
+                <label class="col-span-2 text-[13px] text-[#201e1e] mt-1 font-medium" [attr.keyLabel]="'LB.TITLE'">{{
+                    'LB.TITLE' | transloco
+                }}</label>
+                <div class="col-span-10">
+                    <asc-form-control formControlName="tieuDe"></asc-form-control>
+                </div>
+            </div>
+            <div class="form-group grid grid-cols-12 gap-4 mb-4">
+                <label class="col-span-2 text-[13px] text-[#201e1e] mt-1 font-medium" [attr.keyLabel]="'LB.NOTE'">{{
+                    'LB.NOTE' | transloco
+                }}</label>
+                <div class="col-span-10">
+                    <asc-form-control formControlName="ghiChu" type="textarea"></asc-form-control>
+                </div>
+            </div>
+        </div>
+        <div formFooter>
+            <asc-button
+                class="mr-[8px]"
+                (click)="closeForm()"
+                [btnClass]="'btn-white'"
+                [btnText]="'BTN.CANCEL' | transloco"
+                [attr.keyLabel]="'BTN.CANCEL'"
+            ></asc-button>
+            <asc-button
+                class="mr-[8px]"
+                *ngIf="isCreateAndAddNew"
+                (click)="onSaveAndAddNew()"
+                [isSubmit]="true"
+                [btnClass]="'btn-outline-primary'"
+                [isLoading]="isLoadingSaveAndCreate"
+                [btnText]="'BTN.SAVE_AND_ADD' | transloco"
+                [attr.keyLabel]="'BTN.SAVE_AND_ADD'"
+            >
+            </asc-button>
+            <asc-button
+                [isSubmit]="true"
+                [btnClass]="'btn-primary'"
+                [isLoading]="isSubmited"
+                [btnText]="'BTN.SAVE' | transloco"
+                [attr.keyLabel]="'BTN.SAVE'"
+            ></asc-button>
+        </div>
+    </asc-wrap-form>
+</form>

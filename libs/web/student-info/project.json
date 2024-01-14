@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/web/student-info",
+    "sourceRoot": "libs/web/student-info/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/web/student-info"],
+            "options": {
+                "jestConfig": "libs/web/student-info/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/web/student-info/src/**/*.ts", "libs/web/student-info/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

@@ -1,0 +1,37 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <asc-wrap-form (closeForm)="close()" (zoomForm)="zoomForm($event)">
+        <ng-container ngProjectAs="[formTitle]"> {{ 'ROLE.TAO_VAI_TRO' | transloco }} </ng-container>
+        <ng-container ngProjectAs="[formBody]">
+            <div class="mb-4 form-group">
+                <label class="inline-block mb-2 text-[13px] text-[#201e1e] font-medium" [attr.keyLabel]="'ROLE.TEN_VAI_TRO'"
+                    >{{ 'ROLE.TEN_VAI_TRO' | transloco }}
+                </label>
+                <asc-form-control formControlName="name"></asc-form-control>
+            </div>
+            <div class="mb-4">
+                <label class="inline-block mb-2 text-[13px] text-[#201e1e] font-medium" [attr.keyLabel]="'LB.NOTE'">{{
+                    'LB.NOTE' | transloco
+                }}</label>
+                <textarea class="form-control h-auto" rows="4" formControlName="notes"></textarea>
+            </div>
+        </ng-container>
+        <ng-container ngProjectAs="[formFooter]">
+            <asc-button
+                (click)="close()"
+                [btnClass]="'btn-white'"
+                class="mr-[8px]"
+                [btnText]="'BTN.CANCEL' | transloco"
+                [attr.keyLabel]="'BTN.CANCEL'"
+            >
+            </asc-button>
+            <asc-button
+                [isSubmit]="true"
+                [isLoading]="isSubmited"
+                [btnClass]="'btn-primary'"
+                [btnText]="'BTN.SAVE' | transloco"
+                [attr.keyLabel]="'BTN.SAVE'"
+            >
+            </asc-button>
+        </ng-container>
+    </asc-wrap-form>
+</form>

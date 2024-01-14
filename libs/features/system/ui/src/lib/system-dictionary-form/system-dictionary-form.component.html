@@ -1,0 +1,37 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <asc-wrap-form (closeForm)="closeForm()" (zoomForm)="zoomForm($event)">
+        <ng-container ngProjectAs="[formTitle]">
+            {{ 'LB.DICTIONARY_SYSTEM' | transloco }}
+        </ng-container>
+        <ng-container ngProjectAs="[formBody]">
+            <div class="mb-4 form-group">
+                <label class="inline-block mb-2 text-[13px] text-[#201e1e] font-medium" [attr.keyLabel]="'CODE'">{{ 'CODE' }} </label>
+                <div class="relative">
+                    <input
+                        type="text"
+                        class="form-control"
+                        formControlName="keyName"
+                        [readOnly]="_formState.action === actionEnum.UPDATE"
+                    />
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="inline-block mb-2 text-[13px] text-[#201e1e] font-medium" [attr.keyLabel]="'VI'">{{
+                    'VI' | transloco
+                }}</label>
+                <input type="text" class="form-control" formControlName="valueVI" />
+            </div>
+            <div class="mb-4">
+                <label class="inline-block mb-2 text-[13px] text-[#201e1e] font-medium" [attr.keyLabel]="'EN'">{{
+                    'EN' | transloco
+                }}</label>
+                <input type="text" class="form-control" formControlName="valueEN" />
+            </div>
+        </ng-container>
+        <ng-container ngProjectAs="[formFooter]">
+            <asc-button (click)="closeForm()" [btnClass]="'btn-white'" [btnText]="'BTN.CANCEL' | transloco" class="mr-[8px]"> </asc-button>
+            <asc-button [isSubmit]="true" [isLoading]="isSubmited" [btnClass]="'btn-primary'" [btnText]="'BTN.SAVE' | transloco">
+            </asc-button>
+        </ng-container>
+    </asc-wrap-form>
+</form>

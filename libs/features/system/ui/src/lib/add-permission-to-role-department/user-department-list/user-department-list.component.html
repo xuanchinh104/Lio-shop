@@ -1,0 +1,186 @@
+<div class="flex">
+    <div [ngClass]="this.isSearchAdvanced ? 'flex-1' : 'basis-full'" class="shadow bg-white rounded overflow-hidden">
+        <div class="shadow bg-white rounded overflow-hidden">
+            <div class="w-full h-[55px] flex items-center flex-nowrap px-[15px] py-[10px] gap-[10px]">
+                <ng-container *ngIf="idsUserSelected && idsUserSelected.length > 0; else searchTpl">
+                    <label [attr.keyLabel]="'LB.SELECTED'"
+                        ><b>{{ idsUserSelected.length }}</b> {{ 'LB.SELECTED' | transloco }}
+                    </label>
+                    <label class="cursor-pointer text-[#2a7efc]" (click)="onDeselectedAll()" [attr.keyLabel]="'LB.UNSELECTED'">
+                        {{ 'LB.UNSELECTED' | transloco }}</label
+                    >
+                </ng-container>
+                <ng-template #searchTpl>
+                    <asc-grid-search [formControl]="searchControl"></asc-grid-search>
+                    <div class="relative w-[340px]">
+                        <nz-select
+                            nzShowSearch
+                            nzAllowClear
+                            [(ngModel)]="userType"
+                            [nzPlaceHolder]="'HRM.LOAI_NHAN_SU' | transloco"
+                            (ngModelChange)="onChangeUserType($event)"
+                            [ngModelOptions]="{ standalone: true }"
+                        >
+                            <nz-option *ngFor="let item of userTypeList" [nzLabel]="userTypeDescription[item]" [nzValue]="item"></nz-option>
+                        </nz-select>
+                    </div>
+                </ng-template>
+            </div>
+
+            <div class="grid-wrapper grid-none-border" [ngStyle]="{ 'height.px': pageHeight }">
+                <kendo-grid
+                    [data]="(gridView$ | async)!"
+                    [loading]="(isLoading$ | async)!"
+                    [pageSize]="gridState.take!"
+                    [skip]="gridState.skip!"
+                    [pageable]="(pageSetting$ | async)!"
+                    [resizable]="true"
+                    [columnMenu]="false"
+                    [sortable]="true"
+                    [selectable]="true"
+                    [navigable]="true"
+                    kendoGridFocusable
+                    kendoGridSelectBy="id"
+                    [selectedKeys]="idsUserSelected"
+                    [sort]="gridState.sort!"
+                    [style.height]="'100%'"
+                    (selectionChange)="selectedRows($event)"
+                    (dataStateChange)="onStateChange($event)"
+                >
+                    <ng-template kendoGridNoRecordsTemplate>
+                        <div [attr.keyLabel]="'LB.NO_DATA'">
+                            {{ 'LB.NO_DATA' | transloco }}
+                        </div>
+                    </ng-template>
+                    <kendo-grid-checkbox-column [showSelectAll]="true" [width]="45" [columnMenu]="false"></kendo-grid-checkbox-column>
+                    <kendo-grid-column
+                        [title]="'LB.STT' | transloco"
+                        [width]="50"
+                        [columnMenu]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+                            <div class="text-center">
+                                {{ rowIndex + 1 }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column [width]="100" [title]="'USER.CODE' | transloco">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{ dataItem.maNhanSu }}
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="userName" [width]="150" [title]="'USER.USERNAME' | transloco">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{ dataItem.userName }}
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="hoTen" [width]="80" [title]="'USER.FULLNAME' | transloco">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{ dataItem.hoTen }}
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="email" [width]="200" [title]="'USER.EMAIL' | transloco"></kendo-grid-column>
+                    <kendo-grid-column [width]="200" [headerStyle]="{ 'text-align': 'center' }" [title]="'' | transloco">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="text-center">
+                                <div *ngIf="dataItem && dataItem.phongBans; else block">
+                                    <span
+                                        [attr.keyLabel]="'ROLE.DA_PHAN_QUYEN'"
+                                        class="inline-block w-[145px] py-[4px] text-center bg-green-500 text-white rounded-[20px] text-[12px]"
+                                    >
+                                        {{ 'ROLE.DA_PHAN_QUYEN' | transloco }}</span
+                                    >
+                                </div>
+                                <ng-template #block>
+                                    <span
+                                        [attr.keyLabel]="'ROLE.CHUA_PHAN_QUYEN'"
+                                        class="inline-block w-[145px] py-[4px] text-center bg-red-500 text-white rounded-[20px] text-[12px]"
+                                    >
+                                        {{ 'ROLE.CHUA_PHAN_QUYEN' | transloco }}</span
+                                    >
+                                </ng-template>
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                </kendo-grid>
+            </div>
+        </div>
+    </div>
+    <!--    <div-->
+    <!--        *ngIf="isSearchFirsttime"-->
+    <!--        [formGroup]="formSearch"-->
+    <!--        [ngClass]="this.isSearchAdvanced ? 'w-[270px]' : 'hidden'"-->
+    <!--        class="rounded bg-white transition duration-500 shadow-[0_1px_3px_rgba(0,0,0,0.1)] ml-[15px]"-->
+    <!--    >-->
+    <!--        <div class="flex flex-col">-->
+    <!--            <div class="flex justify-between items-center relative h-[50px] px-[15px]">-->
+    <!--                <div class="text-lg font-bold" [attr.keyLabel]="'LB.BO_LOC'">{{ 'LB.BO_LOC' | transloco }}</div>-->
+    <!--                <div-->
+    <!--                    (click)="onToggleSearchAdvanced()"-->
+    <!--                    class="grid place-content-center w-[30px] h-[30px] text-[#666] transition-all duration-300 ease-in-out rounded-full cursor-pointer hover:bg-gray-100"-->
+    <!--                >-->
+    <!--                    <svg-icon key="close" fontSize="22px"></svg-icon>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div-->
+    <!--                class="flex-auto scrollbar scrollbar-hover py-[10px] px-[15px] h-[calc(100%-50px)]"-->
+    <!--                [ngStyle]="{ 'height.px': pageHeight - 45 }"-->
+    <!--            >-->
+    <!--                <div class="form-group">-->
+    <!--                    <label class="inline-block mb-[.5rem]"-->
+    <!--                           [attr.keyLabel]="'LB.FIRSTNAME'">{{ 'LB.FIRSTNAME' | transloco }}</label>-->
+    <!--                    <asc-form-control formControlName="lastName"></asc-form-control>-->
+    <!--                </div>-->
+    <!--                <div class="form-group">-->
+    <!--                    <label class="inline-block mb-[.5rem]"-->
+    <!--                           [attr.keyLabel]="'LB.LASTNAME'">{{ 'LB.LASTNAME' | transloco }}</label>-->
+    <!--                    <asc-form-control formControlName="firstName"></asc-form-control>-->
+    <!--                </div>-->
+    <!--                <div class="form-group">-->
+    <!--                    <label class="inline-block mb-[.5rem]"-->
+    <!--                           [attr.keyLabel]="'USER.EMAIL'">{{ 'USER.EMAIL' | transloco }}</label>-->
+    <!--                    <asc-form-control formControlName="email"></asc-form-control>-->
+    <!--                </div>-->
+    <!--                <div class="form-group">-->
+    <!--                    <label class="inline-block mb-[.5rem]"-->
+    <!--                           [attr.keyLabel]="'USER.PHONE_NUMBER'">{{ 'USER.PHONE_NUMBER' | transloco }}</label>-->
+    <!--                    <asc-form-control formControlName="phoneNumber"></asc-form-control>-->
+    <!--                </div>-->
+    <!--                <div class="form-group">-->
+    <!--                    <label class="inline-block mb-[.5rem]"-->
+    <!--                           [attr.keyLabel]="'LB.DON_VI'">{{ 'LB.DON_VI' | transloco }}</label>-->
+    <!--                    <select-control formControlName="idCoSo" [placeholder]="''"></select-control>-->
+    <!--                </div>-->
+    <!--                <div class="form-group">-->
+    <!--                    <label class="inline-block mb-[.5rem]"-->
+    <!--                           [attr.keyLabel]="'LB.PHONG_BAN'">{{ 'LB.PHONG_BAN' | transloco }}</label>-->
+    <!--                    <select-control formControlName="idPhongBan" [placeholder]="''"></select-control>-->
+    <!--                </div>-->
+    <!--                <div class="form-group">-->
+    <!--                    <label class="inline-block mb-[.5rem]"-->
+    <!--                           [attr.keyLabel]="'LB.CHUC_VU'">{{ 'LB.CHUC_VU' | transloco }}</label>-->
+    <!--                    <select-control formControlName="idChucVu" [placeholder]="''"></select-control>-->
+    <!--                </div>-->
+    <!--                <div class="form-group">-->
+    <!--                    <label class="inline-block mb-[.5rem]"-->
+    <!--                           [attr.keyLabel]="'LB.CHUC_VU'">{{ 'LB.STATUS' | transloco }}</label>-->
+    <!--                    <nz-select nzShowSearch formControlName="isAssignedRole">-->
+    <!--                        <nz-option [nzValue]="null" [nzLabel]="'LB.ALL' | transloco"-->
+    <!--                                   [attr.keyLabel]="'LB.ALL'"></nz-option>-->
+    <!--                        <nz-option [nzValue]="true" [nzLabel]="'ROLE.DA_PHAN_QUYEN' | transloco"-->
+    <!--                                   [attr.keyLabel]="'ROLE.DA_PHAN_QUYEN'"></nz-option>-->
+    <!--                        <nz-option [nzValue]="false" [nzLabel]="'ROLE.CHUA_PHAN_QUYEN' | transloco"-->
+    <!--                                   [attr.keyLabel]="'ROLE.CHUA_PHAN_QUYEN'"></nz-option>-->
+    <!--                    </nz-select>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="flex items-center justify-between h-[50px] p-[15px]">-->
+    <!--                <asc-button (click)="refreshHandler()" [btnClass]="'btn btn-light'" [btnText]="'BTN.RESET' | transloco"-->
+    <!--                            [attr.keyLabel]="'BTN.RESET'"></asc-button>-->
+    <!--                <asc-button (click)="onSearchChange()" [btnClass]="'btn btn-primary'"-->
+    <!--                            [btnText]="'BTN.SEARCH' | transloco" [attr.keyLabel]="'BTN.SEARCH'"></asc-button>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+</div>

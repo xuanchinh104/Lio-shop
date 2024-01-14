@@ -1,0 +1,16 @@
+<button
+    [attr.type]="isSubmit ? 'submit' : 'button'"
+    class="min-w-[80px] btn font-medium disabled:cursor-no-drop"
+    [disabled]="_isDisabled"
+    [ngClass]="btnClass"
+>
+    <ng-container *ngIf="iconPosition === 'left'"> <ng-content select="i"></ng-content> </ng-container>
+    <ng-container *ngIf="_isLoading; else defaultText"> <i nz-icon nzType="loading" nzTheme="outline"></i> Loading ... </ng-container>
+    <ng-template #defaultText>
+        <i *ngIf="btnIconClass" [ngClass]="btnIconClass"></i>
+        {{ btnText }}
+    </ng-template>
+    <ng-container *ngIf="iconPosition === 'right'">
+        <ng-content select="i"></ng-content>
+    </ng-container>
+</button>

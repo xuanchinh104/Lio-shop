@@ -1,0 +1,283 @@
+<div class="p-[16px] md:p-[24px]">
+    <div class="flex items-center gap-[10px] mb-[16px]">
+        <div class="grid place-content-center rounded-full w-[30px] h-[30px] cursor-pointer hover:bg-[#F0F3F5]" (click)="closeForm.emit()">
+            <svg-icon key="go-back"></svg-icon>
+        </div>
+        <span [attr.keyLabel]="'CAC_KHOA_HOC_DA_DANG_KY'" class="text-[16px] text-[#1B2C43] font-semibold">{{
+            'CAC_KHOA_HOC_DA_DANG_KY' | transloco
+        }}</span>
+    </div>
+    <div
+        class="flex text-[20px] text-[#0063E2] font-bold mb-[20px] flex-col gap-[10px] sm:flex-row sm:justify-between sm:items-center sm:gap-0"
+    >
+        <div>
+            {{ 'THONG_TIN_KHOA_HOC' | transloco }}
+        </div>
+        <div class="text-[14px] text-right">
+            <asc-button
+                (click)="inPhieuDangKy()"
+                [isLoading]="isPrint"
+                [btnClass]="'p-[8px_14px] text-white bg-[#0063E2] border border-[#0063E2] rounded-[8px] cursor-pointer'"
+                [btnText]="'In phiếu đăng ký'"
+            >
+            </asc-button>
+        </div>
+    </div>
+    <ng-container *ngIf="course$ | async as courseDetail">
+        <div class="bg-[#F5F9FE] p-[22px] mb-[30px]">
+            <div class="text-[16px] text-[#1B2C43] font-semibold">{{ courseDetail.tenKhoaHoc }}</div>
+            <div class="flex mt-[10px] gap-[10px] flex-col sm:flex-row">
+                <div class="w-[150px] shrink-0 text-[16px] text-[#7E8A9A] font-semibold">{{ 'LOP_HOC' | transloco }}:</div>
+                <div class="flex-1 text-[16px] text-[#1B2C43] font-semibold">
+                    <span [ngClass]="courseDetail.tenLop ? '' : 'italic'"> {{ courseDetail.tenLop ?? ('CHUA_XEP_LOP' | transloco) }}</span>
+                </div>
+            </div>
+            <div class="flex mt-[10px] gap-[10px] flex-col sm:flex-row">
+                <div [attr.keyLabel]="'THOI_GIAN'" class="w-[150px] shrink-0 text-[16px] text-[#7E8A9A] font-semibold">
+                    {{ 'THOI_GIAN' | transloco }}
+                    :
+                </div>
+                <div class="flex-1 text-[16px] font-semibold">
+                    <ng-container *ngIf="courseDetail && courseDetail?.ngayBatDau">
+                        {{ courseDetail.ngayBatDau | date : 'dd/MM/yyyy' }}
+                    </ng-container>
+                    -
+                    <ng-container *ngIf="courseDetail && courseDetail?.ngayKetThuc">
+                        {{ courseDetail.ngayKetThuc | date : 'dd/MM/yyyy' }}
+                    </ng-container>
+                </div>
+            </div>
+            <div class="flex mt-[10px] gap-[10px]">
+                <div [attr.keyLabel]="'TONG_KET'" class="w-[150px] shrink-0 text-[16px] text-[#7E8A9A] font-semibold">
+                    {{ 'TONG_KET' | transloco }} :
+                </div>
+                <div class="flex-1 text-[16px] font-semibold">
+                    <ng-container *ngIf="courseDetail.isKetThuc; else tmplNoKetThuc">
+                        <ng-container *ngIf="courseDetail.diemTongKet || courseDetail.diemTongKet === 0; else tmplIsDat">
+                            {{ courseDetail.diemTongKet }} điểm
+                        </ng-container>
+                        <ng-template #tmplIsDat>
+                            {{ courseDetail.isDat ? 'Đạt' : 'Không đạt' }}
+                        </ng-template>
+                    </ng-container>
+                    <ng-template #tmplNoKetThuc> -</ng-template>
+                </div>
+            </div>
+            <div class="flex mt-[10px] gap-[10px]">
+                <div [attr.keyLabel]="'XEP_LOAI'" class="w-[150px] shrink-0 text-[16px] text-[#7E8A9A] font-semibold">
+                    {{ 'XEP_LOAI' | transloco }} :
+                </div>
+                <div class="flex-1 text-[16px] font-semibold">
+                    {{ courseDetail.tenXepLoai ? courseDetail.tenXepLoai : '-' }}
+                </div>
+            </div>
+            <div class="flex mt-[10px] gap-[10px] flex-col sm:flex-row" *ngIf="courseDetail.isKetThuc && courseDetail.isCapVanBang">
+                <div [attr.keyLabel]="'HT_NHAN_BANG'" class="shrink-0 text-[16px] text-[#7E8A9A] font-semibold w-full sm:w-[150px]">
+                    {{ 'HT_NHAN_BANG' | transloco }} :
+                </div>
+                <div class="flex-1 text-[16px] font-semibold text-red-500">
+                    <span class="italic">{{ courseDetail.hinhThucNhan ? courseDetail.hinhThucNhan : ('TEXT_NHAN_BANG' | transloco) }}</span>
+                    <span
+                        *ngIf="!courseDetail.isDaGuiVangBang"
+                        class="mr-[5px] text-blue-500 cursor-pointer"
+                        (click)="onDKNhanBang(courseDetail)"
+                    >
+                        <i class="icofont-ui-edit text-blue-500 text-[16px] font-semibold"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <ng-container *ngIf="courseDetail.hoSoLopHocs.length > 0">
+            <div class="text-[20px] text-[#0063E2] font-bold mb-[20px]">{{ 'THONG_TIN_HO_SO' | transloco }}</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2" *ngIf="courseDetail.thoiGianKetThucNopHoSo">
+                <div class="flex text-[#6F7A8A] mb-[10px]">
+                    <div class="min-w-[150px]">Hạn nộp hồ sơ</div>
+                    <div class="text-[#1B2C43] font-medium">
+                        <ng-container *ngIf="!isHanNopHoSo; else tmplHetHan">
+                            Trước
+                            {{ courseDetail.thoiGianKetThucNopHoSo | date : 'HH:mm dd/MM/yyyy' }}
+                        </ng-container>
+                        <ng-template #tmplHetHan>
+                            <span class="text-red-500"> Đã hết hạn</span>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2">
+                <div class="flex text-[#6F7A8A] mb-[10px]">
+                    <div class="min-w-[150px]">{{ 'TRANG_THAI_HO_SO' | transloco }}</div>
+                    <ng-container *ngIf="courseDetail.tenTrangThaiHoSo; else defaultValueTpl">
+                        <div
+                            class="text-[#1B2C43] font-medium"
+                            [style]="{
+                                color:
+                                    courseDetail && courseDetail.idTrangThaiHoSo >= 0
+                                        ? trangThaiHoSoColor[courseDetail.idTrangThaiHoSo]
+                                        : ''
+                            }"
+                        >
+                            {{ courseDetail.tenTrangThaiHoSo }}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="flex text-[#6F7A8A] mb-[10px]" *ngIf="courseDetail.lyDoKhongDuyet">
+                    <div class="min-w-[150px]">{{ 'LY_DO_KHONG_DUYET' | transloco }}</div>
+                    <div class="text-[#1B2C43] font-medium">
+                        <i style="overflow-wrap: anywhere" class="text-[#EF4444]">{{ courseDetail.lyDoKhongDuyet }}</i>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2">
+                <div class="flex text-[#6F7A8A] mb-[10px]">
+                    <div class="min-w-[150px]">{{ 'NGAY_CAP_NHAT_HO_SO' | transloco }}</div>
+                    <ng-container *ngIf="_course && _course?.ngayCapNhatTrangThaiHoSo; else defaultValueTpl">
+                        <div class="text-[#1B2C43] font-medium">
+                            {{ _course.ngayCapNhatTrangThaiHoSo | date : 'dd/MM/yyyy' }}
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <ng-template #defaultValueTpl>
+                <div class="font-semibold text-[16px]">-</div>
+            </ng-template>
+            <ng-container *ngFor="let item of courseAttachments; let i = index">
+                <div class="text-[17px] text-[#1B2C43] font-bold mb-[12px] sm:text-[20px]">
+                    {{ i + 1 }}. {{ item.tenLoaiHoSo }}
+                    <i class="font-normal text-[16px]"
+                        >{{ 'SO_FILE_DINH_KEM_TOI_DA' | transloco : { soFile: item.soFileDinhKemToiDa } }}
+                        <ng-container *ngIf="item.type">{{ 'DINH_DANG' | transloco }} {{ item.type }}</ng-container>
+                        <span *ngIf="item.isDuyet || !item.isUpload" class="text-[#22C55E]">Đã duyệt</span>
+                    </i>
+                </div>
+                <div
+                    class="border border-[#D9E1EC] rounded-[11px] p-[22px] mb-[30px]"
+                    *ngIf="item.isUpload && !item.isDuyet; else readonlyTpl"
+                >
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-[20px_30px]">
+                        <div class="col-span-1 md:col-span-2">
+                            <asc-course-upload
+                                [fileAttach]="item.fileAttachs"
+                                [fileType]="item.loaiFiles"
+                                [index]="i"
+                                [soLuongFile]="item.soFileDinhKemToiDa"
+                            >
+                            </asc-course-upload>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #readonlyTpl>
+                    <div
+                        class="border border-[#D9E1EC] rounded-[11px] p-[22px] mb-[30px]"
+                        *ngIf="item.fileAttachs && item.fileAttachs.length > 0"
+                    >
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-[12px]">
+                            <ng-container *ngFor="let itemFileAttach of item.fileAttachs">
+                                <div
+                                    class="col-span-1"
+                                    *ngIf="
+                                        itemFileAttach.fileType === '.png' ||
+                                            itemFileAttach.fileType === '.jpeg' ||
+                                            itemFileAttach.fileType === '.jpg' ||
+                                            itemFileAttach.fileType === '.svg';
+                                        else tmpFileType
+                                    "
+                                >
+                                    <div
+                                        class="group relative flex flex-col items-center justify-between rounded-[8px] overflow-hidden h-[142px] border border-[#D9E1EC] cursor-pointer"
+                                    >
+                                        <img
+                                            [src]="itemFileAttach.filePath | convertUrl"
+                                            (error)="handleMissingImage($event)"
+                                            alt="{{ itemFileAttach.displayName }}"
+                                            class="w-full h-full object-cover"
+                                        />
+                                        <div
+                                            (click)="onViewFile(itemFileAttach)"
+                                            class="absolute w-full h-full inset-0 bg-[rgba(0,0,0,0.3)] opacity-0 group-hover:opacity-100"
+                                        ></div>
+                                        <i
+                                            class="absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] icofont-download text-[20px] text-white opacity-0 group-hover:opacity-100"
+                                            (click)="download(itemFileAttach.filePath, itemFileAttach.fileName, itemFileAttach.fileType)"
+                                        ></i>
+                                    </div>
+                                </div>
+                                <ng-template #tmpFileType>
+                                    <div class="col-span-1">
+                                        <div
+                                            class="group relative flex flex-col items-center justify-between rounded-[8px] p-[8px] overflow-hidden h-[142px] border border-[#D9E1EC] cursor-pointer"
+                                        >
+                                            <div class="mt-[16px]">
+                                                <ng-container
+                                                    *ngIf="itemFileAttach.fileType === '.xlsx' || itemFileAttach.fileType === '.xls'"
+                                                >
+                                                    <svg-icon key="xlsx" width="56px" height="66px"></svg-icon>
+                                                </ng-container>
+                                                <ng-container *ngIf="itemFileAttach.fileType === '.txt'">
+                                                    <svg-icon key="txt" width="56px" height="66px"></svg-icon>
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngIf="itemFileAttach.fileType === '.docx' || itemFileAttach.fileType === '.doc'"
+                                                >
+                                                    <svg-icon key="docx" width="56px" height="66px"></svg-icon>
+                                                </ng-container>
+                                                <ng-container *ngIf="itemFileAttach.fileType === '.pdf'">
+                                                    <svg-icon key="pdf" width="56px" height="66px"></svg-icon>
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngIf="itemFileAttach.fileType === '.pptx' || itemFileAttach.fileType === '.ppt'"
+                                                >
+                                                    <svg-icon key="pptx" width="56px" height="66px"></svg-icon>
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngIf="itemFileAttach.fileType === '.rar' || itemFileAttach.fileType === '.zip'"
+                                                >
+                                                    <svg-icon key="rar" width="56px" height="66px"></svg-icon>
+                                                </ng-container>
+                                            </div>
+                                            <h3
+                                                title="'{{ itemFileAttach.fileName }}'"
+                                                class="w-full text-[14px] text-[#1B2C43] font-medium truncate"
+                                            >
+                                                {{ itemFileAttach.fileName }}
+                                            </h3>
+                                            <div
+                                                class="flex items-center justify-center absolute w-full h-full inset-0 bg-[rgba(0,0,0,0.3)] opacity-0 group-hover:opacity-100"
+                                            >
+                                                <i
+                                                    class="icofont-download text-[20px] text-white"
+                                                    (click)="
+                                                        download(itemFileAttach.filePath, itemFileAttach.fileName, itemFileAttach.fileType)
+                                                    "
+                                                ></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ng-container>
+                        </div>
+                    </div>
+                </ng-template>
+            </ng-container>
+            <div
+                class="mt-4 flex justify-end gap-[12px]"
+                *ngIf="
+                    (isSumitAttachment$ | async) &&
+                    (courseDetail.idTrangThaiHoSo === trangThaiHoSoEnum.CHUA_CAP_NHAT ||
+                        courseDetail.idTrangThaiHoSo === trangThaiHoSoEnum.KHONG_DUYET)
+                "
+            >
+                <asc-button
+                    (click)="onSubmit()"
+                    [isSubmit]="true"
+                    [isLoading]="isSubmited"
+                    [isDisabled]="isHanNopHoSo"
+                    [btnClass]="
+                        'p-[8px_14px] text-white bg-[#0063E2] border border-[#0063E2] rounded-[8px] cursor-pointer disabled:bg-[#cccccc] disabled:border-[#cccccc]'
+                    "
+                    [btnText]="'Nộp hồ sơ'"
+                >
+                </asc-button>
+            </div>
+        </ng-container>
+    </ng-container>
+</div>

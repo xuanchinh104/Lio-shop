@@ -1,0 +1,18 @@
+<div nz-dropdown nzTrigger="click" [nzPlacement]="'bottomRight'" [nzDropdownMenu]="menuUserInfo" [nzOverlayClassName]="'dropdown-user'">
+    <div class="nav-link block p-[10px] text-[12px] rounded-[12px]">
+        <div class="flex items-center cursor-pointer" *ngIf="userInfo$ | async as userInfo">
+            <svg-icon key="user2" fontSize="24px"></svg-icon>
+            <span class="ml-[5px]">
+                <ng-container *ngIf="userInfo.firstname; else userTpl"> {{ userInfo?.lastname }} {{ userInfo?.firstname }} </ng-container>
+                <ng-template #userTpl>
+                    {{ userInfo?.username }}
+                </ng-template>
+            </span>
+        </div>
+    </div>
+    <nz-dropdown-menu #menuUserInfo="nzDropdownMenu">
+        <div nz-menu>
+            <asc-dropdown-profile></asc-dropdown-profile>
+        </div>
+    </nz-dropdown-menu>
+</div>

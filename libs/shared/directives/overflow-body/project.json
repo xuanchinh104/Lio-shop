@@ -1,0 +1,26 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/directives/overflow-body",
+    "sourceRoot": "libs/shared/directives/overflow-body/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/directives/overflow-body"],
+            "options": {
+                "jestConfig": "libs/shared/directives/overflow-body/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/shared/directives/overflow-body/src/**/*.ts",
+                    "libs/shared/directives/overflow-body/src/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

@@ -1,0 +1,199 @@
+<section class="relative">
+    <div class="flex items-center justify-start mb-[20px]">
+        <div class="flex justify-center items-center mr-[13px] w-[39px] h-[39px] rounded-full bg-[#E4EFFB]">
+            <span class="text-[18px] leading-[27px] font-semibold text-[#0063E2]">1</span>
+        </div>
+        <div class="text-[20px] leading-[28px] font-bold text-[#0063E2]">
+            {{ 'UU_DAI_LOP_HOC' | transloco }}
+        </div>
+    </div>
+    <div class="flex flex-col gap-[10px] border rounded-[8px] p-[15px] mb-[20px]">
+        <div class="flex items-center justify-start font-semibold text-[18px] text-[#0079E0] px-[10px]">
+            {{ loaiDoiTuong[info.loaiDoiTuong] }}
+        </div>
+        <div
+            class="px-[20px] sm:grid gap-[10px] sm:grid-cols-[minmax(0,1fr)_137px_175px] lg:grid lg:grid-cols-[minmax(0,1fr)_170px_200px_135px_140px] text-[16px] text-[#005391] font-semibold"
+        >
+            <div [attr.keyLabel]="'TEN_LOP_DAO_TAO'" class="text-left">
+                {{ 'TEN_LOP_DAO_TAO' | transloco }}
+            </div>
+            <div [attr.keyLabel]="'NGAY_BAT_DAU_KHAI_GIANG'" class="text-[14px] sm:text-[16px] sm:flex items-center justify-center hidden">
+                {{ 'NGAY_BAT_DAU_KHAI_GIANG' | transloco }}
+            </div>
+            <div [attr.keyLabel]="'NGAY_KET_THUC_DANG_KY'" class="text-[14px] sm:text-[16px] sm:flex items-center justify-center hidden">
+                {{ 'NGAY_KET_THUC_DANG_KY' | transloco }}
+            </div>
+            <div class="text-[14px] sm:hidden lg:text-[16px] lg:flex items-center justify-end hidden">
+                {{ 'HOC_PHI' | transloco }}
+            </div>
+            <div [attr.keyLabel]="'HOC_PHI_CAN_NOP'" class="sm:hidden lg:flex items-center justify-end hidden">
+                {{ 'HOC_PHI_CAN_NOP' | transloco }}
+            </div>
+        </div>
+        <ng-container *ngFor="let children of courses">
+            <ng-container *ngIf="children.keyText === 'don'">
+                <ng-container *ngFor="let item of children.children">
+                    <div class="p-[20px] rounded-[11px] text-[16px] text-[#00000] font-semibold shadow-[0px_4px_20px_rgba(0,52,99,0.1)]">
+                        <div
+                            class="sm:grid gap-[10px] sm:grid-cols-[minmax(0,1fr)_137px_175px] lg:grid lg:grid-cols-[minmax(0,1fr)_170px_200px_135px_140px]"
+                        >
+                            <div [attr.keyLabel]="'TEN_LOP_DAO_TAO'" class="text-left">
+                                {{ item.tenLop }}
+                            </div>
+                            <div
+                                [attr.keyLabel]="'NGAY_BAT_DAU_KHAI_GIANG'"
+                                class="text-[14px] sm:text-[16px] sm:flex items-center justify-center hidden"
+                            >
+                                {{ item.ngayBatDau | date : 'dd/MM/yyyy' }}
+                            </div>
+                            <div
+                                [attr.keyLabel]="'NGAY_KET_THUC_DANG_KY'"
+                                class="text-[14px] sm:text-[16px] sm:flex items-center justify-center hidden"
+                            >
+                                {{ item.ngayKetThuc | date : 'dd/MM/yyyy' }}
+                            </div>
+                            <div class="font-medium text-[14px] sm:hidden md:hidden lg:hidden">
+                                {{ item.ngayBatDau | date : 'dd/MM/yyyy' }}
+                                - {{ item.ngayKetThuc | date : 'dd/MM/yyyy' }}
+                            </div>
+                            <div class="font-medium text-[#0079E0] text-[14px] flex justify-between sm:hidden md:hidden lg:hidden">
+                                <span [ngClass]="item.hocPhi > item.hocPhiPhaiNop ? 'line-through' : ''">{{ item.hocPhi | number }} đ</span
+                                ><span>{{ item.hocPhiPhaiNop | number }} đ</span>
+                            </div>
+                            <div
+                                [ngClass]="item.hocPhi > item.hocPhiPhaiNop ? 'line-through' : ''"
+                                class="text-[#0079E0] text-[14px] sm:hidden lg:text-[16px] lg:flex items-center justify-end hidden"
+                            >
+                                {{ item.hocPhi | number }} đ
+                            </div>
+                            <div
+                                [attr.keyLabel]="'HOC_PHI_CAN_NOP'"
+                                class="text-[#0079E0] sm:hidden lg:flex items-center justify-end hidden"
+                            >
+                                {{ item.hocPhiPhaiNop | number }} đ
+                            </div>
+                        </div>
+                        <div class="text-[#0079E0] hidden sm:flex justify-between lg:hidden mt-[15px]">
+                            <span [ngClass]="item.hocPhi > item.hocPhiPhaiNop ? 'line-through' : ''">{{ item.hocPhi | number }} đ</span
+                            ><span>{{ item.hocPhiPhaiNop | number }} đ</span>
+                        </div>
+                        <div
+                            class="flex justify-center text-center mt-[10px] sm:absolute sm:mt-0 md:absolute md:mt-0 xl:absolute xl:mt-0 top-0 right-0"
+                        >
+                            <button
+                                (click)="registerLopHocDon(item)"
+                                class="flex justify-center items-center p-[5px_12px] min-w-[150px] rounded-[30px] text-white bg-[#0063E2] transition-all duration-500 hover:bg-[#024cab]"
+                            >
+                                {{ 'TIEP_TUC' | transloco }}
+                                <svg-icon key="arrow-right" fontSize="1rem"></svg-icon>
+                            </button>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+</section>
+<section *ngIf="arrCombo.length > 0">
+    <div class="flex items-center justify-start mb-[20px]">
+        <div class="flex justify-center items-center mr-[13px] w-[39px] h-[39px] rounded-full bg-[#E4EFFB]">
+            <span class="text-[18px] leading-[27px] font-semibold text-[#0063E2]">2</span>
+        </div>
+        <div class="text-[20px] leading-[28px] font-bold text-[#0063E2]">
+            {{ 'UU_DAI_COMBO_LOP_HOC' | transloco }}
+        </div>
+    </div>
+    <div class="flex flex-col gap-[10px] border rounded-[8px] p-[15px] mb-[20px]">
+        <div class="flex justify-between">
+            <div class="flex items-center justify-start font-semibold text-[18px] text-[#0079E0] px-[10px]">
+                {{ loaiDoiTuong[info.loaiDoiTuong] }}
+            </div>
+        </div>
+        <div
+            class="px-[20px] sm:grid gap-[10px] sm:grid-cols-[minmax(0,1fr)_137px_175px] lg:grid lg:grid-cols-[minmax(0,1fr)_170px_200px_135px_140px] text-[16px] text-[#005391] font-semibold"
+        >
+            <div [attr.keyLabel]="'TEN_LOP_DAO_TAO'" class="text-left">
+                {{ 'TEN_LOP_DAO_TAO' | transloco }}
+            </div>
+            <div [attr.keyLabel]="'NGAY_BAT_DAU_KHAI_GIANG'" class="text-[14px] sm:text-[16px] sm:flex items-center justify-center hidden">
+                {{ 'NGAY_BAT_DAU_KHAI_GIANG' | transloco }}
+            </div>
+            <div [attr.keyLabel]="'NGAY_KET_THUC_DANG_KY'" class="text-[14px] sm:text-[16px] sm:flex items-center justify-center hidden">
+                {{ 'NGAY_KET_THUC_DANG_KY' | transloco }}
+            </div>
+            <div class="text-[14px] sm:hidden lg:text-[16px] lg:flex items-center justify-end hidden">
+                {{ 'HOC_PHI' | transloco }}
+            </div>
+            <div [attr.keyLabel]="'HOC_PHI_CAN_NOP'" class="sm:hidden lg:flex items-center justify-end hidden">
+                {{ 'HOC_PHI_CAN_NOP' | transloco }}
+            </div>
+        </div>
+        <ng-container *ngFor="let children of courses">
+            <ng-container *ngIf="children.keyText === 'combo'">
+                <div
+                    class="flex flex-col gap-[15px] p-[20px] rounded-[11px] text-[16px] text-[#00000] font-semibold shadow-[0px_4px_20px_rgba(0,52,99,0.1)]"
+                >
+                    <ng-container *ngFor="let item of children.children">
+                        <div
+                            class="sm:grid gap-[10px] sm:grid-cols-[minmax(0,1fr)_137px_175px] lg:grid lg:grid-cols-[minmax(0,1fr)_170px_200px_135px_140px]"
+                        >
+                            <div [attr.keyLabel]="'TEN_LOP_DAO_TAO'" class="text-left">
+                                {{ item.tenLop }}
+                            </div>
+                            <div
+                                [attr.keyLabel]="'NGAY_BAT_DAU_KHAI_GIANG'"
+                                class="text-[14px] sm:text-[16px] sm:flex items-center justify-center hidden"
+                            >
+                                {{ item.ngayBatDau | date : 'dd/MM/yyyy' }}
+                            </div>
+                            <div
+                                [attr.keyLabel]="'NGAY_KET_THUC_DANG_KY'"
+                                class="text-[14px] sm:text-[16px] sm:flex items-center justify-center hidden"
+                            >
+                                {{ item.ngayKetThuc | date : 'dd/MM/yyyy' }}
+                            </div>
+                            <div class="font-medium text-[14px] sm:hidden md:hidden lg:hidden">
+                                {{ item.ngayBatDau | date : 'dd/MM/yyyy' }}
+                                - {{ item.ngayKetThuc | date : 'dd/MM/yyyy' }}
+                            </div>
+                            <div class="font-medium text-[#0079E0] text-[14px] flex justify-between sm:hidden md:hidden lg:hidden">
+                                <span class="line-through">{{ item.hocPhi | number }} đ</span
+                                ><span>{{ item.hocPhiPhaiNop | number }} đ</span>
+                            </div>
+                            <div
+                                class="text-[#0079E0] line-through text-[14px] sm:hidden lg:text-[16px] lg:flex items-center justify-end hidden"
+                            >
+                                {{ item.hocPhi | number }} đ
+                            </div>
+                            <div
+                                [attr.keyLabel]="'HOC_PHI_CAN_NOP'"
+                                class="text-[#0079E0] sm:hidden lg:flex items-center justify-end hidden"
+                            >
+                                {{ item.hocPhiPhaiNop | number }} đ
+                            </div>
+                        </div>
+                        <div class="text-[#0079E0] hidden sm:flex justify-between lg:hidden mt-[15px]">
+                            <span class="line-through">{{ item.hocPhi | number }} đ</span><span>{{ item.hocPhiPhaiNop | number }} đ</span>
+                        </div>
+                    </ng-container>
+                    <div class="flex items-center justify-end cursor-pointer gap-[5px]">
+                        <button
+                            (click)="addToCart(children)"
+                            class="shrink-0 mr-1 text-[20px] h-[32px] w-[32px] flex items-center justify-center border border-[#F56700] text-[#F56700] rounded-[30px] hover:text-white hover:bg-[linear-gradient(262.33deg,#FF8616_6.98%,#F56700_91.55%)] transition-all duration-300 sm:h-[40px] sm:w-[40px]"
+                        >
+                            <svg-icon key="cart" fontSize="20px"></svg-icon>
+                        </button>
+                        <button
+                            (click)="registerLopHocComBo(children)"
+                            type="button"
+                            class="text-[12px] sm:h-[40px] sm:text-[16px] pr-[14px] py-[7px] sm:p-[6px_20px] flex items-center justify-center border border-[#F56700] text-[#F56700] rounded-full sm:rounded-[30px] group-hover:text-white group-hover:bg-[linear-gradient(262.33deg,#FF8616_6.98%,#F56700_91.55%)] transition-all"
+                        >
+                            <span [attr.keyLabel]="'DANG_KY'" class="hidden sm:block">{{ 'DANG_KY' | transloco }}</span>
+                            <svg-icon key="arrow-right"></svg-icon>
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+</section>

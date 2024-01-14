@@ -1,0 +1,112 @@
+<section class="pt-[30px] pb-[130px] bg-gradient min-h-[800px]">
+    <div class="container">
+        <div class="flex flex-row justify-between items-center pb-[60px] w-full">
+            <ul class="flex mt-[12px] flex-wrap w-full">
+                <li>
+                    <a routerLink="/" class="flex items-center text-[#6F7A8A] font-semibold hover:text-[#0063E2]">
+                        <svg-icon key="home"></svg-icon>
+                        <span class="ml-2 whitespace-nowrap">{{ 'TRANG_CHU' | transloco }}</span></a
+                    >
+                </li>
+                <li class="mx-[15px]"><span class="text-[#6F7A8A]">/</span></li>
+                <li>
+                    <span class="text-[#0063E2] font-semibold">{{
+                        serviceName === serviceNameRHM ? (coursesGroupName$ | async) : (coursesGroupNameNhom$ | async)
+                    }}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="mb-[140px] last:mb-0">
+            <asc-course-skeleton
+                *ngIf="serviceName === serviceNameRHM ? (isLoading$ | async)! : (isLoadingNhom$ | async)!; else noLoading"
+                [countItem]="8"
+                [type]="'grid'"
+                [classView]="'grid gap-[24px] grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'"
+            >
+            </asc-course-skeleton>
+            <ng-template #noLoading>
+                <ng-container *ngIf="serviceName === serviceNameRHM; else tmplKTTA">
+                    <ng-container *ngIf="courses$ | async as nhomKhoaHocs">
+                        <ng-container *ngIf="nhomKhoaHocs.length > 0; else noDataTp">
+                            <ng-container *ngFor="let group of nhomKhoaHocs; trackBy: trackByFunc">
+                                <div class="section-title mb-[35px] md:mb-[40px] lg:mb-[50px]">
+                                    <h2 class="font-bold text-[28px] md:text-[30px] lg:text-[35px] xl:text-[40px] mb-6">
+                                        <span class="text-[#1B2C43]">{{ group.tenNhom }}</span>
+                                    </h2>
+                                    <p class="text-[#435267] lg:text-[16px] md:text-[15px] text-[13px]">
+                                        {{ group.ghiChu }}
+                                    </p>
+                                </div>
+                                <div class="mb-[40px] md:mb-[140px] last:mb-0">
+                                    <div class="grid gap-[24px] grid-cols-1 sm:grid-cols-3 xl:grid-cols-4">
+                                        <asc-course-item-group
+                                            *ngFor="let item of group.khoaHocs; trackBy: trackByFunc"
+                                            [item]="item"
+                                            [alias]="param$ | async"
+                                            [nameGroup]="(coursesGroupName$ | async)!"
+                                        >
+                                        </asc-course-item-group>
+                                    </div>
+                                    <div class="text-center mt-[30px] md:mt-[50px]" *ngIf="group.khoaHocs.length === 8">
+                                        <button
+                                            (click)="showListCourse(group)"
+                                            [attr.keyLabel]="'XEM_TAT_CA'"
+                                            type="button"
+                                            class="p-[10px_12px] min-w-[150px] rounded-[30px] text-white bg-[#0063E2] transition-all duration-500 hover:bg-[#024cab] hover:text-white"
+                                        >
+                                            {{ 'XEM_TAT_CA' | transloco }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noDataTp>
+                            <div class="flex flex-col items-center">
+                                <img class="max-h-[400px]" src="./assets/web/course-empty.svg" alt="empty" />
+                                <div class="text-[18px] font-nomal text-[#435267] px-[15px]">{{ 'NO_DATA' | transloco }}</div>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </ng-container>
+                <ng-template #tmplKTTA>
+                    <ng-container *ngIf="nhomKhoaHocs$ | async as nhomKhoaHocs">
+                        <ng-container *ngIf="nhomKhoaHocs.length > 0; else noDataTp">
+                            <div class="section-title mb-[35px] md:mb-[40px] lg:mb-[50px]">
+                                <h2 class="font-bold text-[28px] md:text-[30px] lg:text-[35px] xl:text-[40px] mb-6">
+                                    <span class="text-[#1B2C43]">{{ (coursesGroupNameNhom$ | async)! }}</span>
+                                </h2>
+                            </div>
+                            <div class="mb-[40px] md:mb-[140px] last:mb-0">
+                                <div class="grid gap-[24px] grid-cols-1 sm:grid-cols-3 xl:grid-cols-4">
+                                    <asc-course-item-group
+                                        *ngFor="let item of nhomKhoaHocs; trackBy: trackByFunc"
+                                        [item]="item"
+                                        [alias]="param$ | async"
+                                        [nameGroup]="(coursesGroupNameNhom$ | async)!"
+                                    >
+                                    </asc-course-item-group>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-template #noDataTp>
+                            <div class="flex flex-col items-center">
+                                <img class="max-h-[400px]" src="./assets/web/course-empty.svg" alt="empty" />
+                                <div class="text-[18px] font-nomal text-[#435267] px-[15px]">{{ 'NO_DATA' | transloco }}</div>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                    <div *ngIf="isShowPaging$ | async" class="flex justify-center items-center mt-[100px] relative z-10">
+                        <nz-pagination
+                            class="pagination"
+                            [nzPageIndex]="pageNumber$ | async"
+                            [nzPageSize]="pageSize$ | async"
+                            [nzTotal]="total$ | async"
+                            (nzPageIndexChange)="onPageChanged($event)"
+                        >
+                        </nz-pagination>
+                    </div>
+                </ng-template>
+            </ng-template>
+        </div>
+    </div>
+</section>

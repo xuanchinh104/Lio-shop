@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/ui/confirm",
+    "sourceRoot": "libs/shared/ui/confirm/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/ui/confirm"],
+            "options": {
+                "jestConfig": "libs/shared/ui/confirm/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/ui/confirm/src/**/*.ts", "libs/shared/ui/confirm/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

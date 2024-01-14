@@ -1,0 +1,29 @@
+<div
+    class="group flex items-center justify-center flex-col border border-dashed border-gray-300 relative mx-auto w-[134px] h-[134px] rounded-full overflow-hidden before:content-[''] before:absolute before:inset-0 before:bg-[rgba(0,0,0,0.2)] before:z-[2] before:opacity-0 hover:before:opacity-100"
+>
+    <ng-template [ngIf]="avatarPreView" [ngIfElse]="tmpImage">
+        <img class="absolute inset-0 w-full h-full object-cover" [src]="avatarPreView" alt="image" />
+        <label for="file-upload" class="cursor-pointer z-[3] opacity-0 group-hover:opacity-100">
+            <svg-icon key="edit-img"></svg-icon>
+        </label>
+    </ng-template>
+    <ng-template #tmpImage>
+        <svg-icon width="3rem" height="3rem" key="img-default"></svg-icon>
+    </ng-template>
+
+    <div class="flex justify-center text-sm z-[3]">
+        <label for="file-upload" class="relative cursor-pointer text-[#0063E2] text-[12px]">
+            <ng-template [ngIf]="!avatarPreView">
+                <span>{{ titleUpload ? titleUpload : ('TAI_ANH' | transloco) }} <sup class="text-red-500">(*)</sup></span>
+            </ng-template>
+            <input
+                #fileInput
+                id="file-upload"
+                type="file"
+                accept="image/png, image/jpeg, image/jpg"
+                class="hidden"
+                (change)="uploadFile($event)"
+            />
+        </label>
+    </div>
+</div>

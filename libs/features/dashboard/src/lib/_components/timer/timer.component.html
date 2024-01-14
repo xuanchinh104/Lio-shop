@@ -1,0 +1,4 @@
+<div class="fixed text-white text-center p-[15px] left-0 bottom-0 z-[2]">
+    <div class="text-5xl">{{ currentTimer$ | async }}</div>
+    <div class="text-lg font-light">{{ dayOfWeek | transloco }} {{ currentDate | date : 'dd/MM/yyyy' }}</div>
+</div>

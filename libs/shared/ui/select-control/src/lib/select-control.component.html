@@ -1,0 +1,14 @@
+<div class="relative">
+    <nz-select
+        nzShowSearch
+        [nzPlaceHolder]="placeholder"
+        [nzAllowClear]="allowClear"
+        [formControl]="control"
+        [nzSize]="size"
+        [nzMode]="mode"
+        [nzMaxTagCount]="maxTagCount"
+    >
+        <nz-option *ngFor="let option of options$ | async" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+    </nz-select>
+    <span class="control-validator"></span>
+</div>

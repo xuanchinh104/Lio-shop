@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/ckeditor-config",
+    "sourceRoot": "libs/shared/ckeditor-config/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/ckeditor-config"],
+            "options": {
+                "jestConfig": "libs/shared/ckeditor-config/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/ckeditor-config/src/**/*.ts", "libs/shared/ckeditor-config/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

@@ -1,0 +1,38 @@
+<div class="flex justify-center mb-[10px]">
+    <div class="flex justify-center items-center w-[120px] h-[120px] rounded-full bg-[#01AA81] border border-[5px] border-[#FFFFFF]">
+        <svg-icon fontSize="50px" key="check"></svg-icon>
+    </div>
+</div>
+<div class="text-center mb-[50px]">
+    <div [attr.keyLabel]="'DANG_KY_KHOA_HOC_THANH_CONG'" class="mb-[28px] text-[34px] leading-[42px] text-[#1B2C43] font-bold">
+        {{ 'DANG_KY_KHOA_HOC_THANH_CONG' | transloco }}
+    </div>
+    <div
+        class="text-[16px] text-[#1B2C43] leading-[36px]"
+        [innerHTML]="'TEXT_NOTI1' | transloco : { hoDem: userRegister?.hoDem, ten: userRegister?.ten }"
+    ></div>
+    <p class="text-[16px] text-[#1B2C43] leading-[36px]" [innerHTML]="'TEXT_NOTI2' | transloco"></p>
+    <div class="text-[16px] text-[#1B2C43] leading-[36px] italic" [innerHTML]="'TEXT_NOTI3' | transloco"></div>
+</div>
+<div class="text-center">
+    <asc-button
+        [attr.keyLabel]="'QUAY_VE_TRANG_CHU'"
+        (click)="closeNoti()"
+        [isSubmit]="true"
+        [btnClass]="
+            'w-[180px] h-[40px] p-[8px_12px] text-[#0063E2] bg-[#FFFFFF] shadow-[1px_4px_6px_rgba(0,127,243,0.2)] cursor-pointer mb-[20px] sm:mr-[20px] md:mr-[20px] lg:mr-[20px] rounded-[8px] border border-[#0063E2] text-[#0063E2]'
+        "
+        [btnText]="'DONG' | transloco"
+    >
+    </asc-button>
+    <asc-button
+        [attr.keyLabel]="'QUAY_VE_TRANG_CHU'"
+        routerLink="/"
+        [isSubmit]="false"
+        [btnClass]="
+            'w-[180px] h-[40px] p-[8px_12px] text-dark bg-[#0063E2] shadow-[1px_4px_6px_rgba(0,127,243,0.2)] cursor-pointer rounded-[8px] text-white'
+        "
+        [btnText]="'QUAY_VE_TRANG_CHU' | transloco"
+    >
+    </asc-button>
+</div>

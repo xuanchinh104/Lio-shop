@@ -1,0 +1,106 @@
+<ng-container *ngIf="label; else notLabel">
+    <ng-container *ngIf="mode === 'vertical'">
+        <div class="ui-form-group">
+            <label class="ui-label">{{ type === 'checkbox' ? '&nbsp;' : label }}</label>
+            <ng-container *ngIf="note && type !== 'checkbox'">
+                <span nz-popover [nzPopoverContent]="noteTpl">
+                    <span class="text-danger"> ( i )</span>
+                </span>
+                <ng-template #noteTpl>
+                    <pre class="note">
+                    {{ note }}
+                    </pre>
+                </ng-template>
+            </ng-container>
+            <ng-container [ngTemplateOutlet]="controlTmpl"></ng-container>
+            <span class="control-validator"></span>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="mode === 'horizontal'">
+        <div class="ui-form-group row">
+            <label class="col-form-label ui-label col-4" [ngClass]="'col-lg-' + leftCol">{{
+                type === 'checkbox' ? '&nbsp;' : label
+            }}</label>
+            <div class="col-8" [ngClass]="'col-lg-' + rightCol">
+                <ng-container [ngTemplateOutlet]="controlTmpl"></ng-container>
+                <span class="control-validator"></span>
+            </div>
+        </div>
+    </ng-container>
+</ng-container>
+<ng-template #notLabel>
+    <ng-container [ngTemplateOutlet]="controlTmpl"></ng-container>
+    <span class="control-validator"></span>
+</ng-template>
+
+<ng-template #controlTmpl>
+    <ng-container [ngSwitch]="type">
+        <ng-container *ngSwitchCase="'input'">
+            <input
+                type="text"
+                class="ui-input"
+                [disabled]="isDisabled"
+                [placeholder]="placeHolder"
+                (change)="onInputChange($event)"
+                [(ngModel)]="inputValue"
+            />
+        </ng-container>
+        <ng-container *ngSwitchCase="'password'">
+            <input
+                type="password"
+                (change)="onInputChange($event)"
+                class="ui-input"
+                [placeholder]="placeHolder"
+                [disabled]="isDisabled"
+                [(ngModel)]="inputValue"
+            />
+        </ng-container>
+        <ng-container *ngSwitchCase="'textarea'">
+            <textarea
+                (change)="onInputChange($event)"
+                class="ui-input"
+                [(ngModel)]="inputValue"
+                [placeholder]="placeHolder"
+                [disabled]="isDisabled"
+                [rows]="rows"
+            ></textarea>
+        </ng-container>
+        <ng-container *ngSwitchCase="'ckeditor'">
+            <!--            <ckeditor [config]="configCkeditor"-->
+            <!--                      [(ngModel)]="inputValue"-->
+            <!--                      [editor]="editor"-->
+            <!--                      (ngModelChange)="onModelChange($event)"-->
+            <!--                      (ready)="onReady($event)"></ckeditor>-->
+        </ng-container>
+        <ng-container *ngSwitchCase="'checkbox'">
+            <div>
+                <label nz-checkbox [(ngModel)]="inputValue" (ngModelChange)="onModelChange($event)">{{ label }}</label>
+            </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'number'">
+            <nz-input-number
+                [(ngModel)]="inputValue"
+                (ngModelChange)="onModelChange($event)"
+                class="ui-input ant-input-number"
+                [nzPlaceHolder]="placeHolder"
+                [nzDisabled]="isDisabled"
+                [nzStep]="step"
+                [nzMax]="max"
+                [nzMin]="min"
+                nullValue
+            ></nz-input-number>
+        </ng-container>
+        <ng-container *ngSwitchCase="'date'">
+            <nz-date-picker
+                [(ngModel)]="inputValue"
+                (ngModelChange)="onModelChange($event)"
+                [nzFormat]="'dd/MM/yyyy'"
+                [nzDisabledDate]="disabledDate"
+                [nzDisabled]="isDisabled"
+                [nzPlaceHolder]="placeHolder"
+                class="w-full"
+            >
+            </nz-date-picker>
+        </ng-container>
+    </ng-container>
+</ng-template>

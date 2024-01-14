@@ -1,0 +1,62 @@
+<div class="px-[20px] mb-[46px]">
+    <div>
+        <div class="text-[#6a727d] text-[14px] font-semibold py-[16px]">{{ 'THONG_TIN_CA_NHAN' | transloco }}</div>
+        <div class="grid grid-cols-12 gap-4 px-[30px] mb-[16px] text-[14px]">
+            <div class="lg:col-span-2 sm:col-span-6">{{ 'MA_HSSV' | transloco }}</div>
+            <div class="lg:col-span-4 sm:col-span-6 font-semibold">{{ studentInfo.maHocVien }}</div>
+            <div class="lg:col-span-2 sm:col-span-6">{{ 'GIOI_TINH' | transloco }}</div>
+            <div class="lg:col-span-4 sm:col-span-6 font-semibold">{{ studentInfo.tenGioiTinh }}</div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 px-[30px] mb-[16px] text-[14px]">
+            <div class="md:col-span-2">{{ 'HO_TEN' | transloco }}</div>
+            <div class="md:col-span-4 font-semibold">{{ studentInfo.hoTen }}</div>
+            <div class="col-span-2">{{ 'CMND' | transloco }}</div>
+            <div class="col-span-4 font-semibold">{{ studentInfo.soCMND }}</div>
+            <div class="col-span-2">{{ 'NOI_CAP_CMND' | transloco }}</div>
+            <div class="col-span-4 font-semibold">{{ studentInfo?.tenTinhTPNoiCapCMND ? studentInfo?.tenTinhTPNoiCapCMND : '-' }}</div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 px-[30px] mb-[16px] text-[14px]">
+            <div class="col-span-2">{{ 'SDT' | transloco }}</div>
+            <div class="font-semibold col-span-4">{{ studentInfo.soDienThoai }}</div>
+            <div class="col-span-2">{{ 'EMAIL' | transloco }}</div>
+            <div class="font-semibold col-span-4">{{ studentInfo.email }}</div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 px-[30px] mb-[16px] text-[14px]">
+            <div class="col-span-2">{{ 'NGAY_SINH' | transloco }}</div>
+            <div class="font-semibold col-span-4">{{ studentInfo.ngaySinh | date : 'dd/MM/yyyy' }}</div>
+            <div class="col-span-2">{{ 'NOI_SINH' | transloco }}</div>
+            <div class="font-semibold col-span-4">{{ studentInfo?.tenTinhTPNoiSinh ? studentInfo?.tenTinhTPNoiSinh : '-' }}</div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-4 px-[30px] mb-[16px] text-[14px]">
+            <div class="col-span-2">{{ 'DOI_TUONG' | transloco }}</div>
+            <div class="font-semibold col-span-4">{{ loaiDoiTuongDescription[studentInfo.loaiDoiTuong] }}</div>
+            <div class="col-span-2">{{ 'MA_DOI_TUONG' | transloco }}</div>
+            <div class="font-semibold col-span-4">{{ studentInfo.maDoiTuong }}</div>
+        </div>
+    </div>
+    <div>
+        <div class="text-[#6a727d] text-[14px] font-semibold py-[16px]">{{ 'THONG_TIN_CO_QUAN' | transloco }}</div>
+        <div class="grid grid-cols-12 gap-4 px-[30px] mb-[16px] text-[14px]">
+            <div class="col-span-2">{{ 'CO_QUAN_CONG_TAC' | transloco }}</div>
+            <div class="font-semibold col-span-4">{{ studentInfo?.coQuanCongTac ? studentInfo.coQuanCongTac : '-' }}</div>
+            <div class="col-span-2">{{ 'DIA_CHI' | transloco }}</div>
+            <div class="font-semibold col-span-4">{{ studentInfo?.diaChiCoQuan ? studentInfo.diaChiCoQuan : '-' }}</div>
+            <div class="col-span-2">{{ 'MA_SO_THUE' | transloco }}</div>
+            <div class="font-semibold col-span-4">{{ studentInfo?.maSoThueCoQuan ? studentInfo.maSoThueCoQuan : '-' }}</div>
+        </div>
+    </div>
+    <div>
+        <div class="text-[#6a727d] text-[14px] font-semibold py-[16px]" [attr.keyLabel]="'THONG_TIN_LIEN_HE'">
+            {{ 'THONG_TIN_LIEN_HE' | transloco }}
+        </div>
+        <div class="grid grid-cols-12 gap-4 px-[30px] mb-[16px] text-[14px]">
+            <div class="col-span-2">{{ 'TINH/TP' | transloco }}</div>
+            <div class="font-semibold col-span-4">{{ studentInfo?.tenTinhTPLienLac ? studentInfo.tenTinhTPLienLac : '-' }}</div>
+            <div class="col-span-2">{{ 'QUAN_HUYEN' | transloco }}</div>
+            <div class="font-semibold col-span-4">{{ studentInfo?.tenQuanHuyenLienLac ? studentInfo.tenQuanHuyenLienLac : '-' }}</div>
+            <div class="col-span-2">{{ 'XA_PHUONG' | transloco }}</div>
+            <div class="font-semibold col-span-4">{{ studentInfo?.tenPhuongXaLienLac ? studentInfo.tenPhuongXaLienLac : '-' }}</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,4 @@
+include:
+    - project: 'asc.ems.v2/asc.ems.course.fe'
+      ref: gitlab-ci-templates
+      file: '.gitlab-ci.yml'

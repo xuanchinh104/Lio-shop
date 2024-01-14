@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/pipes/capitalize-name",
+    "sourceRoot": "libs/shared/pipes/capitalize-name/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/pipes/capitalize-name"],
+            "options": {
+                "jestConfig": "libs/shared/pipes/capitalize-name/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/pipes/capitalize-name/src/**/*.ts", "libs/shared/pipes/capitalize-name/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

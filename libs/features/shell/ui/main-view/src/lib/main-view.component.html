@@ -1,0 +1,9 @@
+<div class="relative min-h-full bg-[#ebecef] layout-wrap">
+    <asc-header></asc-header>
+    <asc-sidebar class="main-sidebar w-[265px] shrink-0 bg-[#fff] shadow fixed top-[50px] bottom-0 z-[100]"></asc-sidebar>
+    <div class="ml-[265px] p-[24px] main-content transition-all duration-300">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+<ngx-spinner type="ball-scale-multiple" bdColor="rgba(0,0,0,0.4)" [fullScreen]="true"></ngx-spinner>

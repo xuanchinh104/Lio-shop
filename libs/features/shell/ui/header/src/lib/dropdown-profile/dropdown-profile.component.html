@@ -1,0 +1,46 @@
+<div class="flex flex-col items-center border-b border-[#dcdcdc] p-[8px_10px] text-center">
+    <asc-avatar [user]="userInfo$ | async"> </asc-avatar>
+</div>
+<div class="py-[10px]">
+    <!--    <div class="flex items-center justify-between h-[44px] text-[#212121] cursor-pointer px-[8px] rounded-[4px] hover:bg-[#f2f2f2] hover:text-[#0075e1]"-->
+    <!--        routerLink="/profile">-->
+    <!--        {{ 'LB.PROFILE' | transloco }}-->
+    <!--        <svg-icon key="edit-profile"></svg-icon>-->
+    <!--    </div>-->
+    <div
+        class="flex items-center justify-between h-[44px] text-[#212121] cursor-pointer px-[8px] rounded-[4px] hover:bg-[#f2f2f2] hover:text-[#0075e1]"
+        (click)="onShowModalChangePass()"
+    >
+        {{ 'LB.CHANGE_PASS' | transloco }}
+        <svg-icon key="clock"></svg-icon>
+    </div>
+    <div
+        class="flex items-center justify-between h-[44px] text-[#212121] cursor-pointer px-[8px] rounded-[4px] hover:bg-[#f2f2f2] hover:text-[#0075e1]"
+        (click)="clearCache()"
+    >
+        {{ 'LB.CLEAR_CACHE' | transloco }}
+        <i class="icofont-refresh text-[16px] text-[#0075E1]"></i>
+    </div>
+    <!-- <div
+        class="flex items-center justify-between h-[44px] text-[#212121] cursor-pointer px-[8px] rounded-[4px] hover:bg-[#f2f2f2] hover:text-[#0075e1]"
+        (click)="fileImport.click()"
+    >
+       Import Json
+        <input type="file" #fileImport (change)="onImport($event)" style="display: none" />
+        <i class="icofont-refresh text-[16px] text-[#0075E1]"></i>
+    </div>
+    <div
+        class="flex items-center justify-between h-[44px] text-[#212121] cursor-pointer px-[8px] rounded-[4px] hover:bg-[#f2f2f2] hover:text-[#0075e1]"
+        (click)="onDownload()"
+    >
+       Tải file JSON
+        <i class="icofont-refresh text-[16px] text-[#0075E1]"></i>
+    </div> -->
+    <div
+        class="flex items-center justify-between h-[44px] text-[#212121] cursor-pointer px-[8px] rounded-[4px] hover:bg-[#f2f2f2] hover:text-[#0075e1]"
+        (click)="onLogout()"
+    >
+        {{ 'LB.LOGOUT' | transloco }}
+        <svg-icon key="logout"></svg-icon>
+    </div>
+</div>

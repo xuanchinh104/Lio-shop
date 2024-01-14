@@ -1,0 +1,40 @@
+<label
+    for="file-upload-{{ index }}"
+    class="flex justify-center rounded-md border border-dashed border-[#D9E1EC] hover:border-[#0063E2] px-6 pt-5 pb-6 cursor-pointer"
+>
+    <div class="text-center">
+        <svg-icon key="upload" width="44px" height="44px"></svg-icon>
+        <div class="flex text-sm text-[#1B2C43]">
+            <div class="relative">
+                <span>{{ 'FILE_UPLOAD' | transloco }}</span>
+                <input
+                    id="file-upload-{{ index }}"
+                    #fileInput
+                    name="file-upload"
+                    multiple
+                    (change)="upload($event)"
+                    type="file"
+                    class="sr-only"
+                />
+            </div>
+        </div>
+    </div>
+</label>
+<ng-container *ngFor="let item of fileAttach; let i = index">
+    <div class="bg-[#F0F3F5] rounded p-[6px_12px] flex items-center justify-between gap-[4px] mt-[10px]" *ngIf="!item.isDeleted">
+        <div class="cursor-pointer flex items-center gap-[4px] w-fit" (click)="onViewFile(item)">
+            <div class="text-[#1B2C43]">
+                <i class="icofont-ui-file"></i>
+            </div>
+            <div class="text-[#1B2C43] font-medium flex-1">{{ item.fileName }}</div>
+        </div>
+        <div class="flex items-center">
+            <div class="cursor-pointer text-[#6F7A8A] mr-2" (click)="download(item.filePath, item.fileName, item.fileType)">
+                <i class="icofont-download"></i>
+            </div>
+            <div class="cursor-pointer text-[#6F7A8A]" (click)="onRemove(i)">
+                <i class="icofont-ui-delete"></i>
+            </div>
+        </div>
+    </div>
+</ng-container>

@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/pipes/convert-url",
+    "sourceRoot": "libs/shared/pipes/convert-url/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/pipes/convert-url"],
+            "options": {
+                "jestConfig": "libs/shared/pipes/convert-url/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/pipes/convert-url/src/**/*.ts", "libs/shared/pipes/convert-url/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

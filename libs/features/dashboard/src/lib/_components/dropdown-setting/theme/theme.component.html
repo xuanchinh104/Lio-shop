@@ -1,0 +1,10 @@
+<div
+    class="flex justify-between items-center p-[14px] cursor-pointer rounded-[8px] transition-all hover:bg-[#F0F3F5]"
+    (click)="onSelectTheme()"
+>
+    <span class="mr-[5px]">
+        <svg-icon key="magic" fontSize="20px"></svg-icon>
+    </span>
+    <div class="flex-auto">{{ 'LB.GIAO_DIEN' | transloco }}</div>
+    <span> {{ 'LB.MAU' | transloco }} {{ theme }} </span>
+</div>

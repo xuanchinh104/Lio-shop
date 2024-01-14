@@ -1,0 +1,68 @@
+<form class="m-form" (ngSubmit)="onSubmit()">
+    <asc-wrap-form (closeForm)="closeForm()" (zoomForm)="zoomForm($event)">
+        <div formTitle [attr.keyLabel]="title">
+            {{ title | transloco }}
+        </div>
+        <div formBody>
+            <div class="p-[10px] cursor-pointer">
+                <div
+                    (files)="filesDropped($event)"
+                    asFileDrag
+                    class="border border-gray-500 border-dotted bg-[rgb(245,245,245)] h-[300px] rounded-[8px] flex flex-col justify-center items-center"
+                    (click)="fileInput.click()"
+                >
+                    <ng-container *ngIf="fileAttach; else chooseFile">
+                        <div class="p-[5px_15px] text-[rgb(85,132,236)] rounded-[8px] font-bold">
+                            <span> {{ fileAttach?.name }} </span>
+                        </div>
+                    </ng-container>
+                    <ng-template #chooseFile>
+                        <div class="font-bold">{{ 'IMPORT.KEO_THA_TEP' | transloco }}</div>
+                        <div class="text-[10px] text-[rbg(106,109,114)] my-2">{{ 'LB.HOAC' | transloco }}</div>
+                        <div class="p-[5px_15px] bg-white border border-[rgb(85,132,236)] text-[rgb(85,132,236)] rounded-[8px] font-bold">
+                            <i class="icofont-upload-alt mr-2"></i>
+                            <span> {{ 'IMPORT.CHON_TEP' | transloco }} </span>
+                        </div>
+                        <div class="italic text-[rgb(106,109,114)] text-[10px] my-2">
+                            {{ 'IMPORT.TEXT_FILE_HOP_LE' | transloco }}
+                        </div>
+                    </ng-template>
+                    <input type="file" #fileInput class="hidden" (change)="uploadFile($event)" [accept]="fileAccept" />
+                </div>
+                <div>
+                    <div class="font-bold my-2" *ngIf="rowError > 0">
+                        {{ 'IMPORT.TEXT_ROW_ERROR' | transloco : { rowError: rowError } }}
+                        <span class="text-link text-red-500 font-bold cursor-pointer" (click)="downloadFileError()">{{
+                            'IMPORT.TAI_FILE_LOI' | transloco
+                        }}</span>
+                    </div>
+                    <div class="font-bold my-2">{{ 'IMPORT.LUU_Y' | transloco }}</div>
+                    <div class="my-2">
+                        {{ 'IMPORT.TEXT_DE_XUAT' | transloco }}
+                        <span class="text-link text-blue-500 font-bold cursor-pointer" (click)="exportTemplate()">{{
+                            'IMPORT.TAI_TEP_MAU' | transloco
+                        }}</span>
+                    </div>
+                    <div class="my-2">{{ 'IMPORT.TEXT_NOTE' | transloco }}</div>
+                </div>
+            </div>
+        </div>
+        <div formFooter>
+            <asc-button
+                class="mr-[8px]"
+                (click)="closeForm()"
+                [btnClass]="'btn-white'"
+                [btnText]="'BTN.CANCEL' | transloco"
+                [attr.keyLabel]="'BTN.CANCEL'"
+            ></asc-button>
+            <asc-button
+                [isDisabled]="!fileAttach || rowError > 0"
+                [isSubmit]="true"
+                [btnClass]="'btn-primary'"
+                [isLoading]="isSubmited"
+                [btnText]="'BTN.IMPORT' | transloco"
+                [attr.keyLabel]="'BTN.IMPORT'"
+            ></asc-button>
+        </div>
+    </asc-wrap-form>
+</form>

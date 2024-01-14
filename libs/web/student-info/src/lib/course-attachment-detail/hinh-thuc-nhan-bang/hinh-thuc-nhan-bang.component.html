@@ -1,0 +1,135 @@
+<div class="flex items-center justify-center">
+    <h4 class="text-[#2686E2] font-bold text-[20px]" [attr.keyLabel]="'DANG_KY_HINH_THUC_NHAN_VAN_BANG'">
+        {{ 'DANG_KY_HINH_THUC_NHAN_VAN_BANG' | transloco }}
+    </h4>
+</div>
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="relative px-[24px] leading-[26px] scrollbar scrollbar-hover">
+        <div class="form-group mb-4">
+            <nz-radio-group formControlName="idHinhThuc">
+                <label nz-radio [nzValue]="hinhThucNhan.TRUC_TIEP">{{ 'TRUC_TIEP' | transloco }}</label>
+                <label nz-radio [nzValue]="hinhThucNhan.CHUYEN_PHAT">{{ 'CHUYEN_PHAT' | transloco }}</label>
+            </nz-radio-group>
+        </div>
+        <ng-container *ngIf="form.get('idHinhThuc')?.value === hinhThucNhan.CHUYEN_PHAT">
+            <div class="form-group flex flex-col md:flex-row gap-[10px] mb-4">
+                <div class="font-bold text-[16px]">{{ 'TT_NGUOI_NHAN' | transloco }}</div>
+                <label
+                    nz-checkbox
+                    [nzChecked]="isCopy"
+                    [(ngModel)]="isCopy"
+                    [ngModelOptions]="{ standalone: true }"
+                    (ngModelChange)="changeDefaultInfo($event)"
+                    >{{ 'TT_THONG_TIN_LIEN_HE' | transloco }}</label
+                >
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="col-span-1 form-group">
+                    <label class="label-control mb-[0.5rem]" [attr.keyLabel]="'HO_VA_TEN_NGUOI_NHAN'">{{
+                        'HO_VA_TEN_NGUOI_NHAN' | transloco
+                    }}</label>
+                    <asc-form-control [isDisabled]="isCopy" formControlName="hoTen"></asc-form-control>
+                </div>
+                <div class="col-span-1 form-group">
+                    <label class="label-control mb-[0.5rem]" [attr.keyLabel]="'SO_DIEN_THOAI_NGUOI_NHAN'">{{
+                        'SO_DIEN_THOAI_NGUOI_NHAN' | transloco
+                    }}</label>
+                    <asc-form-control [isDisabled]="isCopy" formControlName="soDienThoai"></asc-form-control>
+                </div>
+            </div>
+            <div class="text-[16px] font-bold mb-4">{{ 'DIA_CHI_NHAN' | transloco }}</div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="col-span-1 form-group">
+                    <label class="label-control mb-[0.5rem]" [attr.keyLabel]="'TINH_THANH'">{{ 'TINH_THANH' | transloco }}</label>
+                    <div class="relative">
+                        <nz-select
+                            nzShowSearch
+                            nzAllowClear
+                            formControlName="idTinhNguoiNhan"
+                            [nzPlaceHolder]="'CHON' | transloco"
+                            [nzDisabled]="isCopy"
+                        >
+                            <nz-option *ngFor="let item of (tinhThanh$ | async)!" [nzLabel]="item.ten" [nzValue]="item.id"></nz-option>
+                        </nz-select>
+                    </div>
+                </div>
+                <div class="col-span-1 form-group">
+                    <label class="label-control mb-[0.5rem]" [attr.keyLabel]="'Q_HUYEN'">{{ 'Q_HUYEN' | transloco }}</label>
+                    <div class="relative">
+                        <nz-select
+                            nzShowSearch
+                            nzAllowClear
+                            formControlName="idHuyenNguoiNhan"
+                            [nzPlaceHolder]="'CHON' | transloco"
+                            [nzDisabled]="isCopy"
+                        >
+                            <nz-option *ngFor="let item of (qHuyen$ | async)!" [nzLabel]="item.ten" [nzValue]="item.id"></nz-option>
+                        </nz-select>
+                    </div>
+                </div>
+                <div class="col-span-1 form-group">
+                    <label class="label-control mb-[0.5rem]" [attr.keyLabel]="'X_PHUONG'">{{ 'X_PHUONG' | transloco }}</label>
+                    <div class="relative">
+                        <nz-select
+                            nzShowSearch
+                            nzAllowClear
+                            formControlName="idXaNguoiNhan"
+                            [nzPlaceHolder]="'CHON' | transloco"
+                            [nzDisabled]="isCopy"
+                        >
+                            <nz-option *ngFor="let item of (phuongXa$ | async)!" [nzLabel]="item.ten" [nzValue]="item.id"></nz-option>
+                        </nz-select>
+                    </div>
+                </div>
+                <div class="col-span-1 form-group">
+                    <label class="label-control mb-[0.5rem]" [attr.keyLabel]="'SO_NHA_TEN_DUONG'">{{
+                        'SO_NHA_TEN_DUONG' | transloco
+                    }}</label>
+                    <asc-form-control [isDisabled]="isCopy" formControlName="soNhaNguoiNhan"></asc-form-control>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="_formState.action === actionEnum.UPDATE">
+            <div class="form-group cursor-pointer mb-4">
+                <ng-container *ngIf="form.get('idHinhThuc')?.value === hinhThucNhan.TRUC_TIEP">
+                    <span class="italic text-blue-500 underline" (click)="mauGiayUyQuyen(hinhThucNhan.TRUC_TIEP)">{{
+                        'MAU_GIAY_UY_QUYEN' | transloco
+                    }}</span>
+                </ng-container>
+                <ng-container *ngIf="form.get('idHinhThuc')?.value === hinhThucNhan.CHUYEN_PHAT">
+                    <span class="italic text-blue-500 underline" (click)="mauGiayUyQuyen(hinhThucNhan.CHUYEN_PHAT)">{{
+                        'PHIEU_YEU_CAU_GUI_CHUNG_CHI' | transloco
+                    }}</span>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+    <div class="flex justify-center gap-4">
+        <asc-button
+            (click)="closeForm()"
+            [btnClass]="'p-[8px_14px] text-[#212529] bg-[#f8f9fa] border border-[#f8f9fa] rounded-[8px] cursor-pointer'"
+            [btnText]="'DONG' | transloco"
+            [attr.keyLabel]="'DONG'"
+        ></asc-button>
+        <ng-container *ngIf="_formState.action === action.CREATE; else tmplUpdate">
+            <asc-button
+                [isSubmit]="true"
+                [btnClass]="'p-[8px_14px] text-white bg-[#0063E2] border border-[#0063E2] rounded-[8px] cursor-pointer'"
+                [isLoading]="isSubmited"
+                [btnText]="'DANG_KY' | transloco"
+                [attr.keyLabel]="'DANG_KY'"
+            ></asc-button>
+        </ng-container>
+        <ng-template #tmplUpdate>
+            <asc-button
+                (click)="onSubmit()"
+                [isSubmit]="true"
+                [btnClass]="'p-[8px_14px] text-white bg-[#0063E2] border border-[#0063E2] rounded-[8px] cursor-pointer'"
+                [isLoading]="isSubmited"
+                [btnText]="'CAP_NHAT' | transloco"
+                [attr.keyLabel]="'CAP_NHAT'"
+            ></asc-button>
+        </ng-template>
+    </div>
+</form>

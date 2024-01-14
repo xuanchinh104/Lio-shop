@@ -1,0 +1,58 @@
+.layout-wrap.mini-sidebar {
+
+    .main-sidebar {
+        width: 52px;
+    }
+
+    .main-content {
+        margin-left: 52px;
+    }
+
+}
+
+:host::ng-deep {
+    .layout-wrap.mini-sidebar {
+        .menu__item {
+            &--title, &--arrow {
+                display: none !important;
+            }
+            &--icon {
+                margin-left: 5px;
+            }
+        }
+        .ant-collapse {
+            &-content {
+                display: none;
+                height: auto !important;
+                position: absolute;
+                top: 0;
+                left: 100%;
+                width: 250px;
+                background: #fff;
+                box-shadow: 0 3px 3px -2px rgb(0 0 0 / 20%), 0 3px 4px 0px rgb(0 0 0 / 14%), 0 1px 8px 0px rgb(0 0 0 / 12%);
+                max-height: 40vh;
+                overflow: auto !important;
+            }
+            &-item {
+                &:hover {
+                    > .ant-collapse-content {
+                        display: block !important;
+                    }
+                }
+            }
+        }
+
+        .submenu__content {
+            padding: 10px;
+            transition: all 0.3s ease;
+            .menu__item {
+                padding: 0 10px;
+            }
+        }
+
+        .main-sidebar .scrollbar {
+            overflow: unset;
+            mask-image: unset;
+        }
+    }
+}

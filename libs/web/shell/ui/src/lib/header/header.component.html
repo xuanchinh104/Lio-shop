@@ -1,0 +1,453 @@
+<header class="bg-white shadow-[0px_2px_1px_rgba(32, 73, 109, 0.03)] p-[15px_0] lg:p-0 relative sticky top-0 z-[102]">
+    <div class="container">
+        <div class="flex py-[18px] flex-col xl:flex-row gap-[20px] md:gap-[5px] xl:justify-between xl:items-center">
+            <div class="flex items-center justify-between">
+                <a routerLink="/" title="logo" class="flex items-center gap-5 text-[#1B2C43] hover:text-[#1B2C43] select-none">
+                    <img [src]="'./assets/web/banner-flower.png'" alt="logo" class="hidden lg:block" />
+                    <img [src]="'./assets/web/banner-flower.png'" alt="logo" class="block lg:hidden" />
+                </a>
+                <div class="hamburger-menu group relative" [ngClass]="isToggleMenu ? 'active' : ''" (click)="toggleMenu()">
+                    <div class="bar-top"></div>
+                    <div class="bar-middle"></div>
+                    <div class="bar-bottom"></div>
+                </div>
+            </div>
+            <div class="xl:flex items-center shrink-0 gap-[10px] h-[42px] hidden menu-item">
+                <ng-container *ngIf="serviceName !== serviceNameRHM; else tmplMenuKTTA">
+                    <ng-container *ngFor="let menu of menuRHM">
+                        <a
+                            [routerLink]="menu.alias"
+                            routerLinkActive="active"
+                            [routerLinkActiveOptions]="{ exact: true }"
+                            class="group flex items-center p-[5px_15px] rounded-[30px] cursor-pointer"
+                        >
+                            <span
+                                class="text-[#1B2C43] text-[16px] rounded-[30px] font-semibold group-hover:text-[#D72134] group-hover:underline group-hover:decoration-[3px] group-hover:underline-offset-[8px]"
+                                >{{ menu.title }}</span
+                            >
+                        </a>
+                    </ng-container>
+                </ng-container>
+                <ng-template #tmplMenuKTTA>
+                    <ng-container *ngFor="let menu of menuKTTA">
+                        <ng-container *ngIf="menu.subMenu.length > 0; else tmplMenu">
+                            <a
+                                nz-dropdown
+                                [nzDropdownMenu]="subMenu"
+                                nzTrigger="click"
+                                [nzOverlayClassName]="'dropdown-user-student'"
+                                (click)="goToPage()"
+                                [ngClass]="menu.isActive ? 'active' : ''"
+                                class="group flex items-center p-[5px_15px] rounded-[30px] cursor-pointer"
+                            >
+                                <span
+                                    class="text-[#1B2C43] text-[16px] rounded-[30px] font-semibold group-hover:text-[#D72134] group-hover:underline group-hover:decoration-[3px] group-hover:underline-offset-[8px]"
+                                    >{{ menu.title }}</span
+                                >
+                            </a>
+                            <nz-dropdown-menu #subMenu="nzDropdownMenu">
+                                <div nz-menu>
+                                    <div
+                                        class="group p-[16px] border-b border-solid border-[#EEE2E3] text-[14px] last:border-none"
+                                        *ngFor="let item of menu.subMenu"
+                                    >
+                                        <a
+                                            class="h-[50px] text-[#111111] font-semibold capitalize group-hover:text-[#D72134]"
+                                            [href]="item.url"
+                                            target="_blank"
+                                        >
+                                            {{ item.title }}
+                                        </a>
+                                    </div>
+                                </div>
+                            </nz-dropdown-menu>
+                        </ng-container>
+                        <ng-template #tmplMenu>
+                            <a
+                                [routerLink]="menu.alias"
+                                routerLinkActive="active"
+                                [routerLinkActiveOptions]="{ exact: true }"
+                                class="group flex items-center p-[5px_15px] rounded-[30px] cursor-pointer"
+                            >
+                                <span
+                                    class="text-[#1B2C43] text-[16px] rounded-[30px] font-semibold group-hover:text-[#D72134] group-hover:underline group-hover:decoration-[3px] group-hover:underline-offset-[8px]"
+                                    >{{ menu.title }}</span
+                                >
+                            </a>
+                        </ng-template>
+                    </ng-container>
+                </ng-template>
+            </div>
+            <div class="hidden xl:flex items-center shrink-0 gap-[20px] h-[42px] justify-center xl:justify-end">
+                <a (click)="onFocusIn()" class="relative mr-[20px] block text-[#1B2C43] w-[42px] h-[42px] cursor-pointer z-10">
+                    <span class="absolute left-[12px] top-[11px] z-10 duration-300" [ngClass]="isSearch ? 'pointer-events-none' : ''">
+                        <svg-icon fontSize="20px" key="search"></svg-icon>
+                    </span>
+                    <input
+                        #inputSearch
+                        (focusin)="onFocusIn()"
+                        (focusout)="onFocusOut()"
+                        (keyup.enter)="onSearchCourses()"
+                        [formControl]="searchControl"
+                        [ngClass]="isSearch ? 'w-[263px] sm:w-[318px] p-[8px_10px_8px_38px] text-[#1B2C43]' : 'cursor-pointer'"
+                        class="h-[42px] w-[42px] pl-[42px] rounded-[30px] bg-[#F0F3F5] outline-0 transition-all duration-300 absolute"
+                        [placeholder]="'TIM_KIEM_LOP_HOC' | transloco"
+                        type="text"
+                    />
+                </a>
+                <a
+                    [ngClass]="isSearch ? 'opacity-0' : ''"
+                    (click)="onShowCart()"
+                    class="relative flex items-center justify-center w-[42px] h-[42px] rounded-full text-[#1B2C43] bg-[#F0F3F5] mr-[20px]"
+                >
+                    <svg-icon key="cart" fontSize="20px"></svg-icon>
+                    <ng-container *ngIf="(totalCourse$ | async)! as total">
+                        <div
+                            *ngIf="total > 0"
+                            [ngClass]="total > 9 ? 'h-[18px] w-[18px] text-[11px]' : 'w-[16px] h-[16px] text-[12px]'"
+                            class="absolute flex items-center justify-center w-[16px] h-[16px] -top-[2px] right-0"
+                        >
+                            <span
+                                class="animate-ping animate-[ping_1.5s_cubic-bezier(0,0,0.2,1)_infinite] absolute w-[14px] h-[14px] rounded-full bg-red-400 opacity-75"
+                            >
+                            </span>
+                            <span
+                                [ngClass]="total > 9 ? 'h-[18px] w-[18px] text-[11px]' : 'w-[16px] h-[16px] text-[12px]'"
+                                class="relative inline-flex items-center justify-center font-semibold text-white rounded-full bg-[#E3313C]"
+                            >
+                                {{ total > 9 ? '9+' : total }}
+                            </span>
+                        </div>
+                    </ng-container>
+                </a>
+                <div
+                    [ngClass]="isSearch ? 'opacity-0' : ''"
+                    class="users inline-flex items-center justify-center h-[40px] rounded-[20px] bg-[#F0F3F5] ml-[20px] transition-all"
+                    *ngIf="isLogin$ | async; else notLoginTpl"
+                >
+                    <div
+                        class="p-[4px] text-[#212121] relative inline-flex items-center justify-between w-full cursor-pointer"
+                        nz-dropdown
+                        [nzDropdownMenu]="menuUserInfo"
+                        nzTrigger="click"
+                        *ngIf="userInfo$ | async as user"
+                        [nzOverlayClassName]="'dropdown-user-student'"
+                    >
+                        <div class="border border-[2px] border-white rounded-full">
+                            <img
+                                [src]="user.avatar ? (user.avatar | convertUrl) : ''"
+                                (error)="handleMissingImage($event)"
+                                alt="alt"
+                                class="w-[32px] h-[32px] rounded-full object-cover"
+                            />
+                        </div>
+                        <span class="px-[10px]">{{ user?.lastname + ' ' + user?.firstname | capitalizeNameWeb }}</span>
+                        <i class="zmdi zmdi-chevron-up mr-[15px] text-[20px]"></i>
+                    </div>
+                    <nz-dropdown-menu #menuUserInfo="nzDropdownMenu">
+                        <div nz-menu>
+                            <div class="w-[300px] p-[16px]" *ngIf="userInfo$ | async as user">
+                                <div class="flex items-center border-b border-[#DCDCDC] pb-[10px] mb-[10px]">
+                                    <div class="w-[42px] h-[42px] border border-[2px] border-white rounded-full mr-[10px] shrink-0">
+                                        <img
+                                            [src]="user.avatar ? (user.avatar | convertUrl) : ''"
+                                            (error)="handleMissingImage($event)"
+                                            alt="alt"
+                                            class="w-full h-full rounded-full object-cover"
+                                        />
+                                    </div>
+
+                                    <div class="flex-auto">
+                                        <div class="text-[14px] text-[#6B7280] opacity-70" *ngIf="user?.lastname && user?.firstname">
+                                            {{ user?.lastname + ' ' + user?.firstname | capitalizeNameWeb }}
+                                        </div>
+                                        <div class="text-[12px] text-[#6B7280] opacity-70">
+                                            {{ user?.code }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <a
+                                    [attr.keyLabel]="'THONG_TIN_CA_NHAN'"
+                                    class="flex items-center justify-between h-[44px] text-[#4B5563]"
+                                    [routerLink]="['/profile/info']"
+                                >
+                                    {{ 'THONG_TIN_CA_NHAN' | transloco }}
+                                    <svg-icon key="edit-profile"></svg-icon>
+                                </a>
+                                <a
+                                    [attr.keyLabel]="'DOI_MAT_KHAU'"
+                                    class="flex items-center justify-between h-[44px] text-[#4B5563]"
+                                    [routerLink]="['/profile/change-password']"
+                                >
+                                    {{ 'DOI_MAT_KHAU' | transloco }}
+                                    <svg-icon key="clock"></svg-icon>
+                                </a>
+                                <a
+                                    [attr.keyLabel]="'KHOA_HOC_CUA_TOI'"
+                                    class="flex items-center justify-between h-[44px] text-[#4B5563]"
+                                    [routerLink]="['/profile/course-registered']"
+                                >
+                                    {{ 'KHOA_HOC_CUA_TOI' | transloco }}
+                                    <svg-icon key="course"></svg-icon>
+                                </a>
+                                <a
+                                    [attr.keyLabel]="'DANG_XUAT'"
+                                    class="flex items-center justify-between h-[44px] text-[#4B5563]"
+                                    (click)="onLogout()"
+                                >
+                                    {{ 'DANG_XUAT' | transloco }}
+                                    <svg-icon key="logout"></svg-icon>
+                                </a>
+                            </div>
+                        </div>
+                    </nz-dropdown-menu>
+                </div>
+                <ng-template #notLoginTpl>
+                    <div
+                        [ngClass]="isSearch ? 'opacity-0' : ''"
+                        class="flex items-center text-white px-[30px] h-[42px] rounded-[30px] bg-[linear-gradient(262.33deg,#FF8616_6.98%,#F56700_91.55%)]"
+                    >
+                        <a
+                            [attr.keyLabel]="'DANG_KY'"
+                            title="register"
+                            routerLink="/register"
+                            class="text-inherit hover:text-inherit hover:text-[#0063E2] hover:underline"
+                        >
+                            {{ 'DANG_KY' | transloco }}</a
+                        >
+                        <span class="mx-[4px]">/</span>
+                        <a
+                            [attr.keyLabel]="'DANG_NHAP'"
+                            title="login"
+                            class="text-inherit hover:text-inherit hover:text-[#0063E2] hover:underline"
+                            (click)="signIn()"
+                        >
+                            {{ 'DANG_NHAP' | transloco }}</a
+                        >
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+    <div
+        class="xl:hidden absolute top-[100%] bottom-0 bg-white w-full transition-all duration-300"
+        [ngClass]="isToggleMenu ? 'h-[500px] visible opacity-100' : 'invisible opacity-0 h-0'"
+    >
+        <div class="p-[24px] bg-[#F0F3F5]" style="text-align: -webkit-center">
+            <div class="rounded-[20px] bg-[#F0F3F5] ml-[20px] transition-all text-center" *ngIf="isLogin$ | async; else notLoginTplMobile">
+                <div
+                    class="w-[228px] p-[4px] text-[#212121] relative inline-flex justify-center items-center cursor-pointer h-[63px] mb-[10px]"
+                    nz-dropdown
+                    [nzDropdownMenu]="menuUserInfoMobile"
+                    nzTrigger="click"
+                    *ngIf="userInfo$ | async as user"
+                    [nzOverlayClassName]="'dropdown-user-student'"
+                >
+                    <div class="border border-[#F5F9FE] rounded-full mr-[10px]">
+                        <img
+                            [src]="user.avatar ? (user.avatar | convertUrl) : ''"
+                            (error)="handleMissingImage($event)"
+                            alt="alt"
+                            class="w-[34px] h-[34px] rounded-full object-cover"
+                        />
+                    </div>
+                    <span class="text-[#1D1D1D] font-semibold text-[16px]">{{
+                        user?.lastname + ' ' + user?.firstname | capitalizeNameWeb
+                    }}</span>
+                    <i class="zmdi zmdi-chevron-up ml-[10px] text-[20px]"></i>
+                </div>
+                <div class="flex gap-[10px] justify-center">
+                    <div
+                        (click)="isToggleMenu = false"
+                        [attr.keyLabel]="'DOI_MAT_KHAU'"
+                        class="flex items-center justify-center h-[42px] text-[#1D1D1D] bg-[#FFFFFF] border border-[#DDDDDD] p-[11px] rounded-[30px] w-[187px] cursor-pointer"
+                        [routerLink]="['/profile/change-password']"
+                    >
+                        {{ 'DOI_MAT_KHAU' | transloco }}
+                    </div>
+                    <div
+                        [attr.keyLabel]="'DANG_XUAT'"
+                        class="flex items-center justify-center h-[42px] text-white bg-[#D72134] border border-[#D72134] p-[11px] rounded-[30px] w-[187px] cursor-pointer"
+                        (click)="onLogout()"
+                    >
+                        {{ 'DANG_XUAT' | transloco }}
+                    </div>
+                </div>
+                <nz-dropdown-menu #menuUserInfoMobile="nzDropdownMenu">
+                    <div nz-menu>
+                        <div class="w-[228px] p-[16px]" *ngIf="userInfo$ | async as user">
+                            <div class="flex items-center border-b border-[#DCDCDC] pb-[10px] mb-[10px]">
+                                <div class="w-[42px] h-[42px] border border-[2px] border-white rounded-full mr-[10px] shrink-0">
+                                    <img
+                                        [src]="user.avatar ? (user.avatar | convertUrl) : ''"
+                                        (error)="handleMissingImage($event)"
+                                        alt="alt"
+                                        class="w-full h-full rounded-full object-cover"
+                                    />
+                                </div>
+
+                                <div class="flex-auto">
+                                    <div class="text-[14px] text-[#6B7280] opacity-70" *ngIf="user?.lastname && user?.firstname">
+                                        {{ user?.lastname + ' ' + user?.firstname | capitalizeNameWeb }}
+                                    </div>
+                                    <div class="text-[12px] text-[#6B7280] opacity-70">
+                                        {{ user?.code }}
+                                    </div>
+                                </div>
+                            </div>
+                            <a
+                                [attr.keyLabel]="'THONG_TIN_CA_NHAN'"
+                                class="flex items-center justify-between h-[44px] text-[#4B5563]"
+                                [routerLink]="['/profile/info']"
+                            >
+                                {{ 'THONG_TIN_CA_NHAN' | transloco }}
+                                <svg-icon key="edit-profile"></svg-icon>
+                            </a>
+                            <a
+                                [attr.keyLabel]="'KHOA_HOC_CUA_TOI'"
+                                class="flex items-center justify-between h-[44px] text-[#4B5563]"
+                                [routerLink]="['/profile/course-registered']"
+                            >
+                                {{ 'KHOA_HOC_CUA_TOI' | transloco }}
+                                <svg-icon key="course"></svg-icon>
+                            </a>
+                        </div>
+                    </div>
+                </nz-dropdown-menu>
+            </div>
+            <ng-template #notLoginTplMobile>
+                <div
+                    class="flex items-center justify-center w-[250px] text-white px-[30px] h-[42px] rounded-[30px] bg-[linear-gradient(262.33deg,#FF8616_6.98%,#F56700_91.55%)]"
+                >
+                    <a
+                        [attr.keyLabel]="'DANG_KY'"
+                        title="register"
+                        routerLink="/register"
+                        class="text-inherit hover:text-inherit hover:text-[#0063E2] hover:underline"
+                    >
+                        {{ 'DANG_KY' | transloco }}</a
+                    >
+                    <span class="mx-[4px]">/</span>
+                    <a
+                        [attr.keyLabel]="'DANG_NHAP'"
+                        title="login"
+                        class="text-inherit hover:text-inherit hover:text-[#0063E2] hover:underline"
+                        (click)="signIn()"
+                    >
+                        {{ 'DANG_NHAP' | transloco }}</a
+                    >
+                </div>
+            </ng-template>
+        </div>
+        <div class="p-[24px] flex items-center justify-center gap-[10px]">
+            <a class="relative block text-[#1B2C43] w-full h-[42px] cursor-pointer z-10 text-[16px]" (click)="toggleInput()">
+                <span class="absolute left-[12px] top-[11px] z-10 duration-300" [ngClass]="isSearch ? 'pointer-events-none' : ''">
+                    <svg-icon fontSize="20px" key="search"></svg-icon>
+                </span>
+                <input
+                    #inputElement
+                    (keyup.enter)="onSearchCourses()"
+                    (blur)="hideInput()"
+                    (keydown)="onKeyDown($event)"
+                    [formControl]="searchControl"
+                    [ngClass]="isSearch ? '' : 'cursor-pointer'"
+                    class="h-[42px] pl-[42px] rounded-[30px] bg-[#F0F3F5] outline-0 transition-all duration-300 absolute p-[8px_10px_8px_38px] text-[#1B2C43] w-full text-[16px]"
+                    [placeholder]="'Tìm kiếm lớp học'"
+                    type="text"
+                />
+            </a>
+            <a
+                (click)="onShowCart()"
+                class="relative flex items-center justify-center w-[42px] h-[42px] rounded-full text-[#1B2C43] bg-[#F0F3F5]"
+            >
+                <svg-icon key="cart" fontSize="20px"></svg-icon>
+                <ng-container *ngIf="(totalCourse$ | async)! as total">
+                    <div
+                        *ngIf="total > 0"
+                        [ngClass]="total > 9 ? 'h-[18px] w-[18px] text-[11px]' : 'w-[16px] h-[16px] text-[12px]'"
+                        class="absolute flex items-center justify-center w-[16px] h-[16px] -top-[2px] right-0"
+                    >
+                        <span
+                            class="animate-ping animate-[ping_1.5s_cubic-bezier(0,0,0.2,1)_infinite] absolute w-[14px] h-[14px] rounded-full bg-red-400 opacity-75"
+                        >
+                        </span>
+                        <span
+                            [ngClass]="total > 9 ? 'h-[18px] w-[18px] text-[11px]' : 'w-[16px] h-[16px] text-[12px]'"
+                            class="relative inline-flex items-center justify-center font-semibold text-white rounded-full bg-[#E3313C]"
+                        >
+                            {{ total > 9 ? '9+' : total }}
+                        </span>
+                    </div>
+                </ng-container>
+            </a>
+        </div>
+        <ul class="px-[24px] bg-white">
+            <ng-container *ngIf="serviceName === serviceNameRHM; else tmplMenuMobileKTTA">
+                <li
+                    *ngFor="let menu of menuRHM; let i = index; trackBy: trackByFunc"
+                    class="border-b border-b-[#E6E6EB] last:border-b-0 collapsible"
+                >
+                    <a
+                        [routerLink]="menu.alias"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        class="block py-[24px] relative text-[#1D1D1D] font-semibold text-[16px] cursor-pointer z-10 hover:text-[#D72134]"
+                        (click)="goToPage()"
+                    >
+                        {{ menu.title }}
+                    </a>
+                </li>
+            </ng-container>
+            <ng-template #tmplMenuMobileKTTA>
+                <li
+                    *ngFor="let menu of menuKTTA; let i = index; trackBy: trackByFunc"
+                    class="border-b border-b-[#E6E6EB] last:border-b-0 collapsible"
+                >
+                    <div class="" *ngIf="menu.subMenu.length > 0; else tmplMenu">
+                        <span
+                            class="float-right relative top-[25px] z-[11] cursor-pointer"
+                            (click)="expandMenuSub(i)"
+                            [ngClass]="menu.isExpand ? 'rotate-[90deg]' : ''"
+                        >
+                            <svg-icon key="left" fontSize="20px"></svg-icon>
+                        </span>
+                        <a
+                            (click)="expandMenuSub(i)"
+                            class="block py-[24px] relative text-[#1D1D1D] font-semibold text-[16px] cursor-pointer z-10 hover:text-[#D72134]"
+                        >
+                            {{ menu.title }}
+                        </a>
+                    </div>
+                    <ng-template #tmplMenu>
+                        <a
+                            [routerLink]="menu.alias"
+                            routerLinkActive="active"
+                            [routerLinkActiveOptions]="{ exact: true }"
+                            class="block py-[24px] relative text-[#1D1D1D] font-semibold text-[16px] cursor-pointer z-10 hover:text-[#D72134]"
+                            (click)="goToPage()"
+                        >
+                            {{ menu.title }}
+                        </a>
+                    </ng-template>
+                    <ul
+                        style="transition: max-height 0.3s ease-out"
+                        *ngIf="menu.subMenu.length > 0"
+                        class="overflow-hidden content max-h-0"
+                    >
+                        <li *ngFor="let chill of menu.subMenu" class="border-b border-b-[#E6E6EB] last:border-b-0">
+                            <a
+                                [href]="chill.url"
+                                target="_blank"
+                                (click)="goToPage()"
+                                class="block py-[24px] relative text-[#1D1D1D] font-semibold text-[16px] cursor-pointer z-10 capitalize hover:text-[#D72134]"
+                            >
+                                {{ chill.title }}</a
+                            >
+                        </li>
+                    </ul>
+                </li>
+            </ng-template>
+        </ul>
+    </div>
+</header>
+<div class="fixed inset-0 w-full h-full bg-[rgba(0,0,0,0.3)] z-[99]" [ngClass]="isToggleMenu ? '' : 'hidden'" (click)="toggleMenu()"></div>

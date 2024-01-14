@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/features/configuration/feature",
+    "sourceRoot": "libs/features/configuration/feature/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/features/configuration/feature"],
+            "options": {
+                "jestConfig": "libs/features/configuration/feature/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/features/configuration/feature/src/**/*.ts", "libs/features/configuration/feature/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/ui/grid-control",
+    "sourceRoot": "libs/shared/ui/grid-control/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/ui/grid-control"],
+            "options": {
+                "jestConfig": "libs/shared/ui/grid-control/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/ui/grid-control/src/**/*.ts", "libs/shared/ui/grid-control/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

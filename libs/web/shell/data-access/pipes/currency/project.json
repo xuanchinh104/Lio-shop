@@ -1,0 +1,26 @@
+{
+    "projectType": "library",
+    "root": "libs/web/shell/data-access/pipes/currency",
+    "sourceRoot": "libs/web/shell/data-access/pipes/currency/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/web/shell/data-access/pipes/currency"],
+            "options": {
+                "jestConfig": "libs/web/shell/data-access/pipes/currency/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/web/shell/data-access/pipes/currency/src/**/*.ts",
+                    "libs/web/shell/data-access/pipes/currency/src/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

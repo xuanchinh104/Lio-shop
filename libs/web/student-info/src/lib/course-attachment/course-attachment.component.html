@@ -1,0 +1,80 @@
+<div class="p-[24px]">
+    <div class="flex items-center gap-[10px] mb-[16px]">
+        <svg-icon key="go-back" class="cursor-pointer" (click)="closeForm.emit()"></svg-icon>
+        <span [attr.keyLabel]="'CAC_KHOA_HOC_DA_DANG_KY'" class="text-[16px] text-[#1B2C43] font-semibold">{{
+            'CAC_KHOA_HOC_DA_DANG_KY' | transloco
+        }}</span>
+    </div>
+    <div class="text-[20px] text-[#0063E2] font-bold mb-[20px]">{{ 'THONG_TIN_KHOA_HOC' | transloco }}</div>
+    <div class="bg-[#F5F9FE] p-[22px] mb-[30px]">
+        <div class="text-[16px] text-[#1B2C43] font-semibold">{{ _course?.tenKhoaHoc }}</div>
+        <div class="flex mt-[10px]">
+            <div class="w-[150px] shrink-0 text-[16px] text-[#7E8A9A] font-semibold">{{ 'THOI_GIAN' | transloco }}:</div>
+            <div class="flex-1 text-[16px] text-[#1B2C43] font-semibold">{{ _course?.thoiGianDaoTao }}</div>
+        </div>
+        <div class="flex mt-[10px]">
+            <div class="w-[150px] shrink-0 text-[16px] text-[#7E8A9A] font-semibold">{{ 'HOC_PHI_CAN_DONG' | transloco }}</div>
+            <div class="flex-1 text-[16px] text-[#0063E2] font-semibold">
+                <ng-container *ngIf="_course && _course.hocPhiDangKy"> {{ _course.hocPhiDangKy | currencyFormat }} đ </ng-container>
+            </div>
+        </div>
+    </div>
+    <div class="text-[20px] text-[#0063E2] font-bold mb-[20px]">{{ 'NOP_HO_SO' | transloco }}</div>
+
+    <ng-container *ngFor="let item of courseAttachments$ | async; let i = index">
+        <div class="text-[20px] text-[#1B2C43] font-bold mb-[12px]">{{ i + 1 }}. {{ item.tenLoaiHoSo }}</div>
+        <div class="border border-[#D9E1EC] rounded-[11px] p-[22px] mb-[30px]" *ngIf="item.fileAttachs && item.fileAttachs.length > 0">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-[12px]">
+                <ng-container *ngFor="let itemFileAttach of item.fileAttachs">
+                    <div
+                        class="col-span-1"
+                        *ngIf="
+                            itemFileAttach.fileType === '.png' ||
+                                itemFileAttach.fileType === '.jpeg' ||
+                                itemFileAttach.fileType === '.jpg' ||
+                                itemFileAttach.fileType === '.svg';
+                            else tmpFileType
+                        "
+                    >
+                        <img
+                            [src]="itemFileAttach.filePath | convertUrl"
+                            alt="{{ itemFileAttach.fileName }}"
+                            class="w-full rounded-[8px] overflow-hidden h-[142px] cursor-pointer"
+                        />
+                    </div>
+                    <ng-template #tmpFileType>
+                        <div class="col-span-1">
+                            <div
+                                class="flex flex-col items-center justify-between rounded-[8px] p-[8px] overflow-hidden h-[142px] border border-[#D9E1EC] cursor-pointer"
+                            >
+                                <div class="mt-[16px]">
+                                    <ng-container *ngIf="itemFileAttach.fileType === '.xlsx' || itemFileAttach.fileType === '.xls'">
+                                        <svg-icon key="xlsx" width="56px" height="66px"></svg-icon>
+                                    </ng-container>
+                                    <ng-container *ngIf="itemFileAttach.fileType === '.txt'">
+                                        <svg-icon key="txt" width="56px" height="66px"></svg-icon>
+                                    </ng-container>
+                                    <ng-container *ngIf="itemFileAttach.fileType === '.docx' || itemFileAttach.fileType === '.doc'">
+                                        <svg-icon key="docx" width="56px" height="66px"></svg-icon>
+                                    </ng-container>
+                                    <ng-container *ngIf="itemFileAttach.fileType === '.pdf'">
+                                        <svg-icon key="pdf" width="56px" height="66px"></svg-icon>
+                                    </ng-container>
+                                    <ng-container *ngIf="itemFileAttach.fileType === '.pptx' || itemFileAttach.fileType === '.ppt'">
+                                        <svg-icon key="pptx" width="56px" height="66px"></svg-icon>
+                                    </ng-container>
+                                    <ng-container *ngIf="itemFileAttach.fileType === '.rar' || itemFileAttach.fileType === '.zip'">
+                                        <svg-icon key="rar" width="56px" height="66px"></svg-icon>
+                                    </ng-container>
+                                </div>
+                                <h3 title="'{{ itemFileAttach.fileName }}'" class="w-full text-[14px] text-[#1B2C43] font-medium truncate">
+                                    {{ itemFileAttach.fileName }}
+                                </h3>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ng-container>
+            </div>
+        </div>
+    </ng-container>
+</div>

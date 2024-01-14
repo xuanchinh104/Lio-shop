@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/ui/skeleton",
+    "sourceRoot": "libs/shared/ui/skeleton/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/ui/skeleton"],
+            "options": {
+                "jestConfig": "libs/shared/ui/skeleton/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/ui/skeleton/src/**/*.ts", "libs/shared/ui/skeleton/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/features/website-manager/ui",
+    "sourceRoot": "libs/features/website-manager/ui/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/features/website-manager/ui"],
+            "options": {
+                "jestConfig": "libs/features/website-manager/ui/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/features/website-manager/ui/src/**/*.ts", "libs/features/website-manager/ui/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

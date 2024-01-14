@@ -1,0 +1,148 @@
+<section class="pt-[30px] pb-[130px] bg-gradient min-h-[800px]">
+    <div class="container">
+        <div class="flex flex-row justify-between items-center pb-[60px] w-full">
+            <ul class="flex mt-[12px] flex-wrap w-full">
+                <li>
+                    <a routerLink="/" class="flex items-center text-[#6F7A8A] font-semibold hover:text-[#0063E2]">
+                        <svg-icon key="home"></svg-icon>
+                        <span class="ml-2 whitespace-nowrap">{{ 'TRANG_CHU' | transloco }}</span></a
+                    >
+                </li>
+                <li class="mx-[15px]"><span class="text-[#6F7A8A]">/</span></li>
+                <li>
+                    <span class="text-[#0063E2] font-semibold">{{ 'TRA_CUU_VAN_BANG' | transloco }}</span>
+                </li>
+            </ul>
+        </div>
+        <h3 class="text-[34px] text-[#1B2C43] font-semibold">{{ 'TRA_CUU_VAN_BANG' | transloco }}</h3>
+        <p class="text-[14px] text-center text-red-500 italic underline">{{ 'TEXT_WARNING8' | transloco }}</p>
+        <form class="my-[50px]" [formGroup]="form" novalidate>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-[24px]">
+                <div class="form-group">
+                    <label class="block text-[16px] text-[#1B2C43] font-semibold mb-[8px]">Mã học viên</label>
+                    <div class="relative">
+                        <input
+                            (ngModelChange)="changeMaHocVien($event)"
+                            formControlName="maHocVien"
+                            type="text"
+                            class="border border-[#D9E1EC] w-full h-[46px] rounded-[6px] outline-none p-[6px_12px]"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="block text-[16px] text-[#1B2C43] font-semibold mb-[8px]">Họ và tên</label>
+                    <div class="relative">
+                        <input
+                            (ngModelChange)="changeHoTen($event)"
+                            formControlName="hoTen"
+                            type="text"
+                            class="border border-[#D9E1EC] w-full h-[46px] rounded-[6px] outline-none p-[6px_12px]"
+                        />
+                    </div>
+                </div>
+                <div class="form-group relative">
+                    <label class="block text-[16px] text-[#1B2C43] font-semibold mb-[8px]">
+                        Số CMND/CCCD
+                        <sup class="text-red-500">(*)</sup>
+                    </label>
+                    <div class="relative">
+                        <input
+                            formControlName="soCMND"
+                            type="text"
+                            class="border border-[#D9E1EC] w-full h-[46px] rounded-[6px] outline-none p-[6px_12px]"
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-center max-w-[500px] mx-auto mt-[70px] gap-[24px]">
+                <div>
+                    <button
+                        (click)="onSubmit()"
+                        type="button"
+                        class="w-[120px] md:w-[160px] h-[36px] md:h-[52px] text-[15px] text-white bg-[#0063E2] font-semibold shadow-[0_10px_30px_rgba(0,99,266,0.2)] rounded md:rounded-[26px]"
+                    >
+                        {{ 'TRA_CUU' | transloco }}
+                    </button>
+                </div>
+                <div>
+                    <button
+                        (click)="refreshView()"
+                        type="button"
+                        class="w-[120px] md:w-[160px] h-[36px] md:h-[52px] text-[#0063E2] bg-white font-semibold shadow-[0_10px_30px_rgba(0,99,266,0.2)] border border-[#0063E2] rounded md:rounded-[26px]"
+                    >
+                        {{ 'LAM_MOI' | transloco }}
+                    </button>
+                </div>
+            </div>
+        </form>
+        <ng-container *ngIf="vanBang$ | async as listVanBang">
+            <asc-course-skeleton
+                *ngIf="isLoading; else contentLoader"
+                [countItem]="4"
+                [type]="'list'"
+                [classView]="'grid gap-[24px] sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4'"
+            >
+            </asc-course-skeleton>
+            <ng-template #contentLoader>
+                <ng-container *ngIf="listVanBang.length > 0; else tmplNodata">
+                    <div class="space-y-[24px]">
+                        <div
+                            class="flex flex-col gap-2 w-full border border-[#E0F0FF] bg-white p-[20px] rounded-[6px] shadow-[0_5px_20px_rgba(0,0,0,.08)]"
+                            *ngFor="let item of listVanBang"
+                        >
+                            <div class="text-[20px] leading-[20px] text-[#0063E2] font-semibold tracking-[.02em]">
+                                {{ item.hoDem }} {{ item.ten }}
+                            </div>
+                            <div class="text-[14px] leading-[21px] text-[#393939] font-semibold">{{ item.tenKhoaHoc }}</div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+                                <div class="flex">
+                                    <div class="w-[100px] shrink-0 text-[#6F7A8A] font-medium">{{ 'MA_HOC_VIEN' | transloco }}:</div>
+                                    <b>{{ item.maHocVien }}</b>
+                                </div>
+                                <div class="flex">
+                                    <div class="w-[100px] shrink-0 text-[#6F7A8A] font-medium">{{ 'NGAY_SINH' | transloco }}:</div>
+                                    <b>{{ item.ngaySinh | date : 'dd/MM/yyyy' }}</b>
+                                </div>
+                                <div class="flex">
+                                    <div class="w-[100px] shrink-0 text-[#6F7A8A] font-medium">{{ 'GIOI_TINH' | transloco }}:</div>
+                                    <b>{{ item.tenGioiTinh }}</b>
+                                </div>
+                                <div class="flex">
+                                    <div class="w-[100px] shrink-0 text-[#6F7A8A] font-medium">{{ 'NOI_SINH' | transloco }}:</div>
+                                    <b>{{ item.noiSinh }}</b>
+                                </div>
+                                <div class="flex">
+                                    <div class="w-[100px] shrink-0 text-[#6F7A8A] font-medium">{{ 'SO_HIEU' | transloco }}:</div>
+                                    <b>{{ item.soHieu }}</b>
+                                </div>
+                                <div class="flex">
+                                    <div class="w-[100px] shrink-0 text-[#6F7A8A] font-medium">{{ 'SO_VAO_SO' | transloco }}:</div>
+                                    <b>{{ item.soVaoSo }}</b>
+                                </div>
+                                <div class="flex">
+                                    <div class="w-[100px] shrink-0 text-[#6F7A8A] font-medium">{{ 'NGAY_CAP' | transloco }}:</div>
+                                    <b>{{ item.ngayCapPhoi | date : 'dd/MM/yyyy' }}</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-template #tmplNodata>
+                    <div class="p-[90px] bg-white rounded-[20px]">
+                        <img src="./assets/web/bg-nodata.png" alt="no-data" class="block mx-auto object-cover" />
+                    </div>
+                </ng-template>
+            </ng-template>
+        </ng-container>
+    </div>
+    <div *ngIf="isShowPaging$ | async" class="flex justify-center items-center mt-[100px] relative z-10">
+        <nz-pagination
+            class="pagination"
+            [nzPageIndex]="pageNumber$ | async"
+            [nzPageSize]="pageSize$ | async"
+            [nzTotal]="total$ | async"
+            (nzPageIndexChange)="onPageChanged($event)"
+        >
+        </nz-pagination>
+    </div>
+</section>

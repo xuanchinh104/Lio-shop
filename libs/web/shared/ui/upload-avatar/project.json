@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/web/shared/ui/upload-avatar",
+    "sourceRoot": "libs/web/shared/ui/upload-avatar/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/web/shared/ui/upload-avatar"],
+            "options": {
+                "jestConfig": "libs/web/shared/ui/upload-avatar/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/web/shared/ui/upload-avatar/src/**/*.ts", "libs/web/shared/ui/upload-avatar/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

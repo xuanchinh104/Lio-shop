@@ -1,0 +1,15 @@
+@media (max-width: 767px) {
+    .wapper-login {
+        padding: 0;
+        .div-login,
+        .div-line {
+            display: none;
+        }
+        .div-content {
+            max-width: 349px;
+            width: 100%;
+            height: auto;
+            padding: 15px;
+        }
+    }
+}

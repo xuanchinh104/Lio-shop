@@ -1,0 +1,95 @@
+:host::ng-deep {
+    .mySwiper {
+        height: 410px;
+        .swiper-button-prev {
+            top: 185px;
+            left: -15px;
+            height: 52px;
+            width: 52px;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 1px solid #E0F0FF;
+            user-select: none;
+
+            &:after {
+                font-size: 25px;
+            }
+        }
+
+        .swiper-button-next {
+            top: 185px;
+            right: -15px;
+            height: 52px;
+            width: 52px;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 1px solid #E0F0FF;
+            user-select: none;
+
+            &:after {
+                font-size: 25px;
+            }
+        }
+
+        .swiper-pagination {
+            bottom: -10px;
+            &-bullet {
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
+
+    .mySwiper-department {
+        .swiper-button-prev {
+            //top: 145px;
+            left: -15px;
+            height: 52px;
+            width: 52px;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 1px solid #E0F0FF;
+            user-select: none;
+
+            &:after {
+                font-size: 25px;
+            }
+        }
+
+        .swiper-button-next {
+            //top: 145px;
+            right: -15px;
+            height: 52px;
+            width: 52px;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 1px solid #E0F0FF;
+            user-select: none;
+
+            &:after {
+                font-size: 25px;
+            }
+        }
+    }
+
+    @media only screen and (max-width: 518px) {
+        .mySwiper {
+            height: auto;
+            .swiper-button-prev {
+                top: 100px;
+                height: 40px;
+                width: 40px;
+                left: -10px;
+            }
+            .swiper-button-next {
+                top: 100px;
+                height: 40px;
+                width: 40px;
+                right: -10px;
+            }
+            .swiper-pagination {
+                display: none;
+            }
+        }
+    }
+}

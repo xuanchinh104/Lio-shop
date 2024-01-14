@@ -1,0 +1,35 @@
+<div class="flex flex-row justify-between items-center h-[66px]">
+    <div>
+        <ng-container *ngIf="pageInfo$ | async as pageInfo">
+            <div class="text-xl font-bold" [attr.keyLabel]="pageInfo.f_Name">{{ pageInfo.f_Name }}</div>
+            <div class="text-sm h-[36px] flex items-center" *ngIf="pageInfo.f_Notes.length > 0" [attr.keyLabel]="pageInfo.f_Notes">
+                {{ pageInfo.f_Notes }}
+            </div>
+        </ng-container>
+    </div>
+    <div class="flex items-center gap-[10px]">
+        <ng-container *ngIf="isHiddenAction">
+            <ng-container *ngIf="isSync">
+                <button
+                    [HideIfUnauthorized]="roleAction.SyncPhongBan"
+                    (click)="onAsyncPhongBan()"
+                    class="!inline-flex items-center btn border !border-[#e0e0e0] mx-[5px] min-h-[35px] text-[#333] h-[35px] bg-white hover:!border-[#296fc9]"
+                    [attr.keyLabel]="'BTN.SYNC'"
+                >
+                    <i class="mr-2 zmdi zmdi-refresh-alt"></i>
+                    {{ 'BTN.SYNC' | transloco }}
+                </button>
+            </ng-container>
+            <button
+                class="btn btn-primary"
+                [HideIfUnauthorized]="roleAction.Create"
+                [attr.keyLabel]="keyTranslate"
+                (click)="onHandlerEvent()"
+            >
+                <i *ngIf="isIcon" class="icofont-plus mr-[5px]"></i>
+                {{ keyTranslate | transloco }}
+            </button>
+        </ng-container>
+        <ng-content select="[extraTemplate]"></ng-content>
+    </div>
+</div>

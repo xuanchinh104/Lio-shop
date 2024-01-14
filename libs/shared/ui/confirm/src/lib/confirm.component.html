@@ -1,0 +1,37 @@
+<div class="p-[1rem]">
+    <div class="flex">
+        <div class="flex-auto flex items-center text-[16px] font-semibold text-[#000]">
+            <i class="zmdi zmdi-help-outline mr-[8px] text-[24px] text-[#faad14]"></i>
+            <span> Bạn có muốn xóa dòng này ? </span>
+        </div>
+        <div class="ml-auto">
+            <div
+                (click)="close()"
+                class="chat__modal-close absolute right-[16px] flex justify-center items-center leading-normal w-[24px] h-[24px] !rounded-full cursor-pointer bg-[#F0F3F5] dark:bg-[#1F1D2B] dark:hover:bg-[#3e404933]"
+            >
+                <i class="zmdi zmdi-close text-[18px]"></i>
+            </div>
+        </div>
+    </div>
+    <div class="text-[14px] text-[#000000d9] mt-[8px] ml-[28px] pb-[10px]">
+        <ng-container *ngIf="isDeleteAll; else deleteTpl"> Bạn có chắc chắn muốn xóa những {{ title }} này không? </ng-container>
+        <ng-template #deleteTpl>
+            Bạn có thực sự muốn xóa {{ title }} <b>{{ value }}</b> không?
+        </ng-template>
+    </div>
+    <div class="flex justify-end mt-[24px]">
+        <button
+            class="min-w-[30px] inline-flex items-center justify-center p-[4px_15px] custor-pointer rounded-[5px] border-0 outline-0"
+            (click)="close()"
+        >
+            <span class="inline-flex"> Không </span>
+        </button>
+        <button
+            (click)="onSubmit()"
+            class="min-w-[30px] inline-flex items-center justify-center p-[4px_15px] custor-pointer rounded-[5px] text-white border-0 ml-[8px] bg-[#ed4043] border border-[#ed4043]"
+            style=""
+        >
+            <span class="inline-flex"> Có, xóa dữ liệu </span>
+        </button>
+    </div>
+</div>

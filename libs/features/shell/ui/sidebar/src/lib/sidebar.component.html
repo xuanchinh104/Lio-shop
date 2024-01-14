@@ -1,0 +1,63 @@
+<div class="h-full relative">
+    <ng-container>
+        <div class="h-[calc(100%-54px)] scrollbar scrollbar-hover">
+            <ng-container *ngFor="let menuItem of menuTops$ | async; let i = index; trackBy: trackByIndex">
+                <a
+                    [routerLink]="[menuItem.url]"
+                    routerLinkActive="active"
+                    class="menu__item flex items-center select-none h-[48px] rounded cursor-pointer m-[4px] hover:bg-[#e5efff]"
+                    *ngIf="menuItem.isMainMenu; else subMenu"
+                >
+                    <span class="menu__item--icon w-[34px] shrink-0 text-center">
+                        <i [ngClass]="menuItem.cssBadge" class="text-[18px] text-[#6e757d]"></i>
+                    </span>
+                    <span class="menu__item--title text-[#3c4858] text-[14px] font-medium flex-1"> {{ menuItem.title }} </span>
+                </a>
+                <ng-template #subMenu>
+                    <nz-collapse nzAccordion [nzBordered]="false" class="!bg-transparent">
+                        <nz-collapse-panel
+                            [nzActive]="menuItem.isActive"
+                            [nzHeader]="panelTitle"
+                            [nzShowArrow]="false"
+                            class="!border-none m-[4px] !rounded relative"
+                        >
+                            <ng-template #panelTitle>
+                                <div class="menu__item flex items-center select-none h-[48px] rounded hover:bg-[#e5efff]">
+                                    <span class="menu__item--icon w-[34px] shrink-0 text-center">
+                                        <i [ngClass]="menuItem.cssBadge" class="text-[18px] text-[#6e757d]"></i>
+                                    </span>
+                                    <span class="menu__item--title text-[#3c4858] text-[14px] font-medium flex-1 whitespace-nowrap">
+                                        {{ menuItem.title }}
+                                    </span>
+                                    <svg
+                                        class="menu__item--arrow w-[24px] h-[24px]"
+                                        focusable="false"
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                    >
+                                        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="#6e757d"></path>
+                                    </svg>
+                                </div>
+                            </ng-template>
+                            <div class="submenu__content">
+                                <a
+                                    *ngFor="let item of menuItem.manHinhs; trackBy: trackByFunc"
+                                    [routerLink]="[item.f_Path]"
+                                    class="menu__item flex items-center text-[#3c4858] h-[40px] pl-[34px] rounded hover:text-[#0F1824] hover:bg-[#e5efff] whitespace-nowrap"
+                                    routerLinkActive="active"
+                                >
+                                    {{ item.f_Name }}
+                                </a>
+                            </div>
+                        </nz-collapse-panel>
+                    </nz-collapse>
+                </ng-template>
+            </ng-container>
+        </div>
+        <div class="flex justify-end absolute bottom-0 left-0 w-full p-[16px] bg-white">
+            <div (click)="onToggleSidebar()" class="toggle__sidebar cursor-pointer">
+                <i class="zmdi zmdi-menu text-[20px] text-[#6e757d]"></i>
+            </div>
+        </div>
+    </ng-container>
+</div>

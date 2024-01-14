@@ -1,0 +1,92 @@
+<div
+    class="relative group flex items-center justify-center !rounded-full bg-[#fff] dark:bg-[#1F1D2B]"
+    [ngClass]="{ '!border-[2px] border-[#F0F3F5] dark:border-[#252836]': !dataAvatar.borderNone }"
+>
+    <ng-container *ngIf="(isLoading$ | async)!; else imgTmpl">
+        <img
+            [src]=""
+            [ngStyle]="{ width: dataAvatar.size + 'px', height: dataAvatar.size + 'px', cursor: dataAvatar.isView ? 'pointer' : '' }"
+            class="w-full h-full bg-no-repeat text-center border-none object-cover rounded-full"
+            alt=""
+        />
+    </ng-container>
+    <ng-template #imgTmpl>
+        <img
+            *ngIf="avatarUrl$ | async as avtUrl; else imgNotfoundTpl"
+            [src]="avtUrl | convertUrl"
+            class="overflow-hidden object-cover !rounded-full shrink-0"
+            #avatar
+            [ngStyle]="{ width: dataAvatar.size + 'px', height: dataAvatar.size + 'px', cursor: dataAvatar.isView ? 'pointer' : '' }"
+            (error)="setDefaultAvatar($event)"
+            alt="img"
+        />
+        <ng-template #imgNotfoundTpl>
+            <div
+                *ngIf="initials; else defaultAvtTpl"
+                [ngStyle]="{
+                    'background-color': circleColor ? circleColor : '#125093',
+                    width: dataAvatar.size + 'px',
+                    height: dataAvatar.size + 'px'
+                }"
+                class="flex items-center justify-center !rounded-full"
+            >
+                <div class="text-sm text-white font-medium" [ngStyle]="{ 'font-size': paramAvatar?.textSize + 'px' }">
+                    {{ initials }}
+                </div>
+            </div>
+            <ng-template #defaultAvtTpl>
+                <img
+                    [src]="'assets/images/no-avatar.jpg'"
+                    class="overflow-hidden object-cover !rounded-full shrink-0"
+                    #avatar
+                    [ngStyle]="{
+                        width: dataAvatar.size + 'px',
+                        height: dataAvatar.size + 'px',
+                        cursor: dataAvatar.isView ? 'pointer' : ''
+                    }"
+                />
+            </ng-template>
+        </ng-template>
+    </ng-template>
+    <div
+        *ngIf="dataAvatar.isEdit"
+        class="flex justify-center items-center absolute inset-0 bg-[rgba(0,0,0,0.4)] flex items-center justify-center cursor-pointer transition-all opacity-0 !rounded-full group-hover:opacity-100 text-white"
+    >
+        <div class="p-[8px]">
+            <label for="file">
+                <input class="hidden" type="file" id="file" (change)="uploadFile($event)" #fileInput accept="image/png, image/jpeg" />
+                <ng-container *ngIf="!dataAvatar.avatarUrl; else tmplAvatar">
+                    <div class="cursor-pointer">
+                        <svg-icon key="camera" fontSize="22px"></svg-icon>
+                    </div>
+                </ng-container>
+                <ng-template #tmplAvatar>
+                    <div class="cursor-pointer">
+                        <i
+                            class="zmdi zmdi-edit text-[22px]"
+                            nz-popover
+                            nzPopoverTrigger="click"
+                            [(nzPopoverVisible)]="visible"
+                            nzPopoverPlacement="bottom"
+                            [nzPopoverContent]="contentTemplate"
+                            [nzPopoverOverlayClassName]="'popoverImage'"
+                        ></i>
+                        <ng-template #contentTemplate>
+                            <ul nz-menu nzSelectable class="border-none">
+                                <li (click)="fileInput.click()" nz-menu-item class="dropdown-item">
+                                    <a [attr.keyLabel]="'LH.EDIT_IMAGE'">{{ 'LH.EDIT_IMAGE' | transloco }}</a>
+                                </li>
+                                <li nz-menu-item class="dropdown-item" (click)="viewAvatar()">
+                                    <a [attr.keyLabel]="'LH.VIEW_IMAGE'">{{ 'LH.VIEW_IMAGE' | transloco }}</a>
+                                </li>
+                            </ul>
+                        </ng-template>
+                    </div>
+                </ng-template>
+            </label>
+        </div>
+        <div class="p-[8px]" *ngIf="dataAvatar.isView && dataAvatar.avatarUrl">
+            <svg-icon key="eye" fontSize="22px"></svg-icon>
+        </div>
+    </div>
+</div>

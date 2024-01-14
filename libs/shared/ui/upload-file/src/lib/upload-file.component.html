@@ -1,0 +1,53 @@
+<ng-container *ngIf="fileName; else tmplNoFile">
+    <div
+        class="group flex flex-col relative cursor-pointer bg-white w-[180px] h-[100px] overflow-hidden z-0 no-underline border border-[#e5e5e5] transition duration-500"
+    >
+        <div class="overflow-hidden">
+            <div class="h-[68px] transition duration-300 ease-in flex items-center justify-center p-[4px] group-hover:scale-110">
+                <svg-icon [key]="fileName | fileType" fontSize="40px"></svg-icon>
+            </div>
+            <div
+                *ngIf="isXem"
+                class="absolute top-[30px] left-0 w-full text-center hidden transition duration-300 ease-in group-hover:block"
+            >
+                <button
+                    type="button"
+                    (click)="removeFile()"
+                    class="btn btn-sm ml-2 text-white bg-[rgba(0,0,0,0.3)] transition duration-500 group-hover:bg-[rgba(0,0,0,0.4)]"
+                >
+                    <i class="icofont-trash"></i>
+                </button>
+
+                <button
+                    type="button"
+                    (click)="onViewFile()"
+                    class="btn btn-sm ml-2 text-white bg-[rgba(0,0,0,0.3)] transition duration-500 group-hover:bg-[rgba(0,0,0,0.4)]"
+                >
+                    <i class="icofont-eye-alt"></i>
+                </button>
+            </div>
+        </div>
+        <div
+            class="h-[30px] w-full bg-[#f5f5f5] flex items-center justify-center overflow-hidden text-ellipsis whitespace-nowrap border-t border-t-[#f5f5f5] px-[8px]"
+        >
+            <div
+                class="text-center text-[#777] text-[12px] font-bold leading-[16px] overflow-hidden text-ellipsis whitespace-nowrap w-[calc(100%-30px)]"
+            >
+                {{ fileName }}
+            </div>
+        </div>
+    </div>
+</ng-container>
+<ng-template #tmplNoFile>
+    <div
+        (files)="filesDropped($event)"
+        asFileDrag
+        (click)="fileInput.click()"
+        class="w-[180px] h-[100px] flex justify-center items-center border border-dashed border-[#0075E1] cursor-pointer"
+    >
+        <div class="flex justify-center items-center mb-[5px]">
+            <i class="icofont-plus-circle text-[#0075E1] text-[28px]"></i>
+        </div>
+        <input type="file" #fileInput class="hidden" (change)="uploadFile($event)" />
+    </div>
+</ng-template>

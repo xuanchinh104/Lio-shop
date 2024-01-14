@@ -1,0 +1,199 @@
+<skeleton-list *ngIf="isSkeleton$ | async as loading; else contentLoader" [loading]="loading"></skeleton-list>
+<ng-template #contentLoader>
+    <div class="relative">
+        <asc-grid-header [isHiddenAction]="false"></asc-grid-header>
+        <div class="flex">
+            <div [ngClass]="this.isSearchAdvanced ? 'flex-1' : 'basis-full'" class="shadow bg-white rounded overflow-hidden">
+                <div class="rounded overflow-hidden bg-white shadow">
+                    <div class="w-full h-[55px] flex items-center justify-center px-[15px] py-2.5">
+                        <ng-container *ngIf="selectionIds && selectionIds.length > 0; else searchTpl">
+                            <label class="mr-2.5" [attr.keyLabel]="'LB.SELECTED'"
+                                ><b>{{ selectionIds.length }}</b> {{ 'LB.SELECTED' | transloco }}
+                            </label>
+                            <label
+                                class="cursor-pointer text-[#2a7efc] mr-2.5"
+                                (click)="onDeselectedAll()"
+                                [attr.keyLabel]="'LB.UNSELECTED'"
+                                >{{ 'LB.UNSELECTED' | transloco }}</label
+                            >
+                            <button
+                                (click)="onSyncNhanSu()"
+                                class="!inline-flex items-center btn border !border-[#e0e0e0] mx-[5px] min-h-[35px] text-[#333] hover:!border-[#296fc9]"
+                                [attr.keyLabel]="'BTN.SYNC'"
+                            >
+                                <i class="mr-2 zmdi zmdi-refresh-alt"></i>
+                                {{ 'BTN.SYNC' | transloco }}
+                            </button>
+                        </ng-container>
+                        <ng-template #searchTpl>
+                            <asc-grid-search [formControl]="searchControl"></asc-grid-search>
+                            <div>
+                                <button
+                                    class="!inline-flex items-center btn border !border-[#e0e0e0] mr-[5px] ml-[10px] min-h-[35px] text-[#333] hover:!border-[#296fc9]"
+                                    (click)="onToggleSearchAdvanced()"
+                                >
+                                    <i class="icofont-filter text-[#6e757d]"></i>
+                                </button>
+                            </div>
+                        </ng-template>
+                        <div class="ml-auto"></div>
+                    </div>
+                    <div class="grid-wrapper grid-none-border" [ngStyle]="{ 'height.px': pageHeight }">
+                        <kendo-grid
+                            [data]="(gridView$ | async)!"
+                            [loading]="(isLoading$ | async)!"
+                            [pageSize]="gridState.take!"
+                            [skip]="gridState.skip!"
+                            [pageable]="(pageSetting$ | async)!"
+                            [resizable]="true"
+                            [columnMenu]="false"
+                            [sortable]="false"
+                            [selectable]="{ enabled: true, checkboxOnly: true }"
+                            [navigable]="true"
+                            kendoGridFocusable
+                            kendoGridSelectBy="id"
+                            [selectedKeys]="selectionIds"
+                            [sort]="gridState.sort!"
+                            [style.height]="'100%'"
+                            (dataStateChange)="onStateChange($event)"
+                        >
+                            <ng-template kendoGridNoRecordsTemplate>
+                                <div [attr.keyLabel]="'LB.NO_DATA'">
+                                    {{ 'LB.NO_DATA' | transloco }}
+                                </div>
+                            </ng-template>
+                            <kendo-grid-checkbox-column
+                                [showSelectAll]="true"
+                                [width]="45"
+                                class="text-center"
+                                [headerStyle]="{ 'text-align': 'center' }"
+                            >
+                            </kendo-grid-checkbox-column>
+                            <kendo-grid-column [title]="'LB.STT' | transloco" [width]="50" [headerStyle]="{ 'text-align': 'center' }">
+                                <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+                                    <div class="text-center">
+                                        {{ rowIndex + 1 }}
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column field="maNhanSu" class="text-center" [title]="'USER.CODE' | transloco" [width]="150">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <div class="dark">
+                                        <b>{{ dataItem.maNhanSu ?? '-' }}</b>
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column [title]="'LB.HO_TEN' | transloco" field="hoDem" [width]="200">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <div class="dark">
+                                        <b>{{ dataItem.hoDem }} {{ dataItem.ten }}</b>
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column
+                                [columnMenu]="false"
+                                field="email"
+                                [headerStyle]="{ 'text-align': 'left' }"
+                                [title]="'USER.EMAIL' | transloco"
+                                [width]="250"
+                            >
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <div class="truncate text-left">
+                                        {{ dataItem.email ? dataItem.email : '-' }}
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column [columnMenu]="false" field="diaChi" [title]="'USER.ADDRESS' | transloco">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    {{ dataItem.diaChi ? dataItem.diaChi : '-' }}
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column
+                                [columnMenu]="false"
+                                [sortable]="false"
+                                [title]="'BTN.SYNC' | transloco"
+                                [width]="100"
+                                [headerStyle]="{ 'text-align': 'center' }"
+                            >
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <div class="text-center" *ngIf="dataItem.isDongBo; else defaultTpl">
+                                        <i class="zmdi zmdi-check-circle text-[18px] text-green-500"></i>
+                                    </div>
+                                    <ng-template #defaultTpl>
+                                        <div class="text-center">-</div>
+                                    </ng-template>
+                                </ng-template>
+                            </kendo-grid-column>
+                        </kendo-grid>
+                    </div>
+                </div>
+            </div>
+            <div
+                *ngIf="isSearchFirsttime"
+                [formGroup]="formSearch"
+                [ngClass]="this.isSearchAdvanced ? 'w-[270px]' : 'hidden'"
+                class="rounded bg-white transition duration-500 shadow-[0_1px_3px_rgba(0,0,0,0.1)] ml-[15px]"
+            >
+                <div class="flex flex-col">
+                    <div class="flex justify-between items-center relative h-[50px] px-[15px]">
+                        <div class="text-lg font-bold" [attr.keyLabel]="'LB.BO_LOC'">{{ 'LB.BO_LOC' | transloco }}</div>
+                        <div
+                            (click)="onToggleSearchAdvanced()"
+                            class="grid place-content-center w-[30px] h-[30px] text-[#666] transition-all duration-300 ease-in-out rounded-full cursor-pointer hover:bg-gray-100"
+                        >
+                            <svg-icon key="close" fontSize="22px"></svg-icon>
+                        </div>
+                    </div>
+                    <div
+                        class="flex-auto scrollbar scrollbar-hover py-[10px] px-[15px] h-[calc(100%-50px)]"
+                        [ngStyle]="{ 'height.px': pageHeight - 45 }"
+                    >
+                        <div class="form-group">
+                            <label class="inline-block mb-[.5rem]" [attr.keyLabel]="'USER.EMAIL'">{{ 'USER.EMAIL' | transloco }}</label>
+                            <asc-form-control formControlName="email"></asc-form-control>
+                        </div>
+                        <div class="form-group">
+                            <label class="inline-block mb-[.5rem]" [attr.keyLabel]="'USER.PHONE_NUMBER'">{{
+                                'USER.PHONE_NUMBER' | transloco
+                            }}</label>
+                            <asc-form-control formControlName="phoneNumber"></asc-form-control>
+                        </div>
+                        <div class="form-group">
+                            <label class="inline-block mb-[.5rem]" [attr.keyLabel]="'LB.DON_VI'">{{ 'LB.DON_VI' | transloco }}</label>
+                            <select-control formControlName="idCoSo" [placeholder]="''"></select-control>
+                        </div>
+                        <div class="form-group">
+                            <label class="inline-block mb-[.5rem]" [attr.keyLabel]="'LB.PHONG_BAN'">{{ 'LB.PHONG_BAN' | transloco }}</label>
+
+                            <div class="relative">
+                                <nz-select formControlName="idPhongBan" nzAllowClear nzShowSearch>
+                                    <nz-option *ngFor="let item of phongBans$ | async" [nzValue]="item.id" [nzLabel]="item.tenPhongBan">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="inline-block mb-[.5rem]" [attr.keyLabel]="'LB.CHUC_VU'">{{ 'LB.CHUC_VU' | transloco }}</label>
+                            <select-control formControlName="idChucVu" [placeholder]="''"></select-control>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between h-[50px] p-[15px]">
+                        <asc-button
+                            [attr.keyLabel]="'BTN.RESET'"
+                            (click)="refreshHandler()"
+                            [btnClass]="'btn btn-light'"
+                            [btnText]="'BTN.RESET' | transloco"
+                        ></asc-button>
+                        <asc-button
+                            (click)="onSearchChange()"
+                            [btnClass]="'btn btn-primary'"
+                            [btnText]="'BTN.SEARCH' | transloco"
+                            [attr.keyLabel]="'BTN.SEARCH'"
+                        >
+                        </asc-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

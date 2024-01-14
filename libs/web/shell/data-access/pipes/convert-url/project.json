@@ -1,0 +1,26 @@
+{
+    "projectType": "library",
+    "root": "libs/web/shell/data-access/pipes/convert-url",
+    "sourceRoot": "libs/web/shell/data-access/pipes/convert-url/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/web/shell/data-access/pipes/convert-url"],
+            "options": {
+                "jestConfig": "libs/web/shell/data-access/pipes/convert-url/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/web/shell/data-access/pipes/convert-url/src/**/*.ts",
+                    "libs/web/shell/data-access/pipes/convert-url/src/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

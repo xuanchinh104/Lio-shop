@@ -1,0 +1,18 @@
+:host::ng-deep {
+    .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+        padding: 0;
+    }
+
+    .ant-collapse-content > .ant-collapse-content-box {
+        padding: 0 !important;
+    }
+
+    .ant-collapse-item-active .menu__item--arrow {
+        transform: rotate(90deg);
+    }
+
+}
+
+.active {
+    background-color: #e5efff;
+}

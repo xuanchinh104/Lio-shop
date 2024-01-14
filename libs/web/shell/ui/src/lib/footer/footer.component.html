@@ -1,0 +1,50 @@
+<div class="w-full py-[20px] flex items-center justify-center relative mt-[-101px]">
+    <div class="border-t border-[#0F4EA0] w-full"></div>
+    <div class="w-[250px] shrink-0 flex justify-center">
+        <img src="./assets/web/dhnd.png" alt="alt" class="block" />
+    </div>
+    <div class="border-t border-[#0F4EA0] w-full"></div>
+</div>
+<footer class="bg-[#E5F1FF]">
+    <div class="container">
+        <div class="py-[50px]">
+            <div class="grid gap-[20px] md:gap-[80px] grid-cols-1 sm:grid-cols-2 items-baseline">
+                <div class="single-footer-widget">
+                    <div class="flex flex-col gap-[18px]">
+                        <div class="w-[400px] shrink-0">
+                            <img src="./assets/web/banner-flower.png" alt="logo" />
+                        </div>
+                        <!--                        <div class="flex-auto">-->
+                        <!--                            <h2 class="font-bold text-[18px] md:text-[24px] text-[#1B2C43] mb-[18px]">-->
+                        <!--                                ''-->
+                        <!--                            </h2>-->
+                        <!--                        </div>-->
+                    </div>
+                    <ul class="flex gap-[12px]">
+                        <li *ngFor="let item of footerSocial$ | async">
+                            <a
+                                [href]="item.Link"
+                                target="_blank"
+                                class="w-[46px] h-[46px] bg-white rounded-full inline-flex items-center justify-center cursor-pointer"
+                            >
+                                <img [src]="mediaServer + '/' + item.Img" [alt]="item.Link" />
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="single-footer-widget">
+                    <h3 class="text-[#6F7A8A] text-[16px] md:text-[20px] font-bold mb-[16px]" [attr.keyLabel]="'LIEN_HE'">
+                        {{ 'LIEN_HE' | transloco }}
+                    </h3>
+                    <ul>
+                        <li class="flex gap-[10px] mb-[12px]" *ngFor="let item of footerContents$ | async">
+                            <svg-icon [key]="item.icon" class="shrink-0 !w-[20px] !h-[24px]"></svg-icon>
+                            <span class="text-[#1B2C43] text-[14px] md:text-[16px]">{{ item.title }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="h-[24px] bg-[#0F4EA0]"></div>
+</footer>

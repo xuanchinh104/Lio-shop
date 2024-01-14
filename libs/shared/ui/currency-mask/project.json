@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/ui/currency-mask",
+    "sourceRoot": "libs/shared/ui/currency-mask/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/ui/currency-mask"],
+            "options": {
+                "jestConfig": "libs/shared/ui/currency-mask/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/ui/currency-mask/src/**/*.ts", "libs/shared/ui/currency-mask/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

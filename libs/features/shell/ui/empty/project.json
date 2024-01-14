@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/features/shell/ui/empty",
+    "sourceRoot": "libs/features/shell/ui/empty/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/features/shell/ui/empty"],
+            "options": {
+                "jestConfig": "libs/features/shell/ui/empty/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/features/shell/ui/empty/src/**/*.ts", "libs/features/shell/ui/empty/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

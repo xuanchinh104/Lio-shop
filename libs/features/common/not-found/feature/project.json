@@ -1,0 +1,26 @@
+{
+    "projectType": "library",
+    "root": "libs/features/common/not-found/feature",
+    "sourceRoot": "libs/features/common/not-found/feature/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/features/common/not-found/feature"],
+            "options": {
+                "jestConfig": "libs/features/common/not-found/feature/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/features/common/not-found/feature/src/**/*.ts",
+                    "libs/features/common/not-found/feature/src/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

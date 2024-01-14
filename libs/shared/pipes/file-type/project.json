@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/pipes/file-type",
+    "sourceRoot": "libs/shared/pipes/file-type/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/pipes/file-type"],
+            "options": {
+                "jestConfig": "libs/shared/pipes/file-type/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/pipes/file-type/src/**/*.ts", "libs/shared/pipes/file-type/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

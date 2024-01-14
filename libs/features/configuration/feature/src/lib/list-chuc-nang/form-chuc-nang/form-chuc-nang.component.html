@@ -1,0 +1,50 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <asc-wrap-form (closeForm)="close()" (zoomForm)="zoomForm($event)">
+        <ng-container ngProjectAs="[formTitle]">
+            {{ 'MODULE.CHUC_NANG' | transloco }}
+        </ng-container>
+        <ng-container ngProjectAs="[formBody]">
+            <div class="grid grid-cols-12 gap-4 mb-4">
+                <label class="col-span-3 text-[13px] text-[#201e1e] mt-1 font-medium">{{ 'MODULE.LOAI' | transloco }}</label>
+                <div class="col-span-9 flex items-center">
+                    <nz-radio-group formControlName="actionType">
+                        <label nz-radio [nzValue]="1">{{ 'PER.VIEW' | transloco }}</label>
+                        <label nz-radio [nzValue]="2">{{ 'PER.ADD' | transloco }}</label>
+                        <label nz-radio [nzValue]="3">{{ 'PER.EDIT' | transloco }}</label>
+                        <label nz-radio [nzValue]="4">{{ 'PER.DELETE' | transloco }}</label>
+                        <label nz-radio [nzValue]="5">{{ 'PER.OPTION' | transloco }}</label>
+                    </nz-radio-group>
+                </div>
+            </div>
+            <div class="form-group grid grid-cols-12 gap-4 mb-4">
+                <label class="col-span-3 text-[13px] text-[#201e1e] mt-1 font-medium">{{ 'MODULE.CHUC_NANG' | transloco }}</label>
+                <div class="col-span-9 relative">
+                    <input class="form-control" formControlName="name" />
+                </div>
+            </div>
+            <div class="form-group grid grid-cols-12 gap-4 mb-4">
+                <label class="col-span-3 text-[13px] text-[#201e1e] mt-1 font-medium">{{ 'MODULE.ACTION_NAME' | transloco }}</label>
+                <div class="col-span-9 relative">
+                    <input class="form-control" formControlName="actionName" />
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4 mb-4">
+                <label class="col-span-3 text-[13px] text-[#201e1e] mt-1 font-medium">{{ 'MODULE.CONTROLLER' | transloco }}</label>
+                <div class="col-span-9">
+                    <input class="form-control" formControlName="controllerName" />
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4 mb-4">
+                <label class="col-span-3 text-[13px] text-[#201e1e] mt-1 font-medium">{{ 'MODULE.KEY_QUYEN_TU_CHON' | transloco }}</label>
+                <div class="col-span-9">
+                    <input class="form-control" formControlName="optionKey" />
+                </div>
+            </div>
+        </ng-container>
+        <ng-container ngProjectAs="[formFooter]">
+            <asc-button (click)="close()" [btnClass]="'btn-white'" [btnText]="'BTN.CANCEL' | transloco" class="mr-[8px]"> </asc-button>
+            <asc-button [isSubmit]="true" [isLoading]="isSubmited" [btnClass]="'btn-primary'" [btnText]="'BTN.SAVE' | transloco">
+            </asc-button>
+        </ng-container>
+    </asc-wrap-form>
+</form>

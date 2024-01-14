@@ -1,0 +1,118 @@
+<div class="py-[20px]">
+    <div
+        class="px-[20px] grid grid-cols-[minmax(0,1fr)_50px] sm:grid-cols-[minmax(0,1fr)_50px] mb-[10px] rounded-[11px] text-[16px] text-[#0063E2] font-semibold gap-[15px]"
+    >
+        <div class="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_140px] xl:grid-cols-[minmax(0,1fr)_170px_200px_170px_170px_140px]">
+            <div [attr.keyLabel]="'TEN_LOP_DAO_TAO'" class="flex items-center justify-start">
+                {{ 'TEN_LOP_DAO_TAO' | transloco }}
+            </div>
+            <div
+                [attr.keyLabel]="'NGAY_BAT_DAU_KHAI_GIANG'"
+                class="sm:px-[8px] text-[14px] sm:text-[16px] xl:flex items-center justify-center hidden"
+            >
+                {{ 'NGAY_BAT_DAU_KHAI_GIANG' | transloco }}
+            </div>
+            <div
+                [attr.keyLabel]="'NGAY_KET_THUC_DANG_KY'"
+                class="sm:px-[8px] text-[14px] sm:text-[16px] xl:flex items-center justify-center hidden"
+            >
+                Ngày kết thúc dự kiến
+            </div>
+            <div
+                [attr.keyLabel]="'NGAY_BAT_DAU_KHAI_GIANG'"
+                class="sm:px-[8px] text-[14px] sm:text-[16px] xl:flex items-center justify-center hidden"
+            >
+                {{ 'HAN_DANG_KY' | transloco }}
+            </div>
+            <div
+                [attr.keyLabel]="'NGAY_KET_THUC_DANG_KY'"
+                class="sm:px-[8px] text-[14px] sm:text-[16px] xl:flex items-center justify-center hidden"
+            >
+                Hạn nộp hồ sơ
+            </div>
+            <div class="text-[14px] sm:px-[16px] sm:text-[16px] items-center justify-end hidden sm:flex">
+                {{ 'HOC_PHI' | transloco }}
+            </div>
+        </div>
+        <div [attr.keyLabel]="'XOA'" class="flex items-center justify-center">
+            {{ 'XOA' | transloco }}
+        </div>
+    </div>
+    <ng-container *ngIf="selectedCourses.length > 0; else noDataTpl">
+        <div
+            *ngFor="let child of selectedCourses; trackBy: trackByFunc"
+            class="bg-[#F5F9FE] p-[20px] mb-[10px] rounded-[8px] font-semibold text-[16px] grid grid-cols-[minmax(0,1fr)_50px] sm:grid-cols-[minmax(0,1fr)_50px] border border-[#E0F0FF] auto-cols-fr gap-[15px]"
+        >
+            <div class="flex flex-col gap-[10px]">
+                <ng-container *ngFor="let course of child.children">
+                    <div
+                        class="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_140px] xl:grid-cols-[minmax(0,1fr)_170px_200px_170px_170px_140px]"
+                    >
+                        <div
+                            class="flex flex-col gap-[10px] justify-start font-semibold text-[15px] hover:cursor-pointer mb-[10px] xl:mb-0"
+                        >
+                            <div>{{ course.tenLop }}</div>
+                            <div class="flex flex-col gap-[7px] xl:hidden text-[13px] text-gray-500">
+                                <span class="inline-block w-max">Ngày khai giảng : {{ course.ngayBatDau | date : 'dd/MM/yyyy' }}</span>
+                                <span class="inline-block w-max"
+                                    >Ngày kết thúc dự kiến : {{ course.ngayKetThuc | date : 'dd/MM/yyyy' }}</span
+                                >
+                                <span class="inline-block w-max" *ngIf="course.thoiGianKetThucDangKy"
+                                    >Hạn đăng ký : {{ course.thoiGianKetThucDangKy | date : 'dd/MM/yyyy' }}</span
+                                >
+                                <span class="inline-block w-max" *ngIf="course.thoiGianKetThucNopHoSo"
+                                    >Hạn nộp hồ sơ : {{ course.thoiGianKetThucNopHoSo | date : 'HH:mm dd/MM/yyyy' }}</span
+                                >
+                                <span class="inline-block w-max sm:hidden"
+                                    >Học phí :
+                                    {{
+                                        course.hocPhiPhaiNop ? (course.hocPhiPhaiNop | currencyFormat) : (course.hocPhi | currencyFormat)
+                                    }}
+                                    đ</span
+                                >
+                            </div>
+                        </div>
+                        <div
+                            class="font-medium sm:font-semibold sm:px-[8px] xl:flex text-[14px] sm:text-[15px] items-center justify-center hidden"
+                        >
+                            {{ course.ngayBatDau | date : 'dd/MM/yyyy' }}
+                        </div>
+                        <div
+                            class="font-medium sm:font-semibold sm:px-[8px] xl:flex text-[14px] sm:text-[15px] items-center justify-center hidden"
+                        >
+                            {{ course.ngayKetThuc | date : 'dd/MM/yyyy' }}
+                        </div>
+                        <div
+                            class="font-medium sm:font-semibold sm:px-[8px] xl:flex text-[14px] sm:text-[15px] items-center justify-center hidden"
+                        >
+                            {{ course.thoiGianKetThucDangKy | date : 'dd/MM/yyyy' }}
+                        </div>
+                        <div
+                            class="font-medium sm:font-semibold sm:px-[8px] xl:flex text-[14px] sm:text-[15px] items-center justify-center hidden"
+                        >
+                            {{ course.thoiGianKetThucNopHoSo | date : 'HH:mm dd/MM/yyyy' }}
+                        </div>
+                        <div
+                            class="font-medium sm:font-semibold sm:px-[15px] sm:text-[15px] text-[14px] items-start justify-end hidden sm:flex"
+                        >
+                            {{ course.hocPhiPhaiNop ? (course.hocPhiPhaiNop | currencyFormat) : (course.hocPhi | currencyFormat) }} đ
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            <div
+                (click)="onRemoveCourse(child.id)"
+                class="flex items-start !justify-center sm:justify-start cursor-pointer text-[#6F7A8A] hover:text-red-500"
+            >
+                <svg-icon key="delete-course" fontSize="24px"></svg-icon>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #noDataTpl>
+        <div
+            class="bg-[#F5F9FE] text-[13px] sm:text-[16px] p-[15px] text-center rounded-[11px] font-semibold text-[#6F7A8A] border border-[#E0F0FF]"
+        >
+            {{ 'VUI_LONG_CHON_LOP_HOC' | transloco }}
+        </div>
+    </ng-template>
+</div>

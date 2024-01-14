@@ -1,0 +1,25 @@
+export const MessageConstant = {
+    COMMON: {
+        MSG_SERVER_DISCONNECT: 'Không kết nối được tới server, vui lòng kiểm tra lại !',
+        MSG_INTERNET_REFUSE: 'Kiểm tra lại kết nối internet',
+        MSG_ERROR_SYSTEM: 'Có lỗi xảy ra, vui lòng kiểm tra lại !',
+        MSG_SAVED_DONE: 'Lưu thay đổi thành công',
+        MSG_CREATE_DONE: 'Tạo mới thành công',
+        MSG_UPDATE_DONE: 'Cập nhật dữ liệu thành công',
+        MSG_DELETE_DONE: 'Xóa dữ liệu thành công',
+        MSG_LOGIN_DONE: 'Đăng nhập vào hệ thống thành công',
+        MSG_REGISTER_DONE: 'Đăng ký tài khoản thành công, Vui lòng nhập tài khoản để đăng nhập vào hệ thống !',
+        MSG_ERROR_CODE_NOTFOUND: 'Mã lỗi chưa được định nghĩa',
+        MSG_FORMAT_INVALID: 'Định dạng dữ liệu chưa chính xác',
+        MSG_RATED_DONE: 'Đánh giá thành công',
+        MSG_CREATE_DONE_2: 'Khởi tạo dữ liệu thành công',
+        MSG_CREATE_DONE_3: 'Tổng hợp dữ liệu thành công',
+        MSG_COPY_DONE: 'Sao chép dữ liệu thành công',
+        MSG_SYNC_DONE: 'Đồng bộ dữ liệu thành công',
+        MSG_FEATURE_DEVELOPING: 'Tính năng đang phát triển',
+
+        MSG_LAST_COLUMN_CANNOT_PINNED: 'Không thể ghim cột cuối cùng',
+        MSG_DOWNLOAD_IMAGE_ERROR: 'Tải ảnh không thành công, vui lòng thử lại !',
+    },
+    AUTH: {},
+};

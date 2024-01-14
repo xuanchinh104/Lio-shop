@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/ui/carousel",
+    "sourceRoot": "libs/shared/ui/carousel/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/ui/carousel"],
+            "options": {
+                "jestConfig": "libs/shared/ui/carousel/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/ui/carousel/src/**/*.ts", "libs/shared/ui/carousel/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

@@ -1,0 +1,14 @@
+<kendo-grid [data]="permissionList">
+    <kendo-grid-column [title]="'STT'" [width]="60">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+            {{ rowIndex + 1 }}
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column [columnMenu]="false" field="label" [title]="'LB.PHONG_BAN' | transloco" [sortable]="false"></kendo-grid-column>
+    <kendo-grid-column [width]="60" [headerStyle]="{ 'text-align': 'center' }" [style]="{ 'text-align': 'center' }">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <i (click)="removePermissionItem(dataItem.id)" nz-icon nzType="close" nzTheme="outline" class="text-red-500"></i>
+        </ng-template>
+    </kendo-grid-column>
+</kendo-grid>
+<!--(click)="removePermissionItem(item.id, dataItem.idUser)"-->

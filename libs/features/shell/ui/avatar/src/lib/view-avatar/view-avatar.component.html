@@ -1,0 +1,12 @@
+<div class="flex flex-col h-[98vh] md:h-screen sm:h-screen xl:h-screen lg:h-screen">
+    <div class="z-[2] flex items-center justify-between h-[60px] p-[0_15px] bg-transparent w-auto">
+        <div></div>
+        <div (click)="close()"
+             class="flex items-center justify-center h-[40px] w-[40px] text-[#fff] cursor-pointer bg-[#d3d3d35c] !rounded-full">
+            <i class="icofont-close-line text-[22px] text-[#D9E1EC]"></i>
+        </div>
+    </div>
+    <div class="absolute overflow-visible bg-transparent flex items-center grow-0 shrink-0 inset-0 bg-center bg-no-repeat background-size border-none justify-center z-[1]">
+        <img class="h-[50%]" [src]="avatar | convertUrl">
+    </div>
+</div>

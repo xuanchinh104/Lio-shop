@@ -1,0 +1,57 @@
+<ng-container *ngIf="!receipt; else receiptDetailTpl">
+    <div class="p-[16px] md:p-[24px]">
+        <h2 class="text-[20px] text-[#1B2C4] font-bold mb-[30px]">{{ 'DS_PHIEU_THU_TONGG_HOP' | transloco }}</h2>
+
+        <div
+            class="rounded-[10px] shadow-[0px_4px_10px_rgba(0,52,99,0.05)] border border-[#F0F3F5] bg-white p-[16px] md:p-[20px] mb-[12px]"
+            *ngFor="let item of receipts$ | async; trackBy: trackByFunc"
+        >
+            <div class="flex flex-col md:flex-row justify-between mb-[12px]">
+                <div class="text-[16px] font-semibold">{{ item.noiDungThu }}</div>
+                <div class="text-[#6F7A8A] text-[14px]">
+                    {{ 'SO_PHIEU' | transloco }} <span class="text-[#1B2C43]">{{ item.soPhieu ? item.soPhieu : '-' }}</span>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between md:items-end">
+                <div class="">
+                    <div class="flex text-[14px] mt-[10px]">
+                        <span class="text-[#6F7A8A] w-[150px]">{{ 'TRANG_THAI' | transloco }}</span>
+                        <span class="text-[#1B2C43]" [style.color]="item.colorTrangThaiGD">{{ item.trangThaiGD }}</span>
+                    </div>
+                    <!-- <div class="flex text-[14px] mt-[10px]">
+                        <span class="text-[#6F7A8A] w-[150px]">Mã hóa đơn</span>
+                        <span class="text-[#1B2C43]">-</span>
+                    </div> -->
+                    <div class="flex text-[14px] mt-[10px]">
+                        <span class="text-[#6F7A8A] w-[150px]">{{ 'NGAY_THU' | transloco }}</span>
+                        <span class="text-[#1B2C43]">{{
+                            item.ngayThanhToan ? (item.ngayThanhToan | date : 'dd/MM/yyyy HH:mm') : '-'
+                        }}</span>
+                    </div>
+                    <div class="flex text-[14px] mt-[10px]">
+                        <span class="text-[#6F7A8A] w-[150px]">{{ 'SO_TIEN' | transloco }}</span>
+                        <span class="text-[#1B2C43]">{{ item.tongTien | currencyFormat }} đ</span>
+                    </div>
+                </div>
+                <div class="text-[#6F7A8A] text-[14px] ml-auto mt-[16px] md:mt-0">
+                    <button
+                        (click)="onShowReceiptDetail(item)"
+                        type="button"
+                        class="text-[12px] sm:text-[14px] p-[4px_8px] flex items-center justify-center bg-[#FB982A]/[0.1] text-[#FB982A] rounded-[4px] sm:rounded-[4px] transition-all"
+                    >
+                        <span class="pl-[5px]">{{ 'XEM_CHI_TIET' | transloco }}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isEmpty$ | async">
+            <div class="flex flex-col items-center py-[30px]">
+                <img class="max-h-[100px]" src="./assets/web/course-empty.svg" />
+                <div class="text-[16px] font-nomal text-[#435267] px-[15px]">{{ 'NO_DATA' | transloco }}</div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<ng-template #receiptDetailTpl>
+    <asc-receipt-detail [receipt]="receipt" (closeForm)="onClose()"></asc-receipt-detail>
+</ng-template>

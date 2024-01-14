@@ -1,0 +1,11 @@
+<ng-container *ngIf="isLoading; else notfoundTpl">
+    <div class="text-center loading-tpl">
+        <i nz-icon nzType="loading" nzTheme="outline"></i>
+        <p>Đang tải dữ liệu</p>
+    </div>
+</ng-container>
+<ng-template #notfoundTpl>
+    <ng-container *ngIf="length < 1">
+        <div class="w-full text-center">Không có dữ liệu</div>
+    </ng-container>
+</ng-template>

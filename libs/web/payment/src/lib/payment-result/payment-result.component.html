@@ -1,0 +1,72 @@
+<ng-container *ngIf="isPaymentStatus$ | async"></ng-container>
+<section class="pt-[30px] pb-[130px] bg-[#F3F5FB] min-h-[800px]">
+    <div class="container">
+        <ul class="flex mb-[30px]">
+            <li>
+                <a routerLink="/" class="flex items-center text-[#6F7A8A] font-semibold hover:text-[#0063E2]">
+                    <svg-icon key="home"></svg-icon>
+                    <span [attr.keyLabel]="'TRANG_CHU'" class="ml-2 whitespace-nowrap">{{ 'TRANG_CHU' | transloco }}</span></a
+                >
+            </li>
+            <li class="mx-[15px]"><span class="text-[#6F7A8A]">/</span></li>
+            <li>
+                <span class="text-[#0063E2] font-semibold">{{ 'KET_QUA_THANH_TOAN' | transloco }}</span>
+            </li>
+        </ul>
+
+        <div class="bg-white rounded-[22px] p-[20px] md:p-[40px]">
+            <ng-container *ngIf="resultPay$ | async as resultPay; else loadingTpl">
+                <ng-container [ngSwitch]="resultPay.code">
+                    <ng-container *ngSwitchCase="'00'">
+                        <div class="flex items-center justify-center w-[100px] h-[100px] mx-auto mb-6 rounded-full bg-[#01AA81]">
+                            <i class="icofont-check-alt text-white text-[60px]"></i>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'01'">
+                        <div class="flex items-center justify-center w-[100px] h-[100px] mx-auto mb-6 rounded-full bg-[#e3b63b]">
+                            <i class="icofont-refresh text-white text-[60px] rotating"></i>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'02'">
+                        <div class="flex items-center justify-center w-[100px] h-[100px] mx-auto mb-6 rounded-full bg-[#d93327]">
+                            <i class="icofont-close-line text-white text-[60px]"></i>
+                        </div>
+                    </ng-container>
+                </ng-container>
+
+                <h2 class="font-bold text-[18px] md:text-[28px] md:text-[30px] lg:text-[35px] text-center mb-6">
+                    <span class="text-[#1B2C43]">{{ resultPay.title }}</span>
+                </h2>
+                <div class="flex gap-[28px] mb-[12px]" *ngFor="let item of resultPay.datas">
+                    <div class="w-full sm:text-right text-[16px] text-[#6F7A8A] font-medium" [style.color]="item.color">
+                        {{ item.label }}:
+                    </div>
+                    <div class="w-full text-right sm:text-left text-[16px] text-[#1B2C43] font-medium">{{ item.value }}</div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-[28px] mt-[60px]">
+                    <button
+                        routerLink="/payment"
+                        type="button"
+                        class="w-[180px] h-[40px] p-[8px_12px] text-white bg-[#FFFFFF] shadow-[1px_4px_6px_rgba(0,127,243,0.2)] cursor-pointer rounded-[8px] border border-[#0063E2] text-[#0063E2]"
+                    >
+                        {{ 'DONG' | transloco }}
+                    </button>
+                    <button
+                        [attr.keyLabel]="'QUAY_VE_TRANG_CHU'"
+                        routerLink="/"
+                        type="button"
+                        class="w-[180px] h-[40px] p-[8px_12px] text-dark bg-[#0063E2] shadow-[1px_4px_6px_rgba(0,127,243,0.2)] cursor-pointer rounded-[8px] text-white"
+                    >
+                        {{ 'QUAY_VE_TRANG_CHU' | transloco }}
+                    </button>
+                </div>
+            </ng-container>
+            <ng-template #loadingTpl>
+                <div class="text-center">
+                    <span nz-icon [nzType]="'loading'" class="text-[40px]"></span>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</section>

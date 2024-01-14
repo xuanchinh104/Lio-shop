@@ -1,0 +1,56 @@
+<section class="pt-[30px] pb-[130px] bg-gradient min-h-[800px]">
+    <div class="container">
+        <div class="flex flex-row justify-between items-center pb-[60px] w-full">
+            <ul class="flex mt-[12px] flex-wrap w-full">
+                <li>
+                    <a routerLink="/" class="flex items-center text-[#6F7A8A] font-semibold hover:text-[#0063E2]">
+                        <svg-icon key="home"></svg-icon>
+                        <span class="ml-2 whitespace-nowrap">{{ 'TRANG_CHU' | transloco }}</span></a
+                    >
+                </li>
+                <li class="mx-[15px]"><span class="text-[#6F7A8A]">/</span></li>
+                <li class="cursor-pointer" (click)="onHistory()">
+                    <span class="text-[#0063E2] font-semibold">Bài viết</span>
+                </li>
+                <li class="mx-[15px]"><span class="text-[#6F7A8A]">/</span></li>
+                <li>
+                    <span class="text-[#0063E2] font-semibold line-clamp-1"> {{ title$ | async }}</span>
+                </li>
+            </ul>
+        </div>
+        <asc-course-skeleton *ngIf="(isLoading$ | async)!; else loadCoursesTpl" [countItem]="1" [type]="'news'"></asc-course-skeleton>
+        <ng-template #loadCoursesTpl>
+            <ng-container *ngFor="let item of postDetail$ | async">
+                <div class="mb-[50px]">
+                    <h3 class="text-[34px] text-[#1B2C43] font-semibold mb-[40px]">
+                        {{ item.tieuDe }}
+                    </h3>
+                    <div class="flex justify-between flex-col sm:flex-row gap-y-[17px]">
+                        <div>
+                            <div class="text-[#D72134] font-semibold text-[18px] uppercase">{{ item.tenPhongBan }}</div>
+                            <div class="flex items-center gap-[6px]">
+                                <svg-icon key="calendar-web"></svg-icon>
+                                <p class="mb-0">{{ item.ngayTao | date : 'dd/MM/yyyy' }}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-[15px] text-[16px]">
+                            <div class="text-[#6C6C6C]">Chia sẻ</div>
+                            <div class="cursor-pointer">
+                                <svg-icon fontSize="32px" key="facebook"></svg-icon>
+                            </div>
+                            <div class="cursor-pointer">
+                                <svg-icon fontSize="32px" key="instagram"></svg-icon>
+                            </div>
+                            <div class="cursor-pointer">
+                                <svg-icon fontSize="32px" key="twitter"></svg-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-4 view-image break-words">
+                    <div class="font-medium text-base text-[#1D1D1D] leading-7" [innerHTML]="item.noiDung | safeHtml : 'html'"></div>
+                </div>
+            </ng-container>
+        </ng-template>
+    </div>
+</section>

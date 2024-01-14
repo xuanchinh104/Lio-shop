@@ -1,0 +1,123 @@
+<skeleton-list *ngIf="isSkeleton$ | async as loading; else contentLoader" [loading]="loading"></skeleton-list>
+<ng-template #contentLoader>
+    <div class="relative">
+        <asc-grid-header (triggerHandler)="addHandler()"></asc-grid-header>
+        <div class="shadow bg-white rounded overflow-hidden">
+            <div class="w-full h-[55px] flex items-center justify-center px-[15px] py-2.5">
+                <ng-container *ngIf="selectionIds && selectionIds.length > 0; else searchTpl">
+                    <label class="mr-2.5" [attr.keyLabel]="'LB.SELECTED'"
+                    ><b>{{ selectionIds.length }}</b> {{ 'LB.SELECTED' | transloco }}
+                    </label>
+                    <label [attr.keyLabel]="'LB.UNSELECTED'" class="cursor-pointer text-[#2a7efc] mr-2.5" (click)="onDeselectedAll()">
+                        {{'LB.UNSELECTED' | transloco}}</label>
+                    <button (click)="removeHandler()" class="btn btn-outline-danger" [attr.keyLabel]="'BTN.DELETE'">
+                        <i class="zmdi zmdi-delete mr-[5px]"></i>{{ 'BTN.DELETE' | transloco }}
+                    </button>
+                </ng-container>
+                <ng-template #searchTpl>
+                    <asc-grid-search [formControl]="searchControl"></asc-grid-search>
+                </ng-template>
+                <div class="ml-auto"></div>
+            </div>
+            <div class="grid-wrapper grid-none-border" [ngStyle]="{ 'height.px': pageHeight }">
+                <kendo-grid
+                    #gridData
+                    [data]="(gridView$ | async)!"
+                    [loading]="(isLoading$ | async)!"
+                    [pageSize]="gridState.take!"
+                    [skip]="gridState.skip!"
+                    [pageable]="(pageSetting$ | async)!"
+                    [resizable]="true"
+                    [columnMenu]="false"
+                    [sortable]="false"
+                    [navigable]="true"
+                    kendoGridFocusable
+                    kendoGridSelectBy="id"
+                    [selectedKeys]="selectionIds"
+                    [sort]="gridState.sort!"
+                    [style.height]="'100%'"
+                    (dataStateChange)="onStateChange($event)"
+                    (detailExpand)="onDetailExpand($event)"
+                >
+                    <ng-template kendoGridNoRecordsTemplate>
+                        <div [attr.keyLabel]="'LB.NO_DATA'">
+                            {{ 'LB.NO_DATA' | transloco }}
+                        </div>
+                    </ng-template>
+                    <kendo-grid-checkbox-column
+                        [showSelectAll]="true"
+                        [width]="45"
+                        class="!text-center"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                    </kendo-grid-checkbox-column>
+                    <kendo-grid-column [title]="'LB.STT' | transloco" [width]="50" [headerStyle]="{ 'text-align': 'center' }">
+                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+                            <div class="text-center">
+                                {{ rowIndex + 1 }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        [title]="'LB.ACTION' | transloco"
+                        class="text-center"
+                        [width]="80"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                        [columnMenu]="false"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="text-center">
+                                <button nz-dropdown [nzDropdownMenu]="menu">
+                                    <svg-icon fontSize="24px" key="menu-action"></svg-icon>
+                                </button>
+                            </div>
+
+                            <nz-dropdown-menu #menu="nzDropdownMenu">
+                                <ul nz-menu nzSelectable>
+                                    <li nz-menu-item class="dropdown-item" (click)="editHandler(dataItem)">
+                                        <i class="zmdi zmdi-edit"></i>
+                                        <a [attr.keyLabel]="'BTN.EDIT'">{{ 'BTN.EDIT' | transloco }}</a>
+                                    </li>
+                                    <li nz-menu-item class="dropdown-item" (click)="removeHandler(dataItem)">
+                                        <i class="zmdi zmdi-delete"></i>
+                                        <a [attr.keyLabel]="'BTN.DELETE'">{{ 'BTN.DELETE' | transloco }}</a>
+                                    </li>
+                                    <li nz-menu-item class="dropdown-item" (click)="initialSetting(dataItem)">
+                                        <i class="icofont-refresh"></i>
+                                        <a [attr.keyLabel]="'RP.INITIAL_SETTING'">{{ 'RP.INITIAL_SETTING' | transloco }}</a>
+                                    </li>
+                                </ul>
+                            </nz-dropdown-menu>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        field="ma" [title]="'LPB.MAPB' | transloco"
+                        [width]="200">
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        field="ten" [title]="'LB.TEN' | transloco"
+                        [width]="300">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="text-link" (click)="editHandler(dataItem)">
+                                {{dataItem.ten}}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        field="tieuDe" [title]="'LB.TITLE' | transloco"
+                        [width]="300">
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        field="ghiChu" [title]="'LB.NOTE' | transloco" [width]="300">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{dataItem.ghiChu ? dataItem.ghiChu : '-'}}
+                        </ng-template>
+                    </kendo-grid-column>
+                    <ng-template kendoGridDetailTemplate let-dataItem>
+                        <asc-config-report-detail [idBieuMau]="dataItem.id"></asc-config-report-detail>
+                    </ng-template>
+                </kendo-grid>
+            </div>
+        </div>
+    </div>
+</ng-template>

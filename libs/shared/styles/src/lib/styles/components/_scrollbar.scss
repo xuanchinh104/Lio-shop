@@ -1,0 +1,36 @@
+/* =========================== CUSTOM SCROLLBAR ========================== */
+
+.scrollbar {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.scrollbar-hover {
+    mask-image: linear-gradient(to top, transparent, black), linear-gradient(to left, transparent 6px, black 6px);
+    mask-position: left bottom;
+    mask-size: 100% 20000px;
+    transition: mask-position 0.3s, mask-position 0.3s;
+}
+
+.scrollbar-hover:hover {
+    mask-position: left top;
+}
+
+$default-color: #f9f9f9;
+.scrollbar::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+
+    &-thumb {
+        border-radius: 5px;
+        background-color: darken($default-color, 30);
+
+        &:hover {
+            background-color: darken($default-color, 40);
+        }
+    }
+
+    &-track {
+        background: lighten(#b8c0c8, 8);
+    }
+}

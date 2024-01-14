@@ -1,0 +1,50 @@
+<div
+    class="relative group border border-dashed"
+    (files)="filesDropped($event)"
+    asFileDrag
+    [style]="{ 'border-radius': rounded + 'px', height: height + 'px', width: width + 'px' }"
+>
+    <div
+        [style]="{ 'border-radius': rounded + 'px' }"
+        class="absolute top-0 right-0 bottom-0 left-0 flex w-full h-full text-center bg-white z-[1] overflow-hidden"
+    >
+        <ng-container *ngIf="isLoadingImg; else imgTmpl">
+            <img
+                src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"
+                class="w-full h-full bg-no-repeat text-center border-none object-cover"
+                alt=""
+            />
+        </ng-container>
+        <ng-template #imgTmpl>
+            <img
+                class="images max-h-[190px] w-full h-full border-none"
+                [ngClass]="avatarUrlView ? 'object-cover' : 'object-contain'"
+                [src]="avatarUrlView ? mediaServer + '/' + avatarUrlView : './assets/images/upload.svg'"
+                alt=""
+            />
+        </ng-template>
+        <a
+            *ngIf="avatarUrlView"
+            (click)="removeImage()"
+            class="absolute top-[10px] right-[10px] mr-[5px] p-[4px_8px] text-[11px] !text-white font-bold border border-[2px] border-solid rounded-[4px] uppercase bg-none opacity-0 z-[7] transition-all duration-150 ease-linear group-hover:opacity-100"
+        >
+            {{ 'BTN.DELETE' | transloco }}
+        </a>
+        <div
+            [style]="{ 'border-radius': rounded + 'px' }"
+            class="drag-image absolute left-0 right-0 top-0 bottom-0 bg-[rgba(0,0,0,0.4)] opacity-0 z-[3] transition-opacity duration-150 ease-linear group-hover:opacity-100"
+        >
+            <div style="transform: translateY(-40%)" class="absolute top-[50%] w-full p-[0_20px] transition-all duration-200 ease-in">
+                <input type="file" accept="image/png, image/jpeg, image/jpg" #fileInput class="hidden" (change)="uploadFile($event)" />
+                <label class="font-bold text-[15px] text-[#102048]">
+                    <a
+                        (click)="fileInput.click()"
+                        class="relative p-0 w-full text-center !text-white text-ellipsis leading-[25px] font-bold whitespace-nowrap overflow-hidden"
+                    >
+                        {{ 'BTN.UPDATE' | transloco }}
+                    </a>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

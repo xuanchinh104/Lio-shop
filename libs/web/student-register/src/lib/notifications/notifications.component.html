@@ -1,0 +1,33 @@
+<div class="flex justify-center mb-[36px]">
+    <div class="flex justify-center items-center w-[120px] h-[120px] rounded-full bg-[#01AA81] border border-[5px] border-[#FFFFFF]">
+        <svg-icon fontSize="50px" key="check"></svg-icon>
+    </div>
+</div>
+<div class="text-center relative">
+    <div [attr.keyLabel]="serviceName === serviceNameRHM ? 'DANG_KY_HOC_VIEN_THANH_CONG' : 'DANG_KY_TAI_KHOAN_THANH_CONG'"
+         class="mb-[28px] text-[34px] leading-[42px] text-[#1B2C43] font-bold">
+        {{ serviceName === serviceNameRHM ? ('DANG_KY_HOC_VIEN_THANH_CONG' | transloco) : ('DANG_KY_TAI_KHOAN_THANH_CONG' | transloco) }}
+    </div>
+    <div
+            [attr.keyLabel]="'THONG_BAO_DANG_KY_THANH_CONG'"
+            class="text-[16px] text-[#1B2C43] leading-[36px]"
+            [innerHTML]="'THONG_BAO_DANG_KY_THANH_CONG' | transloco : { hoDem: infoHocVien.hoDem, ten: infoHocVien.ten }"
+    ></div>
+    <ng-container *ngIf="serviceName === serviceNameRHM; else tmpNotiKTTA">
+        <p class="text-[16px] text-[#1B2C43] leading-[36px]" [innerHTML]="'TEXT_NOTI4' | transloco"></p>
+        <div class="text-[16px] text-[#1B2C43] leading-[36px] italic" [innerHTML]="'TEXT_NOTI3' | transloco"></div>
+    </ng-container>
+    <ng-template #tmpNotiKTTA>
+        <p class="text-[16px] text-[#1B2C43] leading-[36px]" [innerHTML]="'TEXT_NOTI2' | transloco"></p>
+    </ng-template>
+</div>
+<div class="text-center pt-[32px]">
+    <asc-button
+            routerLink="/"
+            [attr.keyLabel]="'QUAY_VE_TRANG_CHU'"
+            [btnClass]="'btn-outline-primary sm:mr-[20px] md:mr-[20px] lg:mr-[20px] xl:mr-[20px]'"
+            [isSubmit]="false"
+            [btnText]="'QUAY_VE_TRANG_CHU' | transloco"
+    >
+    </asc-button>
+</div>

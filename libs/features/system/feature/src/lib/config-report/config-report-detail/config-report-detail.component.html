@@ -1,0 +1,200 @@
+<div class="border border-[#fba302] bg-[#ffeecf] p-[10px_8px] rounded w-full max-w-[calc(100vw-30%)]">
+    <div class="card-container">
+        <nz-tabset nzType="card">
+            <nz-tab [attr.keyLabel]="'RP.CAU_HINH_BIEU_MAU_DETAIL'" [nzTitle]="'RP.CAU_HINH_BIEU_MAU_DETAIL' | transloco" class="m-0">
+                <div class="shadow bg-white rounded overflow-hidden">
+                    <div class="w-full h-[55px] flex items-center flex-nowrap px-[15px] py-[10px]">
+                        <div class="ml-auto">
+                            <button
+                                class="min-w-[80px] btn font-medium btn-outline-primary mr-[10px] disabled:cursor-no-drop"
+                                [attr.keyLabel]="'BTN.SAVE'"
+                                (click)="onSave()"
+                                [disabled]="isSubmited"
+                            >
+                                <ng-container *ngIf="isSubmited; else defaultText"
+                                    ><i nz-icon nzType="loading" nzTheme="outline"></i>
+                                    Loading ...
+                                </ng-container>
+                                <ng-template #defaultText>
+                                    <i class="icofont-save mr-[5px]"></i>
+                                    {{ 'BTN.SAVE' | transloco }}
+                                </ng-template>
+                            </button>
+                            <button
+                                class="min-w-[80px] btn font-medium btn-outline-primary mr-[10px]"
+                                [attr.keyLabel]="'LB.ADD_FAST'"
+                                (click)="addFast()"
+                            >
+                                <i class="icofont-ui-add mr-[5px]"></i>
+                                {{ 'LB.ADD_FAST' | transloco }}
+                            </button>
+                            <button
+                                class="min-w-[80px] btn font-medium btn-outline-primary disabled:cursor-no-drop"
+                                [attr.keyLabel]="'RP.BACKUP'"
+                                [disabled]="configReportDetails.length < 1"
+                                (click)="backupReport()"
+                            >
+                                <i class="icofont-database-add mr-[5px]"></i>
+                                {{ 'RP.BACKUP' | transloco }}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table w-full">
+                        <div class="table-header-group">
+                            <div class="table-row font-medium bg-[#f7f8fa]">
+                                <div
+                                    class="table-cell text-center p-[10px_8px] w-[60px] border-b border-[#2125291a]"
+                                    [attr.keyLabel]="'LB.STT'"
+                                >
+                                    {{ 'LB.STT' | transloco }}
+                                </div>
+                                <div
+                                    class="table-cell text-left p-[10px_8px] w-[100px] border-b border-[#2125291a]"
+                                    [attr.keyLabel]="'CS.STT'"
+                                >
+                                    {{ 'CS.STT' | transloco }}
+                                </div>
+                                <div
+                                    class="table-cell text-left p-[10px_8px] w-[200px] border-b border-[#2125291a]"
+                                    [attr.keyLabel]="'RP.COLUMN_NAME'"
+                                >
+                                    {{ 'RP.COLUMN_NAME' | transloco }}
+                                </div>
+                                <div
+                                    class="table-cell text-left p-[10px_8px] w-[300px] border-b border-[#2125291a]"
+                                    [attr.keyLabel]="'RP.COLUMN_DISPLAY_NAME'"
+                                >
+                                    {{ 'RP.COLUMN_DISPLAY_NAME' | transloco }}
+                                </div>
+                                <div
+                                    class="table-cell text-left p-[10px_8px] w-[250px] border-b border-[#2125291a]"
+                                    [attr.keyLabel]="'RP.TEXT_ALIGN'"
+                                >
+                                    {{ 'RP.TEXT_ALIGN' | transloco }}
+                                </div>
+                                <div
+                                    class="table-cell text-left p-[10px_8px] w-[100px] border-b border-[#2125291a]"
+                                    [attr.keyLabel]="'RP.COLUMN_WIDTH'"
+                                >
+                                    {{ 'RP.COLUMN_WIDTH' | transloco }}
+                                </div>
+                                <div
+                                    class="table-cell text-center p-[10px_8px] w-[100px] border-b border-[#2125291a]"
+                                    [attr.keyLabel]="'LB.ISVISIBLE'"
+                                >
+                                    {{ 'LB.ISVISIBLE' | transloco }}
+                                </div>
+                                <div
+                                    class="table-cell text-left p-[10px_8px] w-[320px] border-b border-[#2125291a]"
+                                    [attr.keyLabel]="'LB.NOTE'"
+                                >
+                                    {{ 'LB.NOTE' | transloco }}
+                                </div>
+                                <div class="table-cell text-left p-[10px_8px] w-[60px] border-b border-[#2125291a]"></div>
+                            </div>
+                        </div>
+                        <div class="table-row-group relative drop-list" cdkDropList (cdkDropListDropped)="drop($event)">
+                            <ng-container *ngIf="!isLoading && configReportDetails && configReportDetails.length > 0; else loadingTpl">
+                                <div
+                                    class="table-row drop-item bg-white cursor-move hover:bg-[#e5efff]"
+                                    cdkDrag
+                                    cdkDragBoundary=".drop-list"
+                                    *ngFor="let item of configReportDetails; let i = index"
+                                >
+                                    <ng-container *ngIf="!item.isDeleted">
+                                        <div class="table-cell align-middle p-[10px_8px] border-b border-[#2125291a] text-center w-[60px]">
+                                            {{ i + 1 }}
+                                        </div>
+                                        <div class="table-cell align-middle p-[10px_8px] border-b border-[#2125291a] w-[100px]">
+                                            <nz-input-number
+                                                class="form-control"
+                                                [nzMin]="1"
+                                                [(ngModel)]="item.soThuTu"
+                                                [ngModelOptions]="{ standalone: true }"
+                                            ></nz-input-number>
+                                        </div>
+                                        <div class="table-cell align-middle p-[10px_8px] border-b border-[#2125291a] w-[200px]">
+                                            <input
+                                                class="form-control"
+                                                [(ngModel)]="item.columnName"
+                                                [ngModelOptions]="{ standalone: true }"
+                                            />
+                                        </div>
+                                        <div class="table-cell align-middle p-[10px_8px] border-b border-[#2125291a] w-[300px]">
+                                            <input
+                                                class="form-control"
+                                                [(ngModel)]="item.columnDisplayName"
+                                                [ngModelOptions]="{ standalone: true }"
+                                            />
+                                        </div>
+                                        <div class="table-cell align-middle p-[10px_8px] border-b border-[#2125291a] w-[250px]">
+                                            <nz-select
+                                                class="w-[250px]"
+                                                [(ngModel)]="item.textAlign"
+                                                [ngModelOptions]="{ standalone: true }"
+                                                nzShowSearch
+                                            >
+                                                <nz-option
+                                                    *ngFor="let item of excelAlignList"
+                                                    [nzValue]="item"
+                                                    [nzLabel]="excelAlignDescription[item]"
+                                                ></nz-option>
+                                            </nz-select>
+                                        </div>
+                                        <div class="table-cell align-middle p-[10px_8px] border-b border-[#2125291a] w-[100px]">
+                                            <nz-input-number
+                                                class="form-control"
+                                                [nzMin]="1"
+                                                [(ngModel)]="item.columnWidth"
+                                                [ngModelOptions]="{ standalone: true }"
+                                            ></nz-input-number>
+                                        </div>
+                                        <div class="table-cell align-middle p-[10px_8px] border-b border-[#2125291a] text-center w-[100px]">
+                                            <label nz-checkbox [(ngModel)]="item.isVisible" [ngModelOptions]="{ standalone: true }"></label>
+                                        </div>
+                                        <div class="table-cell align-middle p-[10px_8px] border-b border-[#2125291a] w-[320px]">
+                                            <input class="form-control" [(ngModel)]="item.ghiChu" [ngModelOptions]="{ standalone: true }" />
+                                        </div>
+                                        <div class="table-cell align-middle p-[10px_8px] border-b border-[#2125291a] w-[60px]">
+                                            <div
+                                                nz-tooltip
+                                                [attr.keyLabel]="'BTN.DELETE'"
+                                                [nzTooltipTitle]="'BTN.DELETE' | transloco"
+                                                (click)="removeHandler(i, item)"
+                                                class="flex justify-center items-center w-[30px] h-[30px] rounded-full bg-white shadow-lg cursor-pointer m-auto"
+                                            >
+                                                <i class="icofont-trash text-[#ff4d4f]"></i>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                            <ng-template #loadingTpl>
+                                <div class="table-row h-[135px]">
+                                    <div class="flex justify-center items-center h-[135px] absolute left-0 w-full">
+                                        <notfound-tpl [isLoading]="isLoadingBackup"></notfound-tpl>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="block">
+                        <div
+                            [attr.keyLabel]="'BTN.ADD'"
+                            class="left-0 w-full flex items-center justify-center cursor-pointer border-dashed border border-[#0075E1] text-[#0075E1] h-[40px]"
+                            (click)="addRow()"
+                        >
+                            {{ 'BTN.ADD' | transloco }}
+                        </div>
+                    </div>
+                </div>
+            </nz-tab>
+            <nz-tab [nzTitle]="'RP.INITIAL_SETTING' | transloco" [attr.keyLabel]="'RP.INITIAL_SETTING'" class="m-0">
+                <asc-config-report-initial
+                    [configReportBackup]="configReportBackup"
+                    [isLoadingBackup]="isLoadingBackup"
+                ></asc-config-report-initial>
+            </nz-tab>
+        </nz-tabset>
+    </div>
+</div>

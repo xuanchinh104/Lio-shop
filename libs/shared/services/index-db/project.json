@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/services/index-db",
+    "sourceRoot": "libs/shared/services/index-db/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/services/index-db"],
+            "options": {
+                "jestConfig": "libs/shared/services/index-db/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/services/index-db/src/**/*.ts", "libs/shared/services/index-db/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/features/shell/ui/layout",
+    "sourceRoot": "libs/features/shell/ui/layout/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/features/shell/ui/layout"],
+            "options": {
+                "jestConfig": "libs/features/shell/ui/layout/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/features/shell/ui/layout/src/**/*.ts", "libs/features/shell/ui/layout/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

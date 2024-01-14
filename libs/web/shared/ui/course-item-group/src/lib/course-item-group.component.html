@@ -1,0 +1,25 @@
+<ng-container *ngIf="item">
+    <div class="group rounded-[22px] bg-white shadow-[0px_4px_20px_rgba(0,52,99,0.1)] overflow-hidden">
+        <div class="item-image block overflow-hidden h-0 relative w-full pb-[60%] bg-[#EDF1FF]">
+            <img
+                [src]="!item.anhDaiDien ? './assets/web/course-item-default.svg' : (item.anhDaiDien | convertUrl)"
+                [alt]="item.tenKhoaHoc"
+                [ngClass]="item.anhDaiDien ? 'object-cover' : 'object-scale-down'"
+                class="absolute inset-0 w-full h-full"
+            />
+        </div>
+        <div class="item-content relative p-[16px]">
+            <h3 class="font-bold text-[#1B2C43] mb-0 transition-all line-clamp-2 duration-500 text-[16px] h-auto md:h-[50px]">
+                {{ item.tenKhoaHoc }}
+            </h3>
+            <div class="text-[#435267] mb-4 mt-2 text-[14px] line-clamp-1 h-[22px]">{{ item.moTa }}</div>
+            <a
+                (click)="onViewDetailCourse(item)"
+                class="flex items-center justify-center mx-auto font-semibold w-[148px] h-[30px] rounded-[30px] bg-[#D72134] !text-white"
+            >
+                Xem Chi tiết
+                <i class="icofont-long-arrow-right text-[18px] ml-[14px]"></i>
+            </a>
+        </div>
+    </div>
+</ng-container>

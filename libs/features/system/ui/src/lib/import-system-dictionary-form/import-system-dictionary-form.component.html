@@ -1,0 +1,118 @@
+<!--<div class="modal-body scrollbar">-->
+<!--    <div class="grid grid-cols-12 gap-4 mb-4">-->
+<!--        <label class="col-span-4 text-[13px] text-[#201e1e] mt-1 font-medium"-->
+<!--            [attr.keyLabel]="'BTN.IMPORT_DU_LIEU'">-->
+<!--            {{ 'BTN.IMPORT_DU_LIEU' | transloco }}-->
+<!--        </label>-->
+<!--        <div class="col-span-8 mt-1">-->
+<!--            <nz-select [(ngModel)]="projectType">-->
+<!--                <nz-option [nzLabel]="eProjectTypeName[eProjectType.DTNN]"-->
+<!--                           [nzValue]="eProjectType.DTNN"></nz-option>-->
+<!--            </nz-select>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="grid grid-cols-12 gap-4 mb-4">-->
+<!--        <label class="col-span-4 text-[13px] text-[#201e1e] mt-1 font-medium"-->
+<!--               [attr.keyLabel]="'LANG'">-->
+<!--            {{ 'LANG' | transloco }}-->
+<!--        </label>-->
+<!--        <div class="col-span-8 mt-1">-->
+<!--            <nz-select [(ngModel)]="langType">-->
+<!--                <nz-option [nzLabel]="'VI' | transloco"-->
+<!--                           [nzValue]="eLangRes.VI"></nz-option>-->
+<!--                <nz-option [nzLabel]="'EN' | transloco"-->
+<!--                           [nzValue]="eLangRes.EN"></nz-option>-->
+<!--            </nz-select>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="grid grid-cols-12 gap-4 mb-4">-->
+<!--        <label-->
+<!--            class="col-span-4 text-[13px] text-[#201e1e] mt-1 font-medium"-->
+<!--            [attr.keyLabel]="'LB.ATTACH_FILE'">-->
+<!--            {{ 'LB.ATTACH_FILE' | transloco }}-->
+<!--        </label>-->
+<!--        <div class="col-span-8 text-link cursor-pointer self-center">-->
+<!--            <div (click)="fileInput.click()" class="flex flex-row items-center">-->
+<!--                <svg-icon class="pr-[2px]" name="attachment"></svg-icon>-->
+<!--                <ng-container *ngIf="fileAttach?.name; else tmpUpload">-->
+<!--                    <span class="truncate "> {{fileAttach?.name}} </span>-->
+<!--                </ng-container>-->
+<!--                <ng-template #tmpUpload>-->
+<!--                    <span class="truncate "-->
+<!--                          [attr.keyLabel]="'IMPORT.SELECT'">-->
+<!--                        {{ 'IMPORT.SELECT' | transloco }} </span>-->
+<!--                </ng-template>-->
+<!--            </div>-->
+<!--            <input type="file" #fileInput class="hidden" (change)="uploadFile($event)">-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="modal-footer">-->
+<!--    <asc-button (click)="closeForm()"-->
+<!--                [btnText]="'BTN.CANCEL' | transloco"-->
+<!--                [attr.keyLabel]="'BTN.CANCEL'">-->
+<!--    </asc-button>-->
+<!--    <asc-button (click)="onSubmit()"-->
+<!--                [btnClass]="'btn-primary'"-->
+<!--                [isLoading]="isSubmited"-->
+<!--                [attr.keyLabel]="'BTN.IMPORT_DU_LIEU'"-->
+<!--                [btnText]="'BTN.IMPORT_DU_LIEU' | transloco">-->
+<!--    </asc-button>-->
+<!--</div>-->
+
+<asc-wrap-form (closeForm)="closeForm()" (zoomForm)="zoomForm($event)">
+    <ng-container ngProjectAs="[formTitle]">
+        {{ 'MODULE.TITLE' | transloco }}
+    </ng-container>
+    <ng-container ngProjectAs="[formBody]">
+        <div class="grid grid-cols-12 gap-4 mb-4">
+            <label class="col-span-4 text-[13px] text-[#201e1e] mt-1 font-medium" [attr.keyLabel]="'BTN.IMPORT_DU_LIEU'">
+                {{ 'BTN.IMPORT_DU_LIEU' | transloco }}
+            </label>
+            <div class="col-span-8 mt-1">
+                <nz-select [(ngModel)]="projectType">
+                    <nz-option [nzLabel]="eProjectTypeName[eProjectType.DTNN]" [nzValue]="eProjectType.DTNN"></nz-option>
+                </nz-select>
+            </div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 mb-4">
+            <label class="col-span-4 text-[13px] text-[#201e1e] mt-1 font-medium" [attr.keyLabel]="'LANG'">
+                {{ 'LANG' | transloco }}
+            </label>
+            <div class="col-span-8 mt-1">
+                <nz-select [(ngModel)]="langType">
+                    <nz-option [nzLabel]="'VI' | transloco" [nzValue]="eLangRes.VI"></nz-option>
+                    <nz-option [nzLabel]="'EN' | transloco" [nzValue]="eLangRes.EN"></nz-option>
+                </nz-select>
+            </div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 mb-4">
+            <label class="col-span-4 text-[13px] text-[#201e1e] mt-1 font-medium" [attr.keyLabel]="'LB.ATTACH_FILE'">
+                {{ 'LB.ATTACH_FILE' | transloco }}
+            </label>
+            <div class="col-span-8 text-link cursor-pointer self-center">
+                <div (click)="fileInput.click()" class="flex flex-row items-center">
+                    <svg-icon class="pr-[2px]" name="attachment"></svg-icon>
+                    <ng-container *ngIf="fileAttach?.name; else tmpUpload">
+                        <span class="truncate"> {{ fileAttach?.name }} </span>
+                    </ng-container>
+                    <ng-template #tmpUpload>
+                        <span class="truncate" [attr.keyLabel]="'IMPORT.SELECT'"> {{ 'IMPORT.SELECT' | transloco }} </span>
+                    </ng-template>
+                </div>
+                <input type="file" #fileInput class="hidden" (change)="uploadFile($event)" />
+            </div>
+        </div>
+    </ng-container>
+    <ng-container ngProjectAs="[formFooter]">
+        <asc-button (click)="closeForm()" [btnClass]="'btn-white'" [btnText]="'BTN.CANCEL' | transloco" class="mr-[8px]"> </asc-button>
+        <asc-button
+            (click)="onSubmit()"
+            [isSubmit]="true"
+            [isLoading]="isSubmited"
+            [btnClass]="'btn-primary'"
+            [btnText]="'BTN.SAVE' | transloco"
+        >
+        </asc-button>
+    </ng-container>
+</asc-wrap-form>

@@ -1,0 +1,63 @@
+<div class="m-[-24px] p-[24px] h-[calc(100vh-50px)] overflow-x-auto">
+    <div class="flex flex-row justify-between items-center h-[66px]">
+        <div>
+            <div class="text-xl font-bold">Thiết lập cấu hình website</div>
+            <!-- <div class="text-sm h-[36px] flex items-center" *ngIf="pageInfo.f_Notes.length > 0">{{ pageInfo.f_Notes }}</div> -->
+        </div>
+        <div class="flex">
+            <asc-button
+                [isSubmit]="true"
+                [btnClass]="'btn-primary'"
+                [isLoading]="isSubmited"
+                (click)="saveConfig()"
+                [btnText]="'LB.SAVE_CAU_HINH' | transloco"
+                [attr.keyLabel]="'LB.SAVE_CAU_HINH'"
+            ></asc-button>
+        </div>
+    </div>
+
+    <nz-collapse>
+        <nz-collapse-panel *ngFor="let parent of settings$ | async" [nzHeader]="parent.tenNhom" [nzActive]="true">
+            <div class="">
+                <div class="grid grid-cols-12">
+                    <div class="col-span-6"></div>
+                    <div class="col-span-6">
+                        <nz-collapse>
+                            <nz-collapse-panel *ngFor="let item of parent.nhomCauHinh" [nzHeader]="item.tenCauHinh">
+                                <ng-container [ngSwitch]="item.loaiCauHinh">
+                                    <ng-container *ngSwitchCase="settingThemeEnum.Images">
+                                        <asc-image [(ngModel)]="item.valueString"></asc-image>
+                                    </ng-container>
+                                    <ng-container *ngSwitchCase="settingThemeEnum.Textarea">
+                                        <asc-list-item
+                                            *ngIf="item.keyCauHinh === 'FooterContent'; else textareaTpl"
+                                            [(ngModel)]="item.valueObj"
+                                        ></asc-list-item>
+                                        <ng-template #textareaTpl>
+                                            <textarea [(ngModel)]="item.valueString" [rows]="10" class="form-control h-auto"></textarea>
+                                        </ng-template>
+                                    </ng-container>
+                                    <ng-container *ngSwitchCase="settingThemeEnum.TextBox">
+                                        <asc-form-control [(ngModel)]="item.valueString"></asc-form-control>
+                                    </ng-container>
+                                    <ng-container *ngSwitchCase="settingThemeEnum.GroupQuangCao">
+                                        <asc-slider [(ngModel)]="item.valueObj"></asc-slider>
+                                    </ng-container>
+                                    <ng-container *ngSwitchCase="settingThemeEnum.QuyTrinhDangKy">
+                                        <nz-select nzShowSearch nzAllowClear [(ngModel)]="item.valueInt">
+                                            <nz-option
+                                                *ngFor="let data of quyTrinhs$ | async"
+                                                [nzValue]="data.id"
+                                                [nzLabel]="data.tenQuyTrinh"
+                                            ></nz-option>
+                                        </nz-select>
+                                    </ng-container>
+                                </ng-container>
+                            </nz-collapse-panel>
+                        </nz-collapse>
+                    </div>
+                </div>
+            </div>
+        </nz-collapse-panel>
+    </nz-collapse>
+</div>

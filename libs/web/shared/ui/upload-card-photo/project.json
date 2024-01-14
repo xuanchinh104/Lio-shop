@@ -1,0 +1,26 @@
+{
+    "projectType": "library",
+    "root": "libs/web/shared/ui/upload-card-photo",
+    "sourceRoot": "libs/web/shared/ui/upload-card-photo/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/web/shared/ui/upload-card-photo"],
+            "options": {
+                "jestConfig": "libs/web/shared/ui/upload-card-photo/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/web/shared/ui/upload-card-photo/src/**/*.ts",
+                    "libs/web/shared/ui/upload-card-photo/src/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

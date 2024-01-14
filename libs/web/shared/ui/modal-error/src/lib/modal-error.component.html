@@ -1,0 +1,26 @@
+<div class="p-[20px] pb-[10px] flex items-center justify-center">
+    <div
+        (click)="closeForm()"
+        class="absolute right-[16px] flex justify-center items-center leading-normal w-[34px] h-[34px] !rounded-full cursor-pointer bg-[#F0F3F5] dark:bg-[#1F1D2B] dark:hover:bg-[#3e404933]"
+    >
+        <i class="zmdi zmdi-close text-[24px]"></i>
+    </div>
+</div>
+<div class="relative px-[24px] leading-[26px] overflow-x-auto max-h-[75vh]">
+    <div class="flex gap-[10px] justify-center">
+        <div class="text-red-500 text-[30px] lg:text-[40px]">
+            <i class="icofont-warning-alt"></i>
+        </div>
+        <div class="text-[16px] md:text-[19px] lg:text-xl font-normal flex flex-col items-center">
+            <span>{{ errorText }}</span>
+            <span
+                >Vui lòng chọn <span class="font-semibold">"Đăng nhập"</span> để tiếp tục hoặc nhấn
+                <span class="font-semibold">"Quên mật khẩu"</span></span
+            >
+        </div>
+    </div>
+</div>
+<div class="flex justify-center gap-4 p-[16px_24px]">
+    <button type="button" class="btn btn-primary" (click)="signIn()">Đăng nhập</button>
+    <button type="button" class="btn btn-primary" (click)="forgotPassword()">Quên mật khẩu</button>
+</div>

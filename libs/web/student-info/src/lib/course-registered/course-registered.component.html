@@ -1,0 +1,100 @@
+<ng-container [ngSwitch]="layout">
+    <div *ngSwitchCase="courseLayout.CourseRegistredList">
+        <div class="p-[16px] md:p-[24px]">
+            <h2 class="text-[20px] text-[#1B2C4] font-bold mb-[30px]">{{ 'KHOA_HOC_CUA_TOI' | transloco }}</h2>
+            <ng-container *ngIf="courseRegistereds$ | async">
+                <div
+                    class="flex flex-col gap-[15px] rounded-[10px] shadow-[0px_4px_10px_rgba(0,52,99,0.05)] border border-[#F0F3F5] bg-white p-[16px] md:p-[20px] mb-[12px]"
+                    *ngFor="let child of itemSelecteds; trackBy: trackByFunc"
+                >
+                    <div
+                        *ngFor="let item of child.children; let i = index"
+                        class="border-b border-[#F0F3F5] pb-[10px] last:border-none last:pb-0"
+                    >
+                        <div class="sm:flex justify-between items-center mb-[12px]">
+                            <div class="text-[16px] font-semibold sm:w-[220px] sm:flex-1 md:flex-1 lg:flex-1">{{ item.tenLop }}</div>
+                            <div class="text-[#6F7A8A] text-[14px] hidden sm:block">
+                                <span
+                                    [ngClass]="item.isHuyLop ? 'font-bold' : ''"
+                                    [ngStyle]="{ color: item.isHuyLop ? 'red' : item.maMauTTHocVien }"
+                                    >{{ item.isHuyLop ? ('CHO_THANH_TOAN' | transloco) : item.trangThaiHocVien }}</span
+                                >
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-start md:items-end flex-col md:flex-row">
+                            <div class="">
+                                <div class="flex text-[14px] mt-[10px] sm:hidden">
+                                    <span class="text-[#6F7A8A] w-[103px]">Trạng thái</span>
+                                    <span
+                                        [ngClass]="item.isHuyLop ? 'font-bold' : ''"
+                                        [ngStyle]="{ color: item.isHuyLop ? 'red' : item.maMauTTHocVien }"
+                                        >{{ item.isHuyLop ? ('CHO_THANH_TOAN' | transloco) : item.trangThaiHocVien }}</span
+                                    >
+                                </div>
+                                <div class="flex text-[14px] mt-[10px]">
+                                    <span class="text-[#6F7A8A] w-[103px] sm:w-[150px]">{{ 'THOI_GIAN_HOC' | transloco }}</span>
+                                    <span class="font-semibold"
+                                        >{{ item.ngayBatDau | date : 'dd/MM/yyyy' }} - {{ item.ngayKetThuc | date : 'dd/MM/yyyy' }}</span
+                                    >
+                                </div>
+                                <div class="flex text-[14px] mt-[10px]">
+                                    <ng-container *ngIf="item.isHopDong; else tmplHV">
+                                        <span class="font-semibold text-[#1890FF]" *ngIf="!item.isMienGiam && !item.isHuyLop"
+                                            >Đã thanh toán hợp đồng</span
+                                        >
+                                    </ng-container>
+                                    <ng-template #tmplHV>
+                                        <span class="text-[#6F7A8A] w-[103px] sm:w-[150px]">{{ 'HOC_PHI' | transloco }}</span>
+                                        <span class="font-semibold text-[#1890FF]" *ngIf="item.isMienGiam"
+                                            >{{ item.hocPhi | currencyFormat }} đ</span
+                                        >
+                                        <span class="font-semibold text-[#1890FF]" *ngIf="!item.isMienGiam && item.isHuyLop"
+                                            >{{ item.hocPhiDangKy | currencyFormat }} đ</span
+                                        >
+                                        <span class="font-semibold text-[#1890FF]" *ngIf="!item.isMienGiam && !item.isHuyLop"
+                                            >{{ item.hocPhi | currencyFormat }} đ</span
+                                        >
+                                        <!--                                    <span class="font-semibold text-[#1890FF]" *ngIf="item.isThanhToan"-->
+                                        <!--                                        >{{ item.hocPhi | currencyFormat }} đ</span-->
+                                        <!--                                    >-->
+                                    </ng-template>
+                                </div>
+                            </div>
+                            <div class="text-[#6F7A8A] text-[14px] flex ml-auto mt-[12px] md:mt-0">
+                                <button
+                                    type="button"
+                                    (click)="uploadCourseAttachment(item)"
+                                    class="text-[12px] sm:text-[14px] p-[4px_8px] flex items-center justify-center bg-[#FB982A] border border-[#FB982A] text-white rounded-[4px] sm:rounded-[4px] transition-all"
+                                >
+                                    <svg-icon key="web-attachment"></svg-icon>
+                                    <span class="pl-[5px]">{{ 'HO_SO' | transloco }}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center" *ngIf="child.isHuyLop">
+                        <button
+                            (click)="onHuyDangKy(child)"
+                            type="button"
+                            class="text-[12px] sm:text-[14px] p-[4px_8px] flex items-center justify-center bg-[#dc3545] border border-[#dc3545] rounded-[4px] sm:rounded-[4px] transition-all mr-[10px]"
+                        >
+                            <span class="pl-[5px] text-white">Hủy đăng ký</span>
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+            <div *ngIf="isEmpty$ | async">
+                <div class="flex flex-col items-center py-[30px]">
+                    <img class="max-h-[100px]" src="./assets/web/course-empty.svg" />
+                    <div class="text-[16px] font-nomal text-[#435267] px-[15px]">{{ 'KHONG_TIM_THAY_KHOA_HOC' | transloco }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngSwitchCase="courseLayout.CourseAttachment">
+        <asc-course-attachment (closeForm)="onClose()" [course]="courseSelected"></asc-course-attachment>
+    </div>
+    <div *ngSwitchCase="courseLayout.CourseAttachmentDetail">
+        <asc-course-attachment-detail (closeForm)="onClose()" [course]="courseSelected"></asc-course-attachment-detail>
+    </div>
+</ng-container>

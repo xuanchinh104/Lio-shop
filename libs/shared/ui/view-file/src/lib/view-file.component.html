@@ -1,0 +1,85 @@
+<div class="iframe-header">
+    <div class="iframe-title">
+        <a class="btn-icon-direction" (click)="closeModal()">
+            <i class="zmdi zmdi-arrow-left"></i>
+        </a>
+        <span>
+            {{ _fileName }}
+        </span>
+    </div>
+    <div class="btn-dropdown-extra" nz-dropdown [nzDropdownMenu]="fileContext">
+        <i class="zmdi zmdi-more-vert"></i>
+    </div>
+    <nz-dropdown-menu #fileContext="nzDropdownMenu">
+        <ul nz-menu class="menu-context-manager">
+            <li nz-menu-item (click)="onDownloadFile()">
+                <i class="icofont-download text-[16px] mr-[5px]"></i>
+                {{ 'Tải xuống' }}
+            </li>
+        </ul>
+    </nz-dropdown-menu>
+</div>
+<div class="iframe-container">
+    <div class="iframe-head"></div>
+    <div class="iframe-body">
+        <ng-container *ngIf="_filePath">
+            <ng-container [ngSwitch]="_fileType">
+                <ng-container *ngSwitchCase="'pdf'">
+                    <ng-container *ngTemplateOutlet="formViewDocument"></ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="'docx'">
+                    <ng-container *ngTemplateOutlet="formViewDocumentPPT"></ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="'doc'">
+                    <ng-container *ngTemplateOutlet="formViewDocumentPPT"></ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="'ppt'">
+                    <ng-container *ngTemplateOutlet="formViewDocumentPPT"></ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="'pptx'">
+                    <ng-container *ngTemplateOutlet="formViewDocumentPPT"></ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="'xls'">
+                    <ng-container *ngTemplateOutlet="formViewDocumentPPT"></ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="'xlsx'">
+                    <ng-container *ngTemplateOutlet="formViewDocumentPPT"></ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="'png'">
+                    <ng-container *ngTemplateOutlet="formViewImage"></ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="'jpg'">
+                    <ng-container *ngTemplateOutlet="formViewImage"></ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="'jpeg'">
+                    <ng-container *ngTemplateOutlet="formViewImage"></ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="'svg'">
+                    <ng-container *ngTemplateOutlet="formViewImage"></ng-container>
+                </ng-container>
+
+                <ng-template #formViewDocument>
+                    <asc-document-viewer
+                        [url]="_filePath | convertUrl"
+                        viewer="url"
+                        [style]="{ width: '100%', height: '100vh' }"
+                    ></asc-document-viewer>
+                </ng-template>
+                <ng-template #formViewDocumentPPT>
+                    <asc-document-viewer
+                        [url]="_filePath | convertUrl"
+                        viewer="office"
+                        [style]="{ width: '100%', height: '100vh' }"
+                    ></asc-document-viewer>
+                </ng-template>
+                <ng-template #formViewImage>
+                    <img
+                        [src]="_filePath | convertUrl"
+                        (error)="handleMissingImage($event)"
+                        class="img-thumbnail"
+                    />
+                </ng-template>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>

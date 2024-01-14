@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/web/shared/ui/course-skeleton",
+    "sourceRoot": "libs/web/shared/ui/course-skeleton/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/web/shared/ui/course-skeleton"],
+            "options": {
+                "jestConfig": "libs/web/shared/ui/course-skeleton/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/web/shared/ui/course-skeleton/src/**/*.ts", "libs/web/shared/ui/course-skeleton/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

@@ -1,0 +1,14 @@
+:host ::ng-deep {
+    .ant-tabs-tab.ant-tabs-tab-active {
+        a > *{
+            @apply text-[#0063E2]
+        }
+    }
+}
+
+.active {
+    > * {
+        color: #1890ff;
+    }
+    background-color: #F5F9FE;
+}

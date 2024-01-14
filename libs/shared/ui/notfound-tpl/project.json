@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/ui/notfound-tpl",
+    "sourceRoot": "libs/shared/ui/notfound-tpl/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/ui/notfound-tpl"],
+            "options": {
+                "jestConfig": "libs/shared/ui/notfound-tpl/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/ui/notfound-tpl/src/**/*.ts", "libs/shared/ui/notfound-tpl/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

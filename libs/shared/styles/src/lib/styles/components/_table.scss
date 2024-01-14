@@ -1,0 +1,85 @@
+.ant-table-wrapper {
+    .ant-table {
+        .ant-table-thead {
+            > tr {
+                > th {
+                    background: $bg-table-header;
+                    color: $color-table-header;
+                    border-bottom: 2px solid $border-table;
+                    padding: 8px 12px;
+                }
+            }
+        }
+        .ant-table-tbody {
+            > tr {
+                > td {
+                    padding: 8px 12px;
+                    border-color: $border-table;
+                    .ant-table-wrapper:only-child {
+                        .ant-table {
+                            margin: -8px -12px -8px 33px;
+                        }
+                    }
+                }
+            }
+            .ant-table-row-expand-icon {
+                width: 20px;
+                height: 20px;
+                background: #f9f9f9;
+                border-radius: 100%;
+                &::before {
+                    width: 0;
+                    height: 0;
+                    border-top: 6px solid transparent;
+                    border-bottom: 6px solid transparent;
+                    border-left: 6px solid #2a62ff;
+                    background: transparent;
+                    top: 3px;
+                    left: 6px;
+                    transform: rotate(90deg);
+                }
+                &::after {
+                    content: none;
+                }
+                &:focus,
+                &:hover {
+                    color: unset;
+                    border: 1px solid #f0f0f0;
+                }
+            }
+            .ant-table-row-expand-icon-collapsed::before {
+                transform: rotate(0deg);
+            }
+        }
+    }
+    .ant-table-pagination {
+        justify-content: start;
+        margin: 15px;
+        .ant-pagination-item {
+            border: 1px solid #e8e8e8;
+            background: #fbfbfb;
+            border-radius: 5px;
+            &.ant-pagination-item-active {
+                background: #2a62ff;
+                a {
+                    color: #fff;
+                }
+            }
+            a {
+                color: #374a70;
+            }
+        }
+        .ant-pagination-prev,
+        .ant-pagination-next {
+            .ant-pagination-item-link {
+                border: 1px solid #e8e8e8;
+                background: #fbfbfb;
+                border-radius: 5px;
+            }
+        }
+    }
+}
+
+.table {
+    width: 100%;
+}

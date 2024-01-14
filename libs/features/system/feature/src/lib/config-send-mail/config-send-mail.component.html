@@ -1,0 +1,228 @@
+<skeleton-list *ngIf="isSkeleton$ | async as loading; else contentLoader" [loading]="loading"></skeleton-list>
+<ng-template #contentLoader>
+    <div class="relative">
+        <asc-grid-header (triggerHandler)="addHandler()"></asc-grid-header>
+        <div class="shadow bg-white rounded overflow-hidden">
+            <div class="rounded overflow-hidden bg-white shadow">
+                <div class="w-full h-[55px] flex items-center justify-center px-[15px] py-2.5">
+                    <ng-container *ngIf="selectionIds && selectionIds.length > 0; else searchTpl">
+                        <label class="mr-2.5" [attr.keyLabel]="'LB.SELECTED'"
+                            ><b>{{ selectionIds.length }}</b> {{ 'LB.SELECTED' | transloco }}
+                        </label>
+                        <label class="cursor-pointer text-[#2a7efc] mr-2.5" (click)="onDeselectedAll()" [attr.keyLabel]="'LB.UNSELECTED'">{{
+                            'LB.UNSELECTED' | transloco
+                        }}</label>
+                        <button class="btn btn-outline-danger" (click)="removeHandler()" [attr.keyLabel]="'BTN.DELETE'">
+                            <i class="zmdi zmdi-delete mr-[5px]"></i>
+                            {{ 'BTN.DELETE' | transloco }}
+                        </button>
+                    </ng-container>
+                    <ng-template #searchTpl>
+                        <div class="relative">
+                            <asc-grid-search [formControl]="searchControl"></asc-grid-search>
+                            <i
+                                nz-popover
+                                nzPopoverTrigger="click"
+                                [(nzPopoverVisible)]="showSearch"
+                                nzPopoverPlacement="bottomRight"
+                                nzPopoverOverlayClassName="w-[330px]"
+                                [nzPopoverContent]="searchTemplate"
+                                class="icofont-filter absolute top-[10px] right-[12px] cursor-pointer text-[#6e757d]"
+                            ></i>
+                            <ng-template #searchTemplate>
+                                <div class="dropdownSetting p-[20px]">
+                                    <div class="flex justify-between header-filter">
+                                        <div class="font-semibold text-[18px] h-[40px]" [attr.keyLabel]="'LB.BO_LOC'">
+                                            {{ 'LB.BO_LOC' | transloco }}
+                                        </div>
+                                        <div
+                                            nz-tooltip
+                                            [attr.keyLabel]="'BTN.CANCEL'"
+                                            [nzTooltipTitle]="'BTN.CANCEL' | transloco"
+                                            (click)="closeSearch()"
+                                            class="flex justify-center items-center leading-normal w-[22px] h-[22px] !rounded-full cursor-pointer hover:bg-[#F0F3F5]"
+                                        >
+                                            <i class="icofont-close-line text-[22px] text-[#9197af]"></i>
+                                        </div>
+                                    </div>
+                                    <div class="overflow-hidden" [formGroup]="formSearch">
+                                        <div class="form-group">
+                                            <label class="inline-block mb-[.5rem]" [attr.keyLabel]="'RP.MAIL_KEY'">{{
+                                                'RP.MAIL_KEY' | transloco
+                                            }}</label>
+                                            <asc-form-control formControlName="mailKey"></asc-form-control>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="inline-block mb-[.5rem]" [attr.keyLabel]="'USER.EMAIL'">{{
+                                                'USER.EMAIL' | transloco
+                                            }}</label>
+                                            <asc-form-control formControlName="mailAddress"></asc-form-control>
+                                        </div>
+                                        <div
+                                            class="form-group-action flex items-center justify-between pt-[12px] border-t border-[#ebecef]"
+                                        >
+                                            <asc-button
+                                                [btnText]="'BTN.RESET' | transloco"
+                                                [btnClass]="'btn btn-light'"
+                                                [attr.keyLabel]="'BTN.RESET'"
+                                                (click)="refreshHandler()"
+                                            ></asc-button>
+                                            <asc-button
+                                                [btnClass]="'btn btn-primary'"
+                                                (click)="onSearchChange()"
+                                                [btnText]="'BTN.SEARCH' | transloco"
+                                                [attr.keyLabel]="'BTN.SEARCH'"
+                                            ></asc-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </ng-template>
+                    <div class="ml-auto"></div>
+                </div>
+                <div class="grid-wrapper grid-none-border" [ngStyle]="{ 'height.px': pageHeight }">
+                    <kendo-grid
+                        [data]="(gridView$ | async)!"
+                        [loading]="(isLoading$ | async)!"
+                        [pageSize]="gridState.take!"
+                        [skip]="gridState.skip!"
+                        [pageable]="(pageSetting$ | async)!"
+                        [resizable]="true"
+                        [columnMenu]="false"
+                        [sortable]="false"
+                        [selectable]="{ enabled: true, checkboxOnly: true }"
+                        [navigable]="true"
+                        kendoGridFocusable
+                        kendoGridSelectBy="id"
+                        [selectedKeys]="selectionIds"
+                        [sort]="gridState.sort!"
+                        [style.height]="'100%'"
+                        (dataStateChange)="onStateChange($event)"
+                    >
+                        <ng-template kendoGridNoRecordsTemplate>
+                            <div [attr.keyLabel]="'LB.NO_DATA'">
+                                {{ 'LB.NO_DATA' | transloco }}
+                            </div>
+                        </ng-template>
+                        <kendo-grid-checkbox-column
+                            [showSelectAll]="true"
+                            [width]="45"
+                            class="text-center"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                        </kendo-grid-checkbox-column>
+                        <kendo-grid-column
+                            [title]="'LB.ACTION' | transloco"
+                            [width]="80"
+                            class="text-center"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="text-center">
+                                    <button [nzDropdownMenu]="menu" nz-dropdown>
+                                        <svg-icon fontSize="24px" key="menu-action"></svg-icon>
+                                    </button>
+                                </div>
+                                <nz-dropdown-menu #menu="nzDropdownMenu">
+                                    <ul nz-menu nzSelectable>
+                                        <li (click)="editHandler(dataItem)" class="dropdown-item" nz-menu-item>
+                                            <i class="zmdi zmdi-edit w-[12px] mr-2"></i>
+                                            <a [attr.keyLabel]="'BTN.EDIT'">{{ 'BTN.EDIT' | transloco }}</a>
+                                        </li>
+                                        <li (click)="removeHandler(dataItem)" class="dropdown-item" nz-menu-item>
+                                            <i class="zmdi zmdi-delete w-[12px] mr-2"></i>
+                                            <a [attr.keyLabel]="'BTN.DELETE'">{{ 'BTN.DELETE' | transloco }}</a>
+                                        </li>
+                                    </ul>
+                                </nz-dropdown-menu>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column [title]="'LB.STT' | transloco" [width]="50" [headerStyle]="{ 'text-align': 'center' }">
+                            <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+                                <div class="text-center">
+                                    {{ rowIndex + 1 }}
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column field="mailKey" [headerStyle]="{ 'text-align': 'left' }" [title]="'MailKey'" [width]="170">
+                        </kendo-grid-column>
+                        <ng-container *ngIf="isHienThi; else tmplMailSMPT">
+                            <kendo-grid-column field="email" class="text-center" [title]="'Email'" [width]="250">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <div class="dark" (click)="editHandler(dataItem)">
+                                        <b>{{ dataItem.email }}</b>
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <!--                            <kendo-grid-column [title]="'Description'" [width]="150" field="description"></kendo-grid-column>-->
+                            <!--                            <kendo-grid-column field="displayName" [title]="'Display name'" [width]="150"> </kendo-grid-column>-->
+                            <kendo-grid-column field="clientId" [title]="'Client Id'" [width]="250">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    {{ dataItem.clientId | slice : 0 : 5 }}<sup *ngIf="dataItem.clientId.length > 5">**************</sup>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column field="clientSerect" [title]="'Value Serect'" [width]="250">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    {{ dataItem.clientSerect | slice : 0 : 5
+                                    }}<sup *ngIf="dataItem.clientSerect.length > 5">**************</sup>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column field="tenantId" [title]="'Tenant Id'" [width]="250">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    {{ dataItem.tenantId | slice : 0 : 5 }}<sup *ngIf="dataItem.tenantId.length > 5">**************</sup>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column field="expries" [title]="'Expries'" [width]="150">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    {{ dataItem.expries | date : 'dd/MM/yyyy' }}
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column field="creationDate" [title]="'Creation Date'" [width]="150">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    {{ dataItem.creationDate | date : 'dd/MM/yyyy' }}
+                                </ng-template>
+                            </kendo-grid-column>
+                        </ng-container>
+                        <ng-template #tmplMailSMPT>
+                            <kendo-grid-column field="mailAddress" class="text-center" [title]="'Email'" [width]="250">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <div class="dark" (click)="editHandler(dataItem)">
+                                        <b>{{ dataItem.mailAddress }}</b>
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column [title]="'SMTP Host'" [width]="150" field="smtpHost"></kendo-grid-column>
+                            <kendo-grid-column field="port" [headerStyle]="{ 'text-align': 'left' }" [title]="'Port'" [width]="100">
+                            </kendo-grid-column>
+                            <kendo-grid-column
+                                field="isEnableSSL"
+                                [title]="'Enable SSL'"
+                                [headerStyle]="{ 'text-align': 'center' }"
+                                [width]="80"
+                            >
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <div class="text-center" *ngIf="dataItem.isEnableSSL">
+                                        <i class="zmdi zmdi-check-circle text-[18px] text-green-500"></i>
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                        </ng-template>
+                        <kendo-grid-column
+                            field="isVisible"
+                            [title]="'LB.ACTIVE' | transloco"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                            [width]="150"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="text-center" *ngIf="dataItem.isVisible">
+                                    <i class="zmdi zmdi-check-circle text-[18px] text-green-500"></i>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                    </kendo-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

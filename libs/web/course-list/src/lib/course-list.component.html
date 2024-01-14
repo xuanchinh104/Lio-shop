@@ -1,0 +1,69 @@
+<section class="pt-[30px] pb-[130px] bg-gradient min-h-[800px]">
+    <div class="container">
+        <div class="flex flex-row justify-between items-center pb-[60px] w-full">
+            <ul class="flex mt-[12px] flex-wrap w-full">
+                <li>
+                    <a routerLink="/" class="flex items-center text-[#6F7A8A] font-semibold hover:text-[#0063E2]">
+                        <svg-icon key="home"></svg-icon>
+                        <span class="ml-2 whitespace-nowrap">{{ 'TRANG_CHU' | transloco }}</span></a
+                    >
+                </li>
+                <li class="mx-[15px]"><span class="text-[#6F7A8A]">/</span></li>
+                <li (click)="onSelectGroup()" class="cursor-pointer">
+                    <span class="text-[#0063E2] font-semibold"> {{ tenNhom$ | async }}</span>
+                </li>
+                <li class="mx-[15px]"><span class="text-[#6F7A8A]">/</span></li>
+                <li>
+                    <span class="text-[#0063E2] font-semibold">{{ courseGroupName$ | async }}</span>
+                </li>
+            </ul>
+        </div>
+        <ng-container>
+            <div class="section-title mb-[35px] md:mb-[40px] lg:mb-[50px] mx-auto">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="mb-0 max-w-[800px] font-bold text-[20px] md:text-[30px] lg:text-[30px] xl:text-[34px]">
+                        <span class="text-[#1B2C43]">{{ courseGroupName$ | async }}</span>
+                    </h2>
+                </div>
+            </div>
+            <div>
+                <div class="mb-[140px] last:mb-0">
+                    <asc-course-skeleton
+                        *ngIf="(isLoading$ | async)!; else loadCoursesTpl"
+                        [countItem]="8"
+                        [type]="'grid'"
+                        [classView]="'grid gap-[24px] sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'"
+                    >
+                    </asc-course-skeleton>
+                    <ng-template #loadCoursesTpl>
+                        <ng-container *ngIf="courses$ | async as courses">
+                            <div
+                                *ngIf="courses && courses.length > 0; else noDataTpl"
+                                class="grid gap-[24px] sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
+                            >
+                                <asc-course-item-group *ngFor="let item of courses; trackBy: trackByFunc" [item]="item">
+                                </asc-course-item-group>
+                            </div>
+                            <ng-template #noDataTpl>
+                                <div class="flex flex-col items-center">
+                                    <img class="max-h-[400px]" src="./assets/web/course-empty.svg" />
+                                    <div class="text-[18px] font-nomal text-[#435267] px-[15px]">{{ 'NO_DATA' | transloco }}</div>
+                                </div>
+                            </ng-template>
+                        </ng-container>
+                    </ng-template>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div *ngIf="isShowPaging$ | async" class="flex justify-center items-center mt-[100px] relative z-10">
+        <nz-pagination
+            class="pagination"
+            [nzPageIndex]="pageNumber$ | async"
+            [nzPageSize]="pageSize$ | async"
+            [nzTotal]="total$ | async"
+            (nzPageIndexChange)="onPageChanged($event)"
+        >
+        </nz-pagination>
+    </div>
+</section>

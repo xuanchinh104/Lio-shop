@@ -1,0 +1,42 @@
+<label for="file-upload-anh-the" class="relative flex justify-center items-center cursor-pointer text-[#0063E2] group">
+    <span class="group-hover:underline" nz-popover nzPopoverTrigger="hover" nzPopoverPlacement="top" [nzPopoverContent]="contentTemplate">
+        <ng-container *ngIf="anhTheUrlPreview; else tmplNoNameThe">
+            <span>
+                <p class="mb-0 truncate w-[200px] text-center">
+                    {{ _tenAnhThe }}
+                </p>
+            </span>
+        </ng-container>
+        <ng-template #tmplNoNameThe>
+            <i class="icofont-ui-v-card"></i>
+            <ng-container *ngIf="_loaiDoiTuong === loaiDoiTuongEnum.SINH_VIEN; else tmplCBNV">
+                {{ 'UPLOAD_ANH_THE_SINH_VIEN' | transloco }}
+            </ng-container>
+            <ng-template #tmplCBNV>
+                {{ 'UPLOAD_ANH_THE_CBNV' | transloco }}
+            </ng-template>
+            <sup class="ml-[4px] text-red-500">(*)</sup>
+        </ng-template>
+    </span>
+    <ng-template #contentTemplate>
+        <ng-container *ngIf="anhTheUrlPreview; else tmplNoAnhThe">
+            <div
+                class="w-[200px] group relative flex flex-col items-center justify-between rounded-[8px] overflow-hidden h-[142px] border border-[#D9E1EC]"
+            >
+                <img [src]="mediaServer + '/' + anhTheUrlPreview" class="w-full h-full object-cover" />
+            </div>
+        </ng-container>
+        <ng-template #tmplNoAnhThe>
+            <span>{{ 'NO_ANH_THE' | transloco }}</span>
+        </ng-template>
+    </ng-template>
+
+    <input
+        #fileInputAnhThe
+        id="file-upload-anh-the"
+        type="file"
+        accept="image/png, image/jpeg, image/jpg, image/gif, image/svg, image/webp"
+        class="hidden"
+        (change)="uploadFileAnhThe($event)"
+    />
+</label>

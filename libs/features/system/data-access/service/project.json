@@ -1,0 +1,26 @@
+{
+    "projectType": "library",
+    "root": "libs/features/system/data-access/service",
+    "sourceRoot": "libs/features/system/data-access/service/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/features/system/data-access/service"],
+            "options": {
+                "jestConfig": "libs/features/system/data-access/service/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/features/system/data-access/service/src/**/*.ts",
+                    "libs/features/system/data-access/service/src/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

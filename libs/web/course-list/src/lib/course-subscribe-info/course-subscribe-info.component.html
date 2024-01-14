@@ -1,0 +1,131 @@
+<div class="p-[20px] pb-[10px] flex items-center justify-center">
+    <ng-container *ngIf="serviceName === serviceNameRHM; else tmplTitleKTTA">
+        <h4 class="text-[#2686E2] font-bold text-[20px]" [attr.keyLabel]="'DANG_KY_NHAN_THONG_TIN'">
+            {{ 'DANG_KY_NHAN_THONG_TIN' | transloco }}
+        </h4>
+    </ng-container>
+    <ng-template #tmplTitleKTTA>
+        <h4 class="text-[#2686E2] font-bold text-[20px]" [attr.keyLabel]="'DANG_KY_NHAN_THONG_TIN'">Đăng ký nhận thông tin tư vấn</h4>
+    </ng-template>
+    <div
+        (click)="closeForm()"
+        class="absolute right-[16px] flex justify-center items-center leading-normal w-[34px] h-[34px] !rounded-full cursor-pointer bg-[#F0F3F5] dark:bg-[#1F1D2B] dark:hover:bg-[#3e404933]"
+    >
+        <i class="zmdi zmdi-close text-[24px]"></i>
+    </div>
+</div>
+<div class="w-full text-center mb-[10px]">
+    <ng-container *ngIf="serviceName === serviceNameRHM; else tmplNoteKTTA">
+        <span class="text-[#5580A9]">{{ 'TEXT_NOTE_DANG_KY_THONG_TIN' | transloco }}</span>
+    </ng-container>
+    <ng-template #tmplNoteKTTA>
+        <span class="text-[#5580A9]">Bằng việc đăng ký nhận thông tin tư vấn, Trung tâm sẽ liên lạc với bạn</span>
+    </ng-template>
+</div>
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="relative px-[24px] leading-[26px] overflow-x-auto max-h-[75vh]">
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
+            <div class="col-span-1 form-group">
+                <ng-container *ngIf="serviceName === serviceNameRHM; else tmplLabel1KTTA">
+                    <label class="label-control mb-[0.5rem]" [attr.keyLabel]="'NHU_CAU_HOC'">{{ 'NHU_CAU_HOC' | transloco }}</label>
+                </ng-container>
+                <ng-template #tmplLabel1KTTA>
+                    <label class="label-control mb-[0.5rem]" [attr.keyLabel]="'NHU_CAU_HOC'">Nhu cầu học/thi</label>
+                </ng-template>
+                <div class="relative">
+                    <nz-select
+                        nzShowSearch
+                        formControlName="alias"
+                        [nzPlaceHolder]="'CHON' | transloco"
+                        (ngModelChange)="changeNhomKhoaHoc($event)"
+                    >
+                        <nz-option *ngFor="let item of nhomKhoaHocs" [nzValue]="item.alias" [nzLabel]="item.tenNhom"></nz-option>
+                    </nz-select>
+                </div>
+            </div>
+            <div class="col-span-1 form-group">
+                <ng-container *ngIf="serviceName === serviceNameRHM; else tmplLabel2KTTA">
+                    <label class="label-control mb-[0.5rem]" [attr.keyLabel]="'KHOA_HOC'">{{ 'KHOA_HOC' | transloco }}</label>
+                </ng-container>
+                <ng-template #tmplLabel2KTTA>
+                    <label class="label-control mb-[0.5rem]" [attr.keyLabel]="'NHU_CAU_HOC'">Khóa học/Kỳ thi</label>
+                </ng-template>
+
+                <div class="relative">
+                    <nz-select
+                        [nzOptionHeightPx]="serviceName === serviceNameRHM ? 80 : 45"
+                        nzShowSearch
+                        formControlName="idKhoaHoc"
+                        [nzPlaceHolder]="'CHON' | transloco"
+                        [nzCustomTemplate]="custom"
+                    >
+                        <nz-option
+                            *ngFor="let item of khoaHocs"
+                            [nzValue]="item.id"
+                            [nzCustomContent]="true"
+                            nzLabel="{{ item.tenKhoaHoc }} : {{ item.hocPhi | number }}"
+                        >
+                            <span [ngClass]="{ 'font-bold': serviceName === serviceNameRHM }">{{ item.tenKhoaHoc }}</span>
+                            <ng-container *ngIf="serviceName === serviceNameRHM">
+                                <div>
+                                    <i class="icofont-rounded-left-down"></i>
+                                    <span>Học phí dự kiến: {{ item.hocPhi | number }} đ</span>
+                                </div>
+                                <div>
+                                    <i class="icofont-rounded-left-down"></i>
+                                    <span>Thời gian dự kiến: {{ item.thoiGianDaoTao }} </span>
+                                </div>
+                            </ng-container>
+                        </nz-option>
+                    </nz-select>
+                    <ng-template #custom let-selected>
+                        <span>{{ selected.nzLabel }}</span>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
+            <div class="col-span-1 form-group">
+                <label class="label-control mb-[0.5rem]" [attr.keyLabel]="'HO_TEN'">{{ 'HO_TEN' | transloco }}</label>
+                <div class="relative">
+                    <asc-form-control formControlName="hoTen"></asc-form-control>
+                </div>
+            </div>
+            <div class="col-span-1 form-group">
+                <label class="label-control mb-[0.5rem]" [attr.keyLabel]="'SDT'">{{ 'SDT' | transloco }}</label>
+                <div class="relative">
+                    <asc-form-control formControlName="soDienThoai"></asc-form-control>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
+            <div class="col-span-1 form-group">
+                <label class="label-control mb-[0.5rem]" [attr.keyLabel]="'EMAIL'">{{ 'EMAIL' | transloco }}</label>
+                <div class="relative">
+                    <asc-form-control formControlName="email"></asc-form-control>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="label-control mb-[0.5rem]" [attr.keyLabel]="'GHI_CHU'"> {{ 'GHI_CHU' | transloco }}</label>
+            <div class="relative">
+                <textarea class="form-control !h-[100px]" formControlName="ghiChu"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="flex justify-center gap-4 p-[16px_24px]">
+        <asc-button
+            (click)="refreshForm()"
+            [btnClass]="'p-[8px_14px] text-white bg-[#0063E2] border border-[#0063E2] rounded-[8px] cursor-pointer'"
+            [btnText]="'NHAP_LAI' | transloco"
+            [attr.keyLabel]="'NHAP_LAI'"
+        ></asc-button>
+        <asc-button
+            [isSubmit]="true"
+            [btnClass]="'p-[8px_14px] text-white bg-[#F56700] border border-[#F56700] rounded-[8px] cursor-pointer'"
+            [isLoading]="isSubmited"
+            [btnText]="'DANG_KY' | transloco"
+            [attr.keyLabel]="'DANG_KY'"
+        ></asc-button>
+    </div>
+</form>

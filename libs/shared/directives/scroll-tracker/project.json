@@ -1,0 +1,26 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/directives/scroll-tracker",
+    "sourceRoot": "libs/shared/directives/scroll-tracker/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/directives/scroll-tracker"],
+            "options": {
+                "jestConfig": "libs/shared/directives/scroll-tracker/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/shared/directives/scroll-tracker/src/**/*.ts",
+                    "libs/shared/directives/scroll-tracker/src/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

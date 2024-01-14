@@ -1,0 +1,22 @@
+{
+    "projectType": "library",
+    "root": "libs/core/auth/data-access",
+    "sourceRoot": "libs/core/auth/data-access/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "options": {
+                "jestConfig": "libs/core/auth/data-access/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/core/auth/data-access/src/**/*.ts", "libs/core/auth/data-access/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

@@ -1,0 +1,26 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/directives/validator-required",
+    "sourceRoot": "libs/shared/directives/validator-required/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/directives/validator-required"],
+            "options": {
+                "jestConfig": "libs/shared/directives/validator-required/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/shared/directives/validator-required/src/**/*.ts",
+                    "libs/shared/directives/validator-required/src/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

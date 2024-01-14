@@ -1,0 +1,10 @@
+<ng-container *ngIf="configUI$ | async as configUI">
+    <ng-container [ngSwitch]="configUI.theme">
+        <ng-container *ngSwitchCase="themeUIEnum.THEME_1">
+            <ui-dashboard-v1></ui-dashboard-v1>
+        </ng-container>
+        <ng-container *ngSwitchCase="themeUIEnum.THEME_2">
+            <ui-dashboard-v2></ui-dashboard-v2>
+        </ng-container>
+    </ng-container>
+</ng-container>

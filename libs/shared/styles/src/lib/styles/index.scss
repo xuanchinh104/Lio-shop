@@ -1,0 +1,59 @@
+@use 'sass:math';
+
+@import 'functions';
+@import 'variables';
+@import 'mixins';
+@import 'forms';
+
+@import 'tables';
+@import 'utilities';
+
+@import 'components/_table';
+@import 'components/_ant-custom';
+@import 'components/_scrollbar';
+
+@import 'components/_fonts';
+
+@import 'components/_main';
+@import 'custom-kendo';
+@import 'toaster';
+
+@import "~swiper/scss";
+@import "~swiper/scss/pagination";
+@import "~swiper/scss/navigation";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import 'buttons';
+@import 'components/_control';
+
+[data-theme='blue'] {
+    --primary-bg: #0075e1;
+    --primary-color: #0075e1;
+    --primary-text: #3f537d;
+}
+
+[data-theme='green'] {
+    --primary-bg: #01aa81;
+    --primary-color: #01aa81;
+    --primary-text: #2a4835;
+}
+
+[data-theme='violet'] {
+    --primary-bg: #8060ff;
+    --primary-color: #8060ff;
+    --primary-text: #513072;
+}
+
+[data-font='font1'] {
+    --font-name: 'Inter';
+}
+
+[data-font='font2'] {
+    --font-name: 'Roboto';
+}
+
+[data-font='font3'] {
+    --font-name: 'Times New Roman';
+}

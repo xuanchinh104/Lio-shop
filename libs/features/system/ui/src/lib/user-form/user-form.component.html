@@ -1,0 +1,111 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <asc-wrap-form (closeForm)="closeForm()" (zoomForm)="zoomForm($event)">
+        <ng-container ngProjectAs="[formTitle]"> {{ 'USER.TITLE' | transloco }} </ng-container>
+        <ng-container ngProjectAs="[formBody]">
+            <div class="grid grid-cols-12 gap-4 mb-4">
+                <div
+                    [ngClass]="
+                        model === null || model === undefined || (model && model.userType !== userType.HOC_VIEN_DAO_TAO_NGAN_HAN)
+                            ? 'col-span-8'
+                            : 'col-span-12'
+                    "
+                >
+                    <div class="grid grid-cols-12 gap-4">
+                        <div class="col-span-6">
+                            <asc-form-control
+                                [label]="'USER.LASTNAME' | transloco"
+                                formControlName="lastName"
+                                [attr.keyLabel]="'USER.LASTNAME'"
+                            ></asc-form-control>
+                        </div>
+                        <div class="col-span-6">
+                            <asc-form-control
+                                [label]="'USER.FIRSTNAME' | transloco"
+                                formControlName="firstName"
+                                [attr.keyLabel]="'USER.FIRSTNAME'"
+                            ></asc-form-control>
+                        </div>
+                    </div>
+                    <asc-form-control
+                        [label]="'USER.EMAIL' | transloco"
+                        formControlName="email"
+                        [attr.keyLabel]="'USER.EMAIL'"
+                    ></asc-form-control>
+                    <asc-form-control
+                        [label]="'USER.PHONE_NUMBER' | transloco"
+                        formControlName="phoneNumber"
+                        [attr.keyLabel]="'USER.PHONE_NUMBER'"
+                    ></asc-form-control>
+                    <asc-form-control
+                        [label]="'USER.ADDRESS' | transloco"
+                        formControlName="address"
+                        [attr.keyLabel]="'USER.ADDRESS'"
+                    ></asc-form-control>
+                </div>
+                <div class="col-span-4">
+                    <ng-container *ngIf="model === null || model === undefined">
+                        <asc-form-control
+                            [label]="'USER.USERNAME' | transloco"
+                            formControlName="userName"
+                            [attr.keyLabel]="'USER.USERNAME'"
+                        ></asc-form-control>
+                        <asc-form-control
+                            [label]="'USER.PASSWORD' | transloco"
+                            type="password"
+                            formControlName="password"
+                            [attr.keyLabel]="'USER.PASSWORD'"
+                        ></asc-form-control>
+                    </ng-container>
+                    <ng-container
+                        *ngIf="model === null || model === undefined || (model && model.userType !== userType.HOC_VIEN_DAO_TAO_NGAN_HAN)"
+                    >
+                        <div class="mb-4">
+                            <label class="inline-block mb-2 text-[13px] text-[#201e1e] font-medium" [attr.keyLabel]="'LB.CO_SO'">{{
+                                'LB.CO_SO' | transloco
+                            }}</label>
+                            <select-control formControlName="idCoSo">
+                                <nz-option></nz-option>
+                            </select-control>
+                        </div>
+                        <div class="form-group">
+                            <label class="inline-block mb-2 text-[13px] text-[#201e1e] font-medium" [attr.keyLabel]="'LB.PHONG_BAN'">{{
+                                'LB.PHONG_BAN' | transloco
+                            }}</label>
+                            <div class="relative">
+                                <nz-select formControlName="idPhongBan" nzAllowClear nzShowSearch>
+                                    <nz-option
+                                        *ngFor="let item of phongBans$ | async"
+                                        [nzValue]="item.id"
+                                        [nzLabel]="item.tenPhongBan"
+                                    ></nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="inline-block mb-2 text-[13px] text-[#201e1e] font-medium" [attr.keyLabel]="'LB.CHUC_VU'">{{
+                                'LB.CHUC_VU' | transloco
+                            }}</label>
+                            <select-control formControlName="idChucVu"></select-control>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container ngProjectAs="[formFooter]">
+            <asc-button
+                (click)="closeForm()"
+                [btnClass]="'btn-white'"
+                class="mr-[8px]"
+                [btnText]="'BTN.CANCEL' | transloco"
+                [attr.keyLabel]="'BTN.CANCEL'"
+            ></asc-button>
+            <asc-button
+                [isSubmit]="true"
+                [isLoading]="isSubmited"
+                [btnClass]="'btn-primary'"
+                [btnText]="'BTN.SAVE' | transloco"
+                [attr.keyLabel]="'BTN.SAVE'"
+            ></asc-button>
+        </ng-container>
+    </asc-wrap-form>
+</form>

@@ -1,0 +1,42 @@
+.k-treeview {
+    .fa {
+        display: none;
+    }
+}
+
+.feature-item {
+    &.active {
+        background: #2c975f;
+        color: #fff !important;
+
+        &:hover .title {
+            color: #fff;
+        }
+    }
+}
+
+:host ::ng-deep {
+    .k-treeview .k-item {
+        padding: 0;
+    }
+
+    .k-treeview .k-in {
+        width: 100%;
+        padding: 14px 16px 14px 20px;
+        margin-bottom: 16px;
+        background-color: #f4f5f8;
+        border-radius: 5px;
+        cursor: pointer;
+        color: #454f63;
+        justify-content: space-between;
+    }
+
+    .k-treeview .k-in.k-state-selected {
+        background-color: #2c975f;
+        color: #fff;
+    }
+
+    .k-splitter {
+        border: none;
+    }
+}

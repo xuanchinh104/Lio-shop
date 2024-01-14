@@ -1,0 +1,68 @@
+<div
+    class="h-full relative bg-fixed bg-center bg-no-repeat bg-cover overflow-hidden after:content-[''] after:w-full after:h-full after:absolute after:left-0 after:right-0 after:top-0 after:bottom-0 after:block after:z-[1] after:bg-[rgba(0,0,0,0.2)]"
+    [style.backgroundImage]="'url(' + (topicUrl$ | async) + ')'"
+>
+    <div class="dashboard-header relative flex items-center h-[80px] z-[2]">
+        <div class="w-full flex items-center justify-between px-[15px]">
+            <div class="inline-flex items-center text-white">
+                <svg-icon key="menu-app" fontSize="20px"></svg-icon>
+                <div class="inline-block text-white ml-[1rem] text-[1.125rem] uppercase">
+                    <!--                    {{ appConfig.titleTaskbar ?? ('COMPANY' | transloco) }}-->
+                </div>
+            </div>
+            <ui-menu-top></ui-menu-top>
+        </div>
+    </div>
+    <div class="dashboard-body relative z-[2] max-h-[80vh] animated fadeInUp fast">
+        <div class="container mx-auto max-w-[900px]">
+            <div class="relative z-[20] my-[40px]">
+                <div class="relative">
+                    <button class="absolute top-0 h-full w-[50px] text-[20px] text-[rgba(225,225,225,0.5)]">
+                        <i class="zmdi zmdi-search"></i>
+                    </button>
+                    <input
+                        type="text"
+                        class="w-full h-[50px] bg-[rgba(0,0,0,0.3)] rounded-[8px] text-white pl-[50px]"
+                        [formControl]="keyword"
+                        [placeholder]="'LB.APPS_SEARCH' | transloco"
+                    />
+                </div>
+            </div>
+            <div class="h-[calc(80vh-90px)] scrollbar">
+                <div class="grid grid-cols-12 gap-[10px]">
+                    <ng-container *ngFor="let item of data$ | async; trackBy: trackByFunction">
+                        <div
+                            class="col-span-1 sm:col-span-2 md:col-span-4 group p-[25px] transition-all cursor-pointer text-center rounded-[20px] hover:bg-[rgba(255,255,255,0.1)] hover:hover:shadow"
+                        >
+                            <div
+                                class="img inline-block transition-all relative group-hover:translate-y-[-6px]"
+                                (click)="redirectModule(item)"
+                            >
+                                <img [src]="item.icon" class="relative z-[3]" alt="icon" />
+                                <div class="shadowBox {{ item.shadow }}"></div>
+                            </div>
+                            <div class="text-white mt-[10px]" (click)="redirectModule(item)">
+                                <div class="text-sm">{{ item.title }}</div>
+                                <div class="text-xs font-light truncate" [innerHTML]="item.desc"></div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar fixed top-[110px] left-[0] z-[2]">
+        <ul class="navbar-nav flex flex-col">
+            <li
+                *ngFor="let module of parentModules$ | async; let i = index; trackBy: trackByFunction"
+                class="nav-item block relative font-light text-sm text-white transition-all overflow-hidden rounded-r-[20px] px-[15px] py-[10px]"
+                [ngClass]="{ active: selectedIndex === i }"
+            >
+                <a href="javascript:void(0)" (click)="onSelectModule(module, i)" class="nav-link">
+                    {{ module.title }}
+                </a>
+            </li>
+        </ul>
+    </div>
+    <ui-timer></ui-timer>
+</div>

@@ -1,0 +1,12 @@
+<div class="container text-center mx-auto">
+    <img src="./assets/svgs/empty_1.svg" alt="" class="w-[400px] h-[400px] inline-block" />
+    <h4 class="font-bold text-[20px] text-[#1f2f20] px-[15px]">
+        {{ title | transloco }}
+    </h4>
+    <p class="text-[#65696e] p-[15px]">{{ desc }}</p>
+    <button class="btn btn-primary" *ngIf="isHasAction" (click)="handleEmpty()">
+        <i class="zmdi zmdi-collection-plus mr-[5px]"></i>
+        {{ keyTranslate | transloco }}
+    </button>
+    <ng-content select="[extraTemplate]"></ng-content>
+</div>

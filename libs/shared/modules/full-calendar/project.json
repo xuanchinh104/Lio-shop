@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/modules/full-calendar",
+    "sourceRoot": "libs/shared/modules/full-calendar/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/modules/full-calendar"],
+            "options": {
+                "jestConfig": "libs/shared/modules/full-calendar/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/modules/full-calendar/src/**/*.ts", "libs/shared/modules/full-calendar/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

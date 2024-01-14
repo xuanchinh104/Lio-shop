@@ -1,0 +1,106 @@
+<div class="form-header">
+    <div class="p-[20px] flex items-center justify-between">
+        <h4 class="text-[#222] font-bold text-[20px]">
+            {{ 'MODULE.DANH_SACH_MAN_HINH' | transloco }}
+        </h4>
+        <div
+            class="absolute right-[54px] flex justify-center items-center leading-normal w-[34px] h-[34px] !rounded-full cursor-pointer hover:bg-[#F0F3F5]"
+            (click)="onZoom()"
+        >
+            <svg-icon [key]="isZoom ? 'zoom-out' : 'zoom-in'" color="#9197af" fontSize="20px"></svg-icon>
+        </div>
+        <div
+            class="absolute right-[16px] flex justify-center items-center leading-normal w-[34px] h-[34px] !rounded-full cursor-pointer hover:bg-[#F0F3F5]"
+            (click)="close()"
+        >
+            <i class="icofont-close-line text-[22px] text-[#9197af]"></i>
+        </div>
+    </div>
+</div>
+<div class="relative px-[24px] leading-[26px] scrollbar">
+    <div class="w-full h-[55px] flex items-center justify-center pb-2.5">
+        <button class="btn mr-2.5 bg-[#f7f8fa] hover:bg-gray-100" (click)="addHandler()">
+            <i class="zmdi zmdi-collection-plus mr-[5px]"></i>
+            {{ 'BTN.ADD' | transloco }}
+        </button>
+        <ng-container *ngIf="rowSelecteds && rowSelecteds.length > 0">
+            <button class="btn bg-[#f7f8fa] hover:bg-gray-100" (click)="removeHandler()">
+                <i class="zmdi zmdi-delete mr-[5px] text-red-500"></i>
+                {{ 'BTN.DELETE' | transloco }}
+            </button>
+        </ng-container>
+        <div class="ml-auto"></div>
+    </div>
+    <div>
+        <nz-table
+            #rowSelectionTable
+            nzShowSizeChanger
+            [nzData]="data"
+            [nzLoading]="isLoading"
+            [nzTotal]="totalItems"
+            [nzPageSize]="pageSize"
+            [nzPageIndex]="pageNumber"
+            [nzFrontPagination]="false"
+            [nzSimple]="true"
+            [nzScroll]="{ y: pageHeight + 'px' }"
+            (nzQueryParams)="onQueryParamsChange($event)"
+        >
+            <thead>
+                <tr>
+                    <th
+                        class="!text-center"
+                        [nzWidth]="'50px'"
+                        [(nzChecked)]="checked"
+                        [nzIndeterminate]="indeterminate"
+                        (nzCheckedChange)="onAllChecked($event)"
+                    ></th>
+                    <th class="!text-center" [nzWidth]="'80px'">{{ 'LB.ACTION' | transloco }}</th>
+                    <th [nzWidth]="'50px'" class="!text-center">{{ 'LB.STT' | transloco }}</th>
+                    <th [nzWidth]="'250px'">{{ 'MODULE.TEN_MAN_HINH' | transloco }}</th>
+                    <th [nzWidth]="'150px'">{{ 'MODULE.GROUP_MAN_HINH' | transloco }}</th>
+                    <th class="!text-center" [nzWidth]="'80px'">{{ 'MODULE.THU_TU' | transloco }}</th>
+                    <th class="!text-center" [nzWidth]="'120px'">{{ 'PER.FEATURE' | transloco }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let dataItem of rowSelectionTable.data; let i = index">
+                    <td
+                        [nzChecked]="setOfCheckedId.has(dataItem.id)"
+                        (nzCheckedChange)="onItemChecked(dataItem, $event)"
+                        class="text-center"
+                    ></td>
+                    <td class="text-center">
+                        <button nz-button nz-dropdown [nzDropdownMenu]="menu">
+                            <svg-icon fontSize="24px" class="icon-svg" key="menu-action"></svg-icon>
+                        </button>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                            <ul nz-menu nzSelectable>
+                                <li nz-menu-item class="dropdown-item" (click)="copyHandler(dataItem)">
+                                    <i class="zmdi zmdi-copy mr-2"></i>
+                                    <a>{{ 'BTN.COPY' | transloco }}</a>
+                                </li>
+                                <li nz-menu-item class="dropdown-item" (click)="editHandler(dataItem)">
+                                    <i class="zmdi zmdi-edit mr-2"></i>
+                                    <a>{{ 'BTN.EDIT' | transloco }}</a>
+                                </li>
+                                <li nz-menu-item class="dropdown-item" (click)="removeHandler(dataItem)">
+                                    <i class="zmdi zmdi-delete mr-2"></i>
+                                    <a>{{ 'BTN.DELETE' | transloco }}</a>
+                                </li>
+                            </ul>
+                        </nz-dropdown-menu>
+                    </td>
+                    <td class="text-center">{{ (pageNumber - 1) * pageSize + i + 1 }}</td>
+                    <td>{{ dataItem.name }}</td>
+                    <td>{{ dataItem.groupName }}</td>
+                    <td class="text-center">{{ dataItem.order }}</td>
+                    <td class="text-center">
+                        <a (click)="showListFunction(dataItem)" class="text-center text-blue-500 hover:underline">
+                            {{ 'PER.VIEW' | transloco }} [{{ dataItem.totalAction }}]
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>

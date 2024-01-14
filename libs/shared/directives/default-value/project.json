@@ -1,0 +1,26 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/directives/default-value",
+    "sourceRoot": "libs/shared/directives/default-value/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/directives/default-value"],
+            "options": {
+                "jestConfig": "libs/shared/directives/default-value/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/shared/directives/default-value/src/**/*.ts",
+                    "libs/shared/directives/default-value/src/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

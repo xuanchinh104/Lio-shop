@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/ui/import-data",
+    "sourceRoot": "libs/shared/ui/import-data/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/ui/import-data"],
+            "options": {
+                "jestConfig": "libs/shared/ui/import-data/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/ui/import-data/src/**/*.ts", "libs/shared/ui/import-data/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

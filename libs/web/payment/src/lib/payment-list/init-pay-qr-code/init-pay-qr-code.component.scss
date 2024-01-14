@@ -1,0 +1,13 @@
+::ng-deep {
+    .qr-code {
+        .ant-modal-content .ant-modal-body {
+            padding: 0;
+        }
+    }
+
+}
+
+.scrollbar {
+    overflow-x: hidden;
+    overflow-y: auto;
+}

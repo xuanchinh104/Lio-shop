@@ -1,0 +1,15 @@
+<asc-header></asc-header>
+<!-- [@fadeAnimation]="outlet.isActivated ? outlet.activatedRoute : ''" -->
+<main>
+    <router-outlet #outlet="outlet"></router-outlet>
+</main>
+<asc-footer></asc-footer>
+<nz-back-top [nzTemplate]="customTpl"></nz-back-top>
+<ng-template #customTpl>
+    <a
+        class="w-[44px] h-[44px] bg-white flex items-center justify-center rounded-full shadow-[1px_4px_20px_rgba(0,91,173,0.2)] cursor-pointer text-[#212121]"
+    >
+        <i class="icofont-long-arrow-up text-[18px]"></i>
+    </a>
+</ng-template>
+<ngx-spinner type="ball-scale-multiple" bdColor="rgba(0,0,0,0.4)" [fullScreen]="true"></ngx-spinner>

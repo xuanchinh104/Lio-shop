@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+    flower-shop:
+        container_name: dev-ems-flower-shop
+        ports:
+            - '7790:80'
+            - '7791:443'
+        volumes:
+            #     - /home/ubuntu/course/dev/feconfig/erp/:/usr/share/nginx/html/_config/
+            - type: volume
+              source: flower-shop-i18n
+              target: /usr/share/nginx/html/i18n/
+
+    flower-shop-web:
+        container_name: dev-ems-flower-shop-web
+        ports:
+            - '7792:80'
+            - '7793:443'
+        # volumes:
+        #     - /home/ubuntu/course/dev/feconfig/web/:/usr/share/nginx/html/_config/
+
+volumes:
+    flower-shop-i18n:
+        name: ems-dev-flower-shop-i18n
+
+networks:
+    default:
+        external: true
+        name: ems-dev-default

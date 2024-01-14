@@ -1,0 +1,272 @@
+<section class="pt-[30px] pb-[130px] bg-[#F3F5FB] min-h-[800px]">
+    <div class="container !max-w-[1500px]">
+        <ul class="flex mb-[30px]">
+            <li>
+                <a routerLink="/" class="flex items-center text-[#6F7A8A] font-semibold hover:text-[#0063E2]">
+                    <svg-icon key="home"></svg-icon>
+                    <span [attr.keyLabel]="'TRANG_CHU'" class="ml-2 whitespace-nowrap">{{ 'TRANG_CHU' | transloco }}</span></a
+                >
+            </li>
+            <li class="mx-[15px]"><span class="text-[#6F7A8A]">/</span></li>
+            <li>
+                <span class="text-[#0063E2] font-semibold">{{ 'THANH_TOAN' | transloco }}</span>
+            </li>
+        </ul>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-[25px]">
+            <div class="col-span-1 md:col-span-2 bg-white rounded-[22px] h-fit">
+                <div class="flex items-center m-[16px] md:m-[30px]">
+                    <div
+                        (click)="goBack()"
+                        class="w-[32px] h-[32px] rounded-full hover:bg-[#f3f3f3] cursor-pointer flex items-center justify-center mr-[4px]"
+                    >
+                        <i class="icofont-long-arrow-left text-[22px] mt-[2px]"></i>
+                    </div>
+
+                    <div class="text-[20px] text-[#1B2C43] font-bold">{{ 'DS_THANH_TOAN_DANG_CHO' | transloco }}</div>
+                </div>
+                <div class="grid grid-cols-12 gap-4 mb-4 p-[10px] md:p-[10px]">
+                    <label [attr.keyLabel]="'LB.TIME'" class="col-span-2 text-[13px] text-[#201e1e] font-bold">Chọn :</label>
+                    <nz-radio-group
+                        class="col-span-10 !flex flex-col md:flex-row md:items-center md:gap-0 gap-4"
+                        [(ngModel)]="idTaiKhoanThanhToan"
+                        (ngModelChange)="changeTaiKhoanThanhToan($event)"
+                        [ngModelOptions]="{ standalone: true }"
+                    >
+                        <ng-container *ngFor="let item of taiKhoanThanhToans$ | async">
+                            <label class="font-bold" nz-radio [nzValue]="item.id">{{ item.tenTaiKhoan }}</label>
+                        </ng-container>
+                    </nz-radio-group>
+                </div>
+                <div class="my-[30px]">
+                    <ng-container *ngIf="idTaiKhoanThanhToan; else tmplnoDataTK">
+                        <ng-container *ngIf="(course$ | async)!; else loadingTpl">
+                            <ng-container *ngIf="courseRegisters.length > 0; else noDataTpl">
+                                <div class="grid grid-cols-[30px_auto_30px] items-center gap-[10px] p-[10px] md:p-[10px]">
+                                    <label nz-checkbox [nzChecked]="isCheckAll" (nzCheckedChange)="onChange($event)"></label>
+                                    <div
+                                        class="w-full grid grid-cols-[auto_115px] xl:grid-cols-[auto_120px_125px_125px_125px_135px] gap-[10px] items-center"
+                                    >
+                                        <div class="text-[14px] text-[#0063E2] font-bold">
+                                            <ng-container *ngIf="serviceName === serviceNameRHM; else tmplTitleKTTA">
+                                                {{ 'LOP_HOC' | transloco }}
+                                            </ng-container>
+                                            <ng-template #tmplTitleKTTA> Khóa học/kỳ thi</ng-template>
+                                        </div>
+                                        <div class="text-[14px] text-[#0063E2] text-right font-bold hidden xl:block">
+                                            {{ 'HOC_PHI' | transloco }}
+                                        </div>
+                                        <div class="text-[14px] text-[#0063E2] text-right font-bold hidden xl:block">Học phí đã nộp</div>
+                                        <div class="text-[14px] text-[#0063E2] text-right font-bold hidden xl:block">Công nợ</div>
+                                        <div class="text-[14px] text-[#0063E2] text-right font-bold hidden xl:block">
+                                            {{ 'MIEN_GIAM' | transloco }}
+                                        </div>
+                                        <div class="text-[14px] text-[#0063E2] text-right font-bold hidden xl:block">
+                                            {{ 'HOC_PHI_CAN_NOP' | transloco }}
+                                        </div>
+                                        <div class="text-[14px] text-[#0063E2] text-right font-bold block xl:hidden">
+                                            {{ 'HOC_PHI_CAN_NOP' | transloco }}
+                                        </div>
+                                    </div>
+
+                                    <div class="min-w-[32px]"></div>
+                                </div>
+                                <div
+                                    *ngFor="let children of courseRegisters; let i = index"
+                                    [ngClass]="{ 'bg-[#F5F9FE]': i % 2 === 0 }"
+                                    class="grid grid-cols-[30px_auto_30px] items-center gap-[10px] p-[10px] md:p-[10px]"
+                                >
+                                    <label
+                                        nz-checkbox
+                                        [(ngModel)]="children.isChecked"
+                                        (nzCheckedChange)="onChangeCheckedItem($event, i)"
+                                    ></label>
+                                    <div class="w-full flex flex-col gap-[10px]">
+                                        <ng-container *ngFor="let item of children.children; trackBy: trackByFunc">
+                                            <div
+                                                class="grid grid-cols-[auto_115px] gap-[10px] xl:grid-cols-[auto_120px_125px_125px_125px_135px] items-center"
+                                            >
+                                                <div class="flex flex-col gap-[10px] xl:block text-[14px] text-[#1B2C43] font-semibold">
+                                                    {{ item.tenLop }}
+                                                </div>
+                                                <div
+                                                    class="text-[14px] line-through text-[rgba(0,0,0,.26)] text-right font-semibold hidden xl:block"
+                                                >
+                                                    {{ item.hocPhiLopHoc | currencyFormat }} đ
+                                                </div>
+                                                <div class="text-[14px] text-[#0063E2] text-right font-semibold hidden xl:block">
+                                                    {{ item.hocPhiDaNop | currencyFormat }} đ
+                                                </div>
+                                                <div class="text-[14px] text-[#0063E2] text-right font-semibold hidden xl:block">
+                                                    {{ item.congNo | currencyFormat }} đ
+                                                </div>
+                                                <div class="text-[14px] text-[#0063E2] text-right font-semibold hidden xl:block">
+                                                    {{ item.isMienGiam ? (item.soTienMienGiam | currencyFormat) : 0 }} đ
+                                                </div>
+                                                <div class="text-[14px] text-[#0063E2] text-right font-semibold hidden xl:block">
+                                                    <ng-container *ngIf="item.congNo > 0; else tmplMienGiam">
+                                                        {{ item.congNo | currencyFormat }}
+                                                    </ng-container>
+                                                    <ng-template #tmplMienGiam>
+                                                        {{
+                                                            item.isMienGiam
+                                                                ? (item.hocPhiPhaiNop | currencyFormat)
+                                                                : (item.hocPhiDangKy | currencyFormat)
+                                                        }}
+                                                    </ng-template>
+                                                    đ
+                                                </div>
+
+                                                <div class="text-[14px] text-[#0063E2] text-right font-semibold block xl:hidden">
+                                                    <ng-container *ngIf="item.congNo > 0; else tmplMienGiam">
+                                                        <div>
+                                                            {{
+                                                                item.congNo && item.congNo < 0
+                                                                    ? (-item.congNo | currencyFormat)
+                                                                    : (item.congNo | currencyFormat)
+                                                            }}
+                                                            đ
+                                                        </div>
+                                                        <div class="text-[13px] text-[#000]">( Công nợ )</div>
+                                                    </ng-container>
+                                                    <ng-template #tmplMienGiam>
+                                                        {{
+                                                            item.isMienGiam
+                                                                ? (item.hocPhiPhaiNop | currencyFormat)
+                                                                : (item.hocPhiDangKy | currencyFormat)
+                                                        }}đ
+                                                    </ng-template>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <div
+                                        (click)="removeCourse(children)"
+                                        nz-tooltip
+                                        [nzTooltipTitle]="'TEXT_CONFIRM1' | transloco"
+                                        class="min-w-[32px] flex justify-center items-center w-[32px] h-[32px] rounded-full bg-white shadow-lg cursor-pointer"
+                                    >
+                                        <i class="icofont-close text-[#ff4d4f]"></i>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-template #noDataTpl>
+                                <div class="flex flex-col items-center">
+                                    <img class="max-h-[150px]" src="./assets/web/course-empty.svg" alt="empty" />
+                                    <div class="text-[16px] font-nomal text-[#435267] py-[15px]">{{ 'NO_DATA' | transloco }}</div>
+                                </div>
+                            </ng-template>
+                        </ng-container>
+                        <ng-template #loadingTpl>
+                            <div class="text-center min-h-[150px] loading-tpl">
+                                <i nz-icon nzType="loading" nzTheme="outline"></i>
+                                <p>{{ 'LOADING_DATA' | transloco }}</p>
+                            </div>
+                        </ng-template>
+                        <div *ngIf="courseRegisters && courseRegisters.length > 0" class="text-right px-[30px] mt-[24px]">
+                            <div class="flex items-center justify-end">
+                                <span class="text-[18px] text-[#1B2C43] mr-[24px]">{{ 'TONG' | transloco }}</span>
+                                <span class="text-[20px] text-[#0063E2]"
+                                    >{{ this.getTotalCourse(courseRegisters) | currencyFormat }} đ</span
+                                >
+                            </div>
+                        </div>
+                        <asc-payment-types
+                            [idTaiKhoanThanhToan]="idTaiKhoanThanhToan"
+                            *ngIf="courseRegisters && courseRegisters.length > 0"
+                            (selectBank)="onSelectBank($event)"
+                        ></asc-payment-types>
+                    </ng-container>
+                    <ng-template #tmplnoDataTK>
+                        <div class="flex flex-col items-center">
+                            <img class="max-h-[150px]" src="./assets/web/course-empty.svg" alt="empty" />
+                            <div class="text-[16px] font-nomal text-[#435267] py-[15px]">{{ 'NO_DATA' | transloco }}</div>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="col-span-1 md:col-span-1 bg-white rounded-[22px] p-[16px] md:p-[30px] h-fit">
+                <div class="mb-[30px]">
+                    <h3 class="text-[20px] text-[#1B2C43] font-bold">
+                        <ng-container *ngIf="serviceName === serviceNameRHM; else tmplTitleSelectedKTTA">
+                            {{ 'TONG_CAC_LOP_HOC_DA_CHON' | transloco }}
+                        </ng-container>
+                        <ng-template #tmplTitleSelectedKTTA> Tổng các Khóa học/Kỳ thi đã chọn</ng-template>
+                    </h3>
+                </div>
+                <ng-container *ngIf="courseRegisters.length > 0">
+                    <ng-container *ngFor="let children of courseRegisters; trackBy: trackByFunc; let i = index">
+                        <ng-container *ngIf="children.isChecked">
+                            <div
+                                *ngFor="let item of children.children"
+                                class="grid grid-cols-12 gap-[10px] mb-[12px] pb-[12px] border-b border-[#F0F3F5]"
+                            >
+                                <div class="col-span-7 text-[14px] text-[#1B2C43] font-medium">{{ item.tenLop }}</div>
+                                <div class="col-span-5 text-[14px] text-[#1B2C43] font-medium text-right">
+                                    {{ item.isMienGiam ? (item.hocPhiPhaiNop | currencyFormat) : (item.hocPhiDangKy | currencyFormat) }}
+                                    đ
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+                <div class="flex items-center justify-between gap-[10px] my-[40px]">
+                    <div class="text-[14px] text-[#1B2C43] font-medium">{{ 'TONG' | transloco }}</div>
+                    <div class="text-[20px] text-[#0063E2] font-bold">
+                        {{ this.getTotalCourse(courseRegisters) | currencyFormat }}
+                        đ
+                    </div>
+                </div>
+                <div class="my-3">
+                    <label
+                        nz-checkbox
+                        [(ngModel)]="isXuatHoaDon"
+                        (ngModelChange)="changeXuatHoaDon($event)"
+                        [ngModelOptions]="{ standalone: true }"
+                    >
+                        Xuất hóa đơn điện tử</label
+                    >
+                </div>
+
+                <ng-container *ngIf="isXuatHoaDon">
+                    <form novalidate [formGroup]="form">
+                        <div class="form-group items-center grid gap-4 mb-4 grid-cols-1 xl:grid-cols-2">
+                            <label [attr.keyLabel]="'MA_SO_THUE'" class="inline-block text-[#1B2C43]">
+                                {{ 'MA_SO_THUE' | transloco }}</label
+                            >
+                            <asc-form-control [isDisabled]="isUserInfo" formControlName="maSoThueCoQuan"></asc-form-control>
+                        </div>
+                        <div class="form-group items-center grid gap-4 mb-4 grid-cols-1 xl:grid-cols-2">
+                            <label [attr.keyLabel]="'TEN_DON_VI'" class="inline-block text-[#1B2C43]">
+                                {{ 'TEN_DON_VI' | transloco }}</label
+                            >
+                            <asc-form-control [isDisabled]="isUserInfo" formControlName="coQuanCongTac"></asc-form-control>
+                        </div>
+                        <div class="form-group items-center grid gap-4 mb-4 grid-cols-1 xl:grid-cols-2">
+                            <label [attr.keyLabel]="'DIA_CHI_DON_VI'" class="inline-block text-[#1B2C43]">
+                                {{ 'DIA_CHI_DON_VI' | transloco }}</label
+                            >
+                            <asc-form-control [isDisabled]="isUserInfo" formControlName="diaChiCoQuan"></asc-form-control>
+                        </div>
+                    </form>
+                </ng-container>
+                <asc-button
+                    [isDisabled]="isDisable"
+                    (click)="initPay(false)"
+                    [isLoading]="isLoading"
+                    [btnClass]="'btn-primary !w-full sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0'"
+                    [btnText]="'Thanh toán'"
+                ></asc-button>
+                <ng-container *ngIf="bankSelected && bankSelected.maNganHang === 'BIDV'">
+                    <asc-button
+                        [isDisabled]="isDisable"
+                        (click)="initPay(true)"
+                        [isLoading]="isLoadingQRCode"
+                        [btnClass]="'btn-primary !w-full mt-[10px]'"
+                        [btnText]="'Thanh toán qua QR code'"
+                    ></asc-button>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</section>

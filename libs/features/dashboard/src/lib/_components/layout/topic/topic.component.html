@@ -1,0 +1,21 @@
+<h3 class="text-lg capitalize block font-medium text-[#111827]">{{ 'LB.TOPIC' | transloco }}</h3>
+<div class="mt-[30px] overflow-x-clip pr-[6px]">
+    <swiper [config]="configSwiper">
+        <ng-template swiperSlide *ngFor="let item of (backgrounds)!;">
+            <div
+                class="item group"
+                [ngClass]="{ active: item === configUI?.topicImg }"
+                (click)="onSelectTopic(item)"
+            >
+                <img [src]="item" alt="background" class="rounded-[15px] h-[160px] object-cover" />
+                <div class="absolute flex items-center right-[-6px] top-[-6px] bottom-auto z-[98]">
+                    <button
+                        class="flex items-center justify-center w-[20px] h-[20px] bg-white text-white border border-[#E5E7EB] rounded-full p-0"
+                    >
+                        <i class="zmdi zmdi-check"></i>
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+    </swiper>
+</div>

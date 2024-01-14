@@ -1,0 +1,36 @@
+<ng-container *ngIf="isArray">
+    <ng-container *ngFor="let item of slideShowList; let i = index">
+        <nz-collapse class="mb-[10px]">
+            <nz-collapse-panel [nzHeader]="'Liên kết ' + i" [nzExtra]="extraTpl">
+                <div class="mb-4 form-group">
+                    <label class="inline-block mb-2 text-[13px] text-[#201e1e] font-medium">Hình ảnh</label>
+                    <asc-image [(ngModel)]="item.image"></asc-image>
+                </div>
+                <div class="mb-4 form-group">
+                    <label class="inline-block mb-2 text-[13px] text-[#201e1e] font-medium">Liên kết</label>
+                    <asc-form-control [(ngModel)]="item.link"></asc-form-control>
+                </div>
+                <div class="mb-4">
+                    <label class="inline-block mb-2 text-[13px] text-[#201e1e] font-medium">Tiêu đề</label>
+                    <textarea class="form-control h-auto" rows="4" [(ngModel)]="item.title"></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="inline-block mb-2 text-[13px] text-[#201e1e] font-medium"></label>
+                    <textarea class="form-control h-auto" rows="4" [(ngModel)]="item.description"></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="inline-block mb-2 text-[13px] text-[#201e1e] font-medium"></label>
+                    <asc-form-control type="number" [(ngModel)]="item.limit"></asc-form-control>
+                </div>
+            </nz-collapse-panel>
+        </nz-collapse>
+        <ng-template #extraTpl>
+            <!-- You can use stopPropagation if you don't want the panel to toggle -->
+            <span nz-icon nzType="close-circle" (click)="$event.stopPropagation()" (click)="removeItem(i)"></span>
+        </ng-template>
+    </ng-container>
+    <button class="btn btn-primary" (click)="addItem()">
+        <i class="icofont-plus mr-[5px]"></i>
+        Thêm mới
+    </button>
+</ng-container>

@@ -1,0 +1,38 @@
+<div
+    class="flex justify-between items-center p-[14px] cursor-pointer rounded-[8px] transition-all hover:bg-[#F0F3F5]"
+    nz-popover
+    [nzPopoverOverlayClassName]="'popover-wrap popover-wrap-language w-[245px] animated fadeInRight faster pt-0 pb-0'"
+    [(nzPopoverVisible)]="visible"
+    nzPopoverTrigger="click"
+    [nzPopoverContent]="contentLanguage"
+>
+    <span class="mr-[5px]">
+        <svg-icon key="language" fontSize="20px"></svg-icon>
+    </span>
+    <div class="flex-auto">{{ 'LANG' | transloco }}</div>
+    <span>
+        <ng-container *ngIf="currentLang === langEnum.VI; else currentLangTmp">
+            <img src="./assets/images/vietnam.png" alt="vi" />
+        </ng-container>
+        <ng-template #currentLangTmp>
+            <img src="./assets/images/united-states.png" alt="us" />
+        </ng-template>
+    </span>
+</div>
+<ng-template #contentLanguage>
+    <div class="flex items-center p-[14px] cursor-pointer font-semibold" (click)="onHide()">
+        <i class="zmdi zmdi-chevron-left mr-[10px] text-[18px]"></i> {{ 'LANG' | transloco }}
+    </div>
+    <div
+        class="flex items-center p-[14px] cursor-pointer mx-[15px] rounded-[8px] transition-all hover:bg-[#F0F3F5]"
+        (click)="setLanguage(langEnum.VI)"
+    >
+        <img src="./assets/images/vietnam.png" alt="vi" class="mr-2" /> {{ 'VI' | transloco }}
+    </div>
+    <div
+        class="flex items-center p-[14px] cursor-pointer mx-[15px] rounded-[8px] transition-all hover:bg-[#F0F3F5]"
+        (click)="setLanguage(langEnum.EN)"
+    >
+        <img src="./assets/images/united-states.png" alt="us" class="mr-2" /> {{ 'EN' | transloco }}
+    </div>
+</ng-template>

@@ -1,0 +1,65 @@
+<div class="shadow bg-white rounded overflow-hidden">
+    <div class="w-full h-[55px] flex items-center flex-nowrap px-[15px] py-[10px]"></div>
+    <div class="table w-full">
+        <div class="table-header-group">
+            <div class="table-row font-medium bg-[#f7f8fa]">
+                <div class="table-cell text-center p-[10px_8px] w-[60px] border-b border-[#2125291a]" [attr.keyLabel]="'LB.STT'">
+                    {{ 'LB.STT' | transloco }}
+                </div>
+                <div class="table-cell text-center p-[10px_8px] w-[120px] border-b border-[#2125291a]" [attr.keyLabel]="'CS.STT'">
+                    {{ 'CS.STT' | transloco }}
+                </div>
+                <div class="table-cell text-left p-[10px_8px] w-[200px] border-b border-[#2125291a]" [attr.keyLabel]="'RP.COLUMN_NAME'">
+                    {{ 'RP.COLUMN_NAME' | transloco }}
+                </div>
+                <div
+                    class="table-cell text-left p-[10px_8px] w-[300px] border-b border-[#2125291a]"
+                    [attr.keyLabel]="'RP.COLUMN_DISPLAY_NAME'"
+                >
+                    {{ 'RP.COLUMN_DISPLAY_NAME' | transloco }}
+                </div>
+                <div class="table-cell p-[10px_8px] w-[100px] border-b border-[#2125291a]" [attr.keyLabel]="'RP.TEXT_ALIGN'">
+                    {{ 'RP.TEXT_ALIGN' | transloco }}
+                </div>
+                <div class="table-cell text-center p-[10px_8px] w-[130px] border-b border-[#2125291a]" [attr.keyLabel]="'RP.COLUMN_WIDTH'">
+                    {{ 'RP.COLUMN_WIDTH' | transloco }}
+                </div>
+                <div class="table-cell text-center p-[10px_8px] w-[130px] border-b border-[#2125291a]" [attr.keyLabel]="'LB.ISVISIBLE'">
+                    {{ 'LB.ISVISIBLE' | transloco }}
+                </div>
+                <div class="table-cell text-left p-[10px_8px] w-[300px] border-b border-[#2125291a]" [attr.keyLabel]="'LB.NOTE'">
+                    {{ 'LB.NOTE' | transloco }}
+                </div>
+            </div>
+        </div>
+        <div class="table-row-group relative">
+            <ng-container *ngIf="!isLoadingBackup && configReportDetails && configReportDetails.length > 0; else loadingTpl">
+                <ng-container *ngFor="let item of configReportDetails; let i = index">
+                    <div class="table-row bg-white hover:bg-[#e5efff]">
+                        <div class="table-cell p-[10px_8px] border-b border-[#2125291a] text-center align-middle">{{ i + 1 }}</div>
+                        <div class="table-cell p-[10px_8px] border-b border-[#2125291a] text-center align-middle">{{ item.soThuTu }}</div>
+                        <div class="table-cell p-[10px_8px] border-b border-[#2125291a] align-middle">{{ item.columnName }}</div>
+                        <div class="table-cell p-[10px_8px] border-b border-[#2125291a] align-middle">{{ item.columnDisplayName }}</div>
+                        <div class="table-cell p-[10px_8px] border-b border-[#2125291a] align-middle">
+                            {{ excelAlignDescription[item.textAlign] }}
+                        </div>
+                        <div class="table-cell p-[10px_8px] border-b border-[#2125291a] text-center align-middle">
+                            {{ item.columnWidth }}
+                        </div>
+                        <div class="table-cell p-[10px_8px] border-b border-[#2125291a] text-center align-middle" *ngIf="item.isVisible">
+                            <i class="zmdi zmdi-check-circle text-[18px] text-green-500"></i>
+                        </div>
+                        <div class="table-cell p-[10px_8px] border-b border-[#2125291a] break-all">{{ item.ghiChu }}</div>
+                    </div>
+                </ng-container>
+            </ng-container>
+            <ng-template #loadingTpl>
+                <div class="table-row h-[135px]">
+                    <div class="flex justify-center items-center h-[135px] absolute left-0 w-full">
+                        <notfound-tpl [isLoading]="isLoadingBackup"></notfound-tpl>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

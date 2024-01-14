@@ -1,0 +1,44 @@
+<ng-container [ngSwitch]="view">
+    <ng-container *ngSwitchCase="'list'">
+        <div class="flex p-[20px] bg-white rounded-[26px] gap-[24px] shadow-[0px_4px_20px_rgba(0,52,99,0.1)] h-[175px] md:h-[230px]">
+            <div class="shrink-0 rounded-[14px] overflow-hidden w-[127px] md:w-[170px] lg:w-[215px]">
+                <img
+                    [alt]="item.moTa"
+                    (click)="showDetailPost(item)"
+                    class="w-full h-full max-w-full object-cover transition-all duration-300 hover:scale-125 cursor-pointer"
+                    [src]="item.hinhDaiDien ? (item.hinhDaiDien | convertUrl) : './assets/images/news.png'"
+                />
+            </div>
+            <div class="flex-1 space-y-3">
+                <div class="text-[15px] md:text-[19px] text-[#D72134] font-semibold">{{ item.tenPhongBan }}</div>
+                <h3 class="line-clamp-1 md:line-clamp-2">
+                    <a (click)="showDetailPost(item)" class="font-bold text-[#23273C] text-[14px] md:text-[18px]">{{ item.tieuDe }}</a>
+                </h3>
+                <p class="flex items-center gap-[10px] text-[9px] md:text-[14px]">
+                    <svg-icon key="calendar-web"></svg-icon>
+                    {{ item.ngayTao | date : 'dd/MM/yyyy' }}
+                </p>
+                <span class="text-[#4F5262] font-medium line-clamp-1 text-[10px] h-auto md:text-[14px] md:h-[44px] md:line-clamp-2">
+                    {{ item.moTa }}
+                </span>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+        <div
+            class="h-[323px] bg-white shadow-[0px_4px_20px_rgba(32,73,109,0.04),0px_2px_1px_rgba(32,73,109,0.03)] p-[16px] rounded-[22px] cursor-pointer"
+        >
+            <div
+                (click)="showDetailPost(item)"
+                class="flex item-center justify-center bg-[#EEF4FF] rounded-[13px] h-[170px] mb-[12px] overflow-hidden"
+            >
+                <img
+                    [src]="!item.hinhDaiDien ? './assets/web/pmt-hrm.png' : (item.hinhDaiDien | convertUrl)"
+                    alt="pmt-hrm"
+                    class="object-cover w-full"
+                />
+            </div>
+            <h3 (click)="showDetailPost(item)" class="text-[19px] font-bold text-[#1B2C43] line-clamp-3">{{ item.tieuDe }}</h3>
+        </div>
+    </ng-container>
+</ng-container>

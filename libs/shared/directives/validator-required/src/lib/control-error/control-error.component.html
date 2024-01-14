@@ -1,0 +1,8 @@
+<ng-container *ngIf="!hide">
+    <div id="help" class="absolute help text-danger top-[7px] right-[7px]" [class.hide]="hide">
+        <i class="icofont-info-circle text-[20px]" nz-tooltip [nzTooltipTitle]="errorTpl"></i>
+    </div>
+    <ng-template #errorTpl>
+        <div>{{ error }}</div>
+    </ng-template>
+</ng-container>

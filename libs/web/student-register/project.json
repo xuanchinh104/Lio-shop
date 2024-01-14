@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/web/student-register",
+    "sourceRoot": "libs/web/student-register/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/web/student-register"],
+            "options": {
+                "jestConfig": "libs/web/student-register/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/web/student-register/src/**/*.ts", "libs/web/student-register/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

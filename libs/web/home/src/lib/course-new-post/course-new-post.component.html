@@ -1,0 +1,20 @@
+<section class="md:pb-[140px]" *ngIf="newPost$ | async as baiVietForWebs">
+    <ng-container *ngIf="baiVietForWebs.length > 0">
+        <div class="container mb-[40px] sm:mb-0 md:mb-0 lg:mb-0">
+            <div class="section-title mb-[35px] md:mb-[40px] lg:mb-[50px] text-center max-w-[800px] mx-auto">
+                <h2 class="font-bold text-[28px] md:text-[30px] lg:text-[35px] xl:text-[40px] mb-6">
+                    <span class="text-[#1B2C43]">Bài viết mới nhất</span>
+                </h2>
+            </div>
+            <div class="animated fadeInUp overflow-x-clip">
+                <swiper [config]="config" class="mySwiper">
+                    <ng-template swiperSlide *ngFor="let item of baiVietForWebs; trackBy: trackByFunc">
+                        <ng-container *ngIf="item.isHienThi">
+                            <asc-course-post-item [item]="item"></asc-course-post-item>
+                        </ng-container>
+                    </ng-template>
+                </swiper>
+            </div>
+        </div>
+    </ng-container>
+</section>

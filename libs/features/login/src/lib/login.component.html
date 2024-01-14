@@ -1,0 +1,110 @@
+<div
+    class="flex items-center justify-center bg-cover min-h-screen relative overflow-hidden max-md:p-4 bg-[url('/assets/images/login/background.png')] bg-center bg-top bg-no-repeat"
+>
+    <div class="flex rounded-[6px] py-[15px] px-0 bg-white shadow-[0_2px_6px_rgba(0,0,0,0.2)]">
+        <div class="w-[349px] p-[15px_30px]">
+            <div class="relative flex border border-[#007bff] rounded-[60px] h-[47px] !pr-[20px] mb-[10px]">
+                <button
+                    (click)="loginSSO(false)"
+                    class="absolute btn !rounded-[60px] h-[45px] left-0 w-[156px] !pl-0"
+                    [ngClass]="isLoginHrm ? '!rounded-r-none btn-outline-primary' : 'z-[99] btn-primary'"
+                >
+                    {{ 'LB.SIGN_IN_SSO' | transloco }}
+                </button>
+                <button
+                    (click)="loginSSO(true)"
+                    class="absolute btn btn-primary !rounded-[60px] h-[45px] w-[156px] right-0 !pr-0"
+                    [ngClass]="isLoginHrm ? 'z-10' : 'btn-outline-primary !rounded-l-none'"
+                >
+                    {{ 'LB.SIGN_IN_HRM' | transloco }}
+                </button>
+            </div>
+            <h2 class="text-[#054289] text-base text-center whitespace-nowrap">{{ 'WELCOME' | transloco }}</h2>
+            <div class="flex items-center h-[70%]">
+                <img src="./assets/images/login/img_1.png" alt="" class="w-full object-scale-down" />
+            </div>
+            <p class="text-[#054289] text-[13px] mt-[20px] text-center max-md:hidden">{{ 'COPY_RIGHT' | transloco }}</p>
+        </div>
+        <div class="w-[2px] bg-[#dfe9f8] opacity-30"></div>
+        <div class="w-[349px] h-[440px] p-[15px_30px] max-md:max-w-[349px] max-md:w-full max-md:h-auto max-md:p-[15px]">
+            <div class="form_login">
+                <ng-container *ngIf="!isLoginHrm; else tmplLoginHRM">
+                    <div class="mb-[20px] text-center">
+                        <img [src]="logoUrl" alt="" class="mx-auto" />
+                    </div>
+                    <h1
+                        class="relative mb-[20px] font-bold text-[20px] text-[#054289] text-center uppercase after:content-[''] after:w-full after:h-[1px] after:block after:bg-[#eaeaea] after:absolute after:top-[15px]"
+                    >
+                        <span class="relative bg-white z-10 p-[0_15px]">{{ 'LB.SIGN_IN_SSO' | transloco }}</span>
+                    </h1>
+                    <form class="form-login" [formGroup]="formLogin">
+                        <button
+                            type="button"
+                            class="w-full h-[45px] border-none text-white cursor-pointer rounded-[30px] shadow-[0_4px_8px_rgba(0,0,0,0.05)] uppercase"
+                            style="background: linear-gradient(90deg, #006af4 17.88%, #00bffb 83.79%)"
+                            (click)="signin()"
+                        >
+                            {{ 'LB.SIGN_IN_SSO' | transloco }}
+                        </button>
+
+                        <!--                        <button-->
+                        <!--                            type="button"-->
+                        <!--                            class="w-full h-[45px] border-none text-white cursor-pointer rounded-[30px] shadow-[0_4px_8px_rgba(0,0,0,0.05)] uppercase mt-[15px]"-->
+                        <!--                            style="background: linear-gradient(90deg, #006af4 17.88%, #00bffb 83.79%)"-->
+                        <!--                            (click)="loginAzure()"-->
+                        <!--                        >-->
+                        <!--                            {{ 'LB.LOGIN_AZURE' | transloco }}-->
+                        <!--                        </button>-->
+                    </form>
+                </ng-container>
+                <ng-template #tmplLoginHRM>
+                    <div class="space-y-3">
+                        <div class="text-center text-[1.5rem] font-bold text-[#1B2C43]">{{ 'LB.LOGIN' | transloco }}</div>
+                    </div>
+                    <button
+                        type="button"
+                        class="w-full h-[45px] border-none text-white cursor-pointer rounded-[30px] shadow-[0_4px_8px_rgba(0,0,0,0.05)] uppercase"
+                        style="background: linear-gradient(90deg, #006af4 17.88%, #00bffb 83.79%)"
+                        (click)="signInHrm()"
+                    >
+                        {{ 'LB.SIGN_IN_HRM' | transloco }}
+                    </button>
+                    <button
+                        type="button"
+                        class="w-full h-[45px] border-none text-white cursor-pointer rounded-[30px] shadow-[0_4px_8px_rgba(0,0,0,0.05)] uppercase mt-[15px]"
+                        style="background: linear-gradient(90deg, #006af4 17.88%, #00bffb 83.79%)"
+                        (click)="signMicrosoft()"
+                    >
+                        {{ 'LB.SIGN_IN_MICRO' | transloco }}
+                    </button>
+                    <!--                    <form class="space-y-6">-->
+                    <!--                        <div class="space-y-3">-->
+                    <!--                            <label class="text-normal text-[#1B2C43] font-medium">{{ 'USER.USERNAME' | transloco }}</label>-->
+                    <!--                            <input-->
+                    <!--                                type="text"-->
+                    <!--                                class="w-full h-[52px] p-[10px_15px] border border-[#D9E1EC] rounded hover:border-[#0063E2] focus:border-[#0063E2]"-->
+                    <!--                                [placeholder]="'LB.NHAP_TEN_DANG_NHAP' | transloco"-->
+                    <!--                            />-->
+                    <!--                        </div>-->
+                    <!--                        <div class="space-y-3">-->
+                    <!--                            <label class="text-normal text-[#1B2C43] font-medium">{{ 'USER.PASSWORD' | transloco }}</label>-->
+                    <!--                            <input-->
+                    <!--                                type="password"-->
+                    <!--                                class="w-full h-[52px] p-[10px_15px] border border-[#D9E1EC] rounded hover:border-[#0063E2] focus:border-[#0063E2]"-->
+                    <!--                                [placeholder]="'LB.NHAP_MAT_KHAU' | transloco"-->
+                    <!--                            />-->
+                    <!--                        </div>-->
+                    <!--                        <div>-->
+                    <!--                            <button-->
+                    <!--                                type="button"-->
+                    <!--                                class="w-full h-[52px] bg-[#0063E2] text-white text-[1rem] font-medium cursor-pointer rounded-[14px] shadow-[1px_4px_6px_rgba(0,127,243,0.2)] hover:bg-[#005ace]"-->
+                    <!--                            >-->
+                    <!--                                {{ 'LB.SIGN_IN_HRM' | transloco }}-->
+                    <!--                            </button>-->
+                    <!--                        </div>-->
+                    <!--                    </form>-->
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

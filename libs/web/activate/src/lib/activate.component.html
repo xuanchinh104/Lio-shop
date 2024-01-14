@@ -1,0 +1,56 @@
+<div class="bg-gradient h-screen flex items-center">
+    <div class="container">
+        <ng-container *ngIf="activate$ | async as userActivated; else loadingTpl">
+            <div class="bg-white shadow-[0_4px_20px_rgba(0,52,99,0.1)] rounded-[22px] p-[30px]">
+                <ng-container [ngSwitch]="userActivated.trangThai">
+                    <ng-container *ngSwitchCase="1">
+                        <div class="flex justify-center mb-[36px]">
+                            <div
+                                class="flex justify-center items-center w-[120px] h-[120px] rounded-full bg-[#01AA81] border border-[5px] border-[#FFFFFF]"
+                            >
+                                <svg-icon fontSize="50px" key="check"></svg-icon>
+                            </div>
+                        </div>
+                        <div class="text-center relative">
+                            <div class="mb-[28px] text-[34px] leading-[42px] text-[#1B2C43] font-bold">
+                                {{ 'EMAIL_ACTIVE_SUCCESS' | transloco }}
+                            </div>
+                            <div
+                                class="text-[16px] text-[#1B2C43] leading-[36px]"
+                                [innerHTML]="'TEXT_ACTIVE1' | transloco : { hoDem: userActivated.hoDem, ten: userActivated.ten }"
+                            ></div>
+                            <div class="text-[16px] text-[#1B2C43] leading-[36px] italic">{{ 'TEXT_ACTIVE2' | transloco }}</div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="2">
+                        <div class="text-center relative">
+                            <div class="mb-[28px] text-[34px] leading-[42px] text-[#1B2C43] font-bold">
+                                {{ 'TEXT_ACTIVE4' | transloco }}
+                            </div>
+                            <div
+                                class="text-[16px] text-[#1B2C43] leading-[36px]"
+                                [innerHTML]="'TEXT_ACTIVE3' | transloco : { hoDem: userActivated.hoDem, ten: userActivated.ten }"
+                            ></div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+                <div class="text-center pt-[32px]">
+                    <asc-button
+                        [attr.keyLabel]="'QUAY_VE_TRANG_CHU'"
+                        routerLink="/"
+                        [btnClass]="'btn-outline-primary sm:mr-[20px] md:mr-[20px] lg:mr-[20px] xl:mr-[20px]'"
+                        [isSubmit]="false"
+                        [btnText]="'QUAY_VE_TRANG_CHU' | transloco"
+                    >
+                    </asc-button>
+                </div>
+            </div>
+        </ng-container>
+        <ng-template #loadingTpl>
+            <div class="text-center">
+                <span nz-icon [nzType]="'loading'" class="text-[40px]"></span>
+                <p [attr.keyLabel]="'DANG_XU_LY'" class="text-[20px]">{{ 'DANG_XU_LY' | transloco }}</p>
+            </div>
+        </ng-template>
+    </div>
+</div>

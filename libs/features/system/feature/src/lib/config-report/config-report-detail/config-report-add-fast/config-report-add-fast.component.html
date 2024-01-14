@@ -1,0 +1,24 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <asc-wrap-form (closeForm)="closeForm()">
+        <div formTitle [attr.keyLabel]="titleKey">
+            {{ titleKey | transloco }}
+        </div>
+        <div formBody>
+            <div class="form-group mb-4">
+                <label class="inline-block mb-[0.5rem] text-[13px] text-[#201e1e] font-medium" [attr.keyLabel]="'LB.DATA'">{{ 'LB.DATA' | transloco }}</label>
+                <asc-form-control formControlName="jsonData" type="textarea"></asc-form-control>
+            </div>
+        </div>
+        <div formFooter>
+            <asc-button class="mr-[8px]" (click)="closeForm()" [btnClass]="'btn-white'"
+                        [btnText]="'BTN.CANCEL' | transloco" [attr.keyLabel]="'BTN.CANCEL'"></asc-button>
+            <asc-button
+                [isSubmit]="true"
+                [btnClass]="'btn-primary'"
+                [isLoading]="isSubmited"
+                [btnText]="'BTN.SAVE' | transloco"
+                [attr.keyLabel]="'BTN.SAVE'"
+            ></asc-button>
+        </div>
+    </asc-wrap-form>
+</form>

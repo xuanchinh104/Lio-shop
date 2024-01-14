@@ -1,0 +1,50 @@
+<div class="menu-horizontal h-[50px] relative z-[11]">
+    <ul class="flex flex-row">
+        <ng-container *ngFor="let menus of menuTops$ | async; let i = index; trackBy: trackByFunc">
+            <li class="nav-item relative" [routerLinkActive]="menus.cssBadge === 'ONLY_ONE' && menus.manHinhs.length === 1 ? 'active' : ''">
+                <ng-container *ngIf="menus.cssBadge === 'ONLY_ONE' && menus.manHinhs.length === 1; else otherMenu">
+                    <a
+                        *ngIf="menus.manHinhs[0].f_Path; else preventTpl"
+                        [routerLink]="menus.manHinhs[0].f_Path"
+                        class="block relative p-[15px] text-white text-[13px] font-normal hover:bg-[#2563b3] hover:text-[#f2f2f2]"
+                    >
+                        {{ menus.manHinhs[0].f_Name }}
+                    </a>
+                    <ng-template #preventTpl>
+                        <a
+                            href="javascript:void(0)"
+                            class="block relative p-[15px] text-white text-[13px] font-medium hover:bg-[#2563b3] hover:text-[#f2f2f2]"
+                        >
+                            {{ menus.manHinhs[0].f_Name }}
+                        </a>
+                    </ng-template>
+                </ng-container>
+                <ng-template #otherMenu>
+                    <a class="block relative p-[15px] text-white text-[13px] font-normal hover:bg-[#2563b3] hover:text-[#f2f2f2]">
+                        {{ menus.title }}
+                        <i *ngIf="menus.manHinhs && menus.manHinhs.length > 0" class="zmdi zmdi-chevron-down"></i>
+                    </a>
+                    <ul class="sub-main-menu absolute bg-white w-max p-[8px] rounded-[5px] top-[100%] z-[9] hidden overflow-hidden">
+                        <li *ngFor="let menu of menus.manHinhs; trackBy: trackByFunc" class="group mb-[3px]">
+                            <a
+                                *ngIf="menu.f_Path; else preventUrl"
+                                [routerLink]="menu.f_Path"
+                                class="block relative py-[10px] px-[10px] text-[#333] text-[13px] leading-[20px] font-medium hover:text-current rounded-[4px] group-hover:bg-[#e5efff] group-hover:text-[#006fc9]"
+                            >
+                                {{ menu.f_Name }}
+                            </a>
+                            <ng-template #preventUrl>
+                                <a
+                                    href="javascript:void(0)"
+                                    class="block relative py-[10px] px-[15px] text-[#333] text-[13px] leading-[20px] font-medium hover:text-current rounded-[4px] group-hover:bg-[#e5efff] group-hover:text-[#006fc9]"
+                                >
+                                    {{ menu.f_Name }}
+                                </a>
+                            </ng-template>
+                        </li>
+                    </ul>
+                </ng-template>
+            </li>
+        </ng-container>
+    </ul>
+</div>

@@ -1,0 +1,23 @@
+<header class="w-full flex items-center px-[15px] bg-[#006fc9] h-[50px] relative top-0 z-[102]">
+    <div class="inline-flex items-center">
+        <asc-app-dock></asc-app-dock>
+        <div class="text-white text-lg uppercase mx-[1rem]">{{ pageTilte$ | async }}</div>
+    </div>
+    <div class="divider inline-flex mr-[8px] after:content-[''] after:w-[1px] after:h-[24px] after:bg-[#c8c6c4]"></div>
+    <!--    <asc-menu-horizontal></asc-menu-horizontal>-->
+    <ul class="flex ml-auto">
+        <!--        <li>-->
+        <!--            <div class="inline-flex items-center justify-center w-[50px] h-[50px] cursor-pointer text-white hover:bg-[#2563b3]">-->
+        <!--                <svg-icon key="notification" fontSize="24px"></svg-icon>-->
+        <!--            </div>-->
+        <!--        </li>-->
+        <!--        <li>-->
+        <!--            <div class="inline-flex items-center justify-center w-[50px] h-[50px] cursor-pointer text-white hover:bg-[#2563b3]">-->
+        <!--                <svg-icon key="support2" fontSize="24px"></svg-icon>-->
+        <!--            </div>-->
+        <!--        </li>-->
+        <li>
+            <asc-profile class="cursor-pointer"></asc-profile>
+        </li>
+    </ul>
+</header>

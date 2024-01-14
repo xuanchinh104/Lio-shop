@@ -1,0 +1,20 @@
+.sidebar-wrap {
+    .nav {
+        li {
+            &:hover a {
+                background-color: rgba(200, 200, 200, 0.2);
+                color: #3c4858;
+            }
+            &.active {
+                i {
+                    color: #fff;
+                }
+                > a {
+                    background-color: #006fc9;
+                    color: #fff;
+                    box-shadow: 0 3px 6px rgba(82, 183, 252, 0.2);
+                }
+            }
+        }
+    }
+}

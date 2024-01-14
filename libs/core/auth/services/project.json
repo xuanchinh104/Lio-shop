@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/core/auth/services",
+    "sourceRoot": "libs/core/auth/services/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/core/auth/services"],
+            "options": {
+                "jestConfig": "libs/core/auth/services/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/core/auth/services/src/**/*.ts", "libs/core/auth/services/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

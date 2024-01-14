@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/features/dashboard",
+    "sourceRoot": "libs/features/dashboard/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/features/dashboard"],
+            "options": {
+                "jestConfig": "libs/features/dashboard/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/features/dashboard/src/**/*.ts", "libs/features/dashboard/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

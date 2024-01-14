@@ -1,0 +1,30 @@
+:host::ng-deep {
+    .shadowBox {
+        width: 46px;
+        height: 50px;
+        display: block;
+        position: absolute;
+        top: 4px;
+        left: 6px;
+        z-index: 1;
+        background: #fff;
+        &.orange {
+            filter: drop-shadow(0 8px 8px rgba(255, 133, 79, 0.5));
+        }
+        &.violet {
+            filter: drop-shadow(0 8px 8px rgba(128, 96, 255, 0.5));
+        }
+        &.yellow {
+            filter: drop-shadow(0 8px 8px rgba(255, 198, 53, 0.5));
+        }
+        &.red {
+            filter: drop-shadow(0 8px 8px rgba(227, 49, 60, 0.5));
+        }
+        &.green {
+            filter: drop-shadow(0 8px 8px rgba(1, 170, 129, 0.5));
+        }
+        &.blue {
+            filter: drop-shadow(0 8px 8px rgba(0, 99, 226, 0.5));
+        }
+    }
+}

@@ -1,0 +1,12 @@
+<div class="flex items-center">
+    <div
+        class="flex items-center justify-center w-[60px] h-[60px] rounded-full"
+        [ngStyle]="{ 'background-color': circleColor, width: size + 'px', height: size + 'px' }"
+    >
+        <img *ngIf="!showInitials" [src]="photoUrl" class="w-[60px] h-[60px] rounded-full" />
+        <div *ngIf="showInitials" class="text-sm text-white font-bold">
+            {{ initials }}
+        </div>
+    </div>
+    <div *ngIf="isShowName && name" class="ml-1 font-medium">{{ name }}</div>
+</div>

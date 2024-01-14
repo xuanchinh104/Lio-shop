@@ -1,0 +1,37 @@
+<section class="px-[30px] pb-[130px] bg-gradient min-h-[800px]">
+    <div class="container">
+        <div class="flex flex-row justify-between items-center pb-[60px] w-full">
+            <ul class="flex mt-[12px] flex-wrap w-full">
+                <li>
+                    <a routerLink="/" class="flex items-center text-[#6F7A8A] font-semibold hover:text-[#0063E2]">
+                        <svg-icon key="home"></svg-icon>
+                        <span class="ml-2 whitespace-nowrap">{{ 'TRANG_CHU' | transloco }}</span></a
+                    >
+                </li>
+                <li class="mx-[15px]"><span class="text-[#6F7A8A]">/</span></li>
+                <li>
+                    <span class="text-[#0063E2] font-semibold">Thông báo</span>
+                </li>
+            </ul>
+        </div>
+        <h3 class="text-[34px] text-[#1B2C43] font-semibold text-center mb-[50px]">Thông báo mới nhất</h3>
+        <asc-course-skeleton *ngIf="(isLoading$ | async)!; else loadCoursesTpl" [countItem]="8" [type]="'news'"> </asc-course-skeleton>
+        <ng-template #loadCoursesTpl>
+            <ng-container *ngFor="let item of tinTuc$ | async; trackBy: trackByFunc">
+                <div *ngIf="item.isHienThi" class="mb-[24px]">
+                    <asc-course-new-item [isViewDetail]="true" [item]="item" [isNewRelated]="true"></asc-course-new-item>
+                </div>
+            </ng-container>
+        </ng-template>
+    </div>
+    <div *ngIf="isShowPaging$ | async" class="flex justify-center items-center mt-[100px] relative z-10">
+        <nz-pagination
+            class="pagination"
+            [nzPageIndex]="pageNumber$ | async"
+            [nzPageSize]="pageSize$ | async"
+            [nzTotal]="total$ | async"
+            (nzPageIndexChange)="onPageChanged($event)"
+        >
+        </nz-pagination>
+    </div>
+</section>

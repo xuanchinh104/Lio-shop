@@ -1,0 +1,121 @@
+<section class="pt-[30px] pb-[130px] bg-gradient min-h-[800px]">
+    <div class="container">
+        <div class="flex flex-row justify-between items-center pb-[60px] w-full">
+            <ul class="flex mt-[12px] flex-wrap w-full">
+                <li>
+                    <a routerLink="/" class="flex items-center text-[#6F7A8A] font-semibold hover:text-[#0063E2]">
+                        <svg-icon key="home"></svg-icon>
+                        <span class="ml-2 whitespace-nowrap">{{ 'TRANG_CHU' | transloco }}</span></a
+                    >
+                </li>
+                <li class="mx-[15px]"><span class="text-[#6F7A8A]">/</span></li>
+                <li (click)="onSelectPhongBan()" class="cursor-pointer">
+                    <span class="text-[#0063E2] font-semibold"> {{ nameGroup$ | async }}</span>
+                </li>
+                <li class="mx-[15px]"><span class="text-[#6F7A8A]">/</span></li>
+                <li>
+                    <span class="text-[#0063E2] font-semibold line-clamp-1"> {{ courseGroupName$ | async }}</span>
+                </li>
+            </ul>
+        </div>
+        <ng-container *ngIf="courses$ | async as courses">
+            <div class="mb-[50px]">
+                <h3 class="text-[34px] text-[#1B2C43] font-semibold mb-[40px]">
+                    {{ title$ | async }}
+                </h3>
+                <div class="flex justify-between flex-col sm:flex-row gap-y-[17px]">
+                    <!--                    <div>-->
+                    <!--                        <div class="text-[#D72134] font-semibold text-[18px] uppercase">{{ tenPhongBan$ | async }}</div>-->
+                    <!--                        <div class="flex items-center gap-[6px]">-->
+                    <!--                            <svg-icon key="calendar-web"></svg-icon>-->
+                    <!--                            <p class="mb-0">05/05/2023</p>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                    <div class="flex items-center gap-[15px] text-[16px] ml-auto">
+                        <div class="text-[#6C6C6C]">Chia sẻ</div>
+                        <div class="cursor-pointer">
+                            <svg-icon fontSize="32px" key="facebook"></svg-icon>
+                        </div>
+                        <div class="cursor-pointer">
+                            <svg-icon fontSize="32px" key="instagram"></svg-icon>
+                        </div>
+                        <div class="cursor-pointer">
+                            <svg-icon fontSize="32px" key="twitter"></svg-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-4 text-justify text-[#1D1D1D]">
+                <asc-course-skeleton *ngIf="(isLoading$ | async)!; else loadCoursesTpl" [countItem]="10" [type]="'list'">
+                </asc-course-skeleton>
+                <ng-template #loadCoursesTpl>
+                    <div
+                        *ngIf="courses.infoKhoa.tieuDe"
+                        class="text-[16px] leading-[30px]"
+                        [innerHTML]="courses.infoKhoa.noiDung | safeHtml : 'html'"
+                    ></div>
+                    <div *ngIf="courses.items.length > 0; else noDataTpl" class="p-[10px] rounded-[8px] bg-[#EBF3FB]">
+                        <div
+                            class="px-[20px] grid grid-cols-[minmax(0,1fr)_100px] sm:grid-cols-[minmax(0,1fr)_162px] mb-[10px] rounded-[11px] text-[16px] text-[#0063E2] font-semibold"
+                        >
+                            <div
+                                class="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_140px] xl:grid-cols-[minmax(0,1fr)_170px_200px_170px_170px_140px]"
+                            >
+                                <div [attr.keyLabel]="'TEN_LOP_DAO_TAO'" class="flex items-center justify-start">
+                                    {{ 'TEN_LOP_DAO_TAO' | transloco }}
+                                </div>
+                                <div
+                                    [attr.keyLabel]="'NGAY_BAT_DAU_KHAI_GIANG'"
+                                    class="sm:px-[8px] text-[14px] sm:text-[16px] xl:flex items-center justify-center hidden"
+                                >
+                                    {{ 'NGAY_BAT_DAU_KHAI_GIANG' | transloco }}
+                                </div>
+                                <div
+                                    [attr.keyLabel]="'NGAY_KET_THUC_DANG_KY'"
+                                    class="sm:px-[8px] text-[14px] sm:text-[16px] xl:flex items-center justify-center hidden"
+                                >
+                                    Ngày kết thúc dự kiến
+                                </div>
+                                <div
+                                    [attr.keyLabel]="'NGAY_BAT_DAU_KHAI_GIANG'"
+                                    class="sm:px-[8px] text-[14px] sm:text-[16px] xl:flex items-center justify-center hidden"
+                                >
+                                    {{ 'HAN_DANG_KY' | transloco }}
+                                </div>
+                                <div
+                                    [attr.keyLabel]="'NGAY_KET_THUC_DANG_KY'"
+                                    class="sm:px-[8px] text-[14px] sm:text-[16px] xl:flex items-center justify-center hidden"
+                                >
+                                    Hạn nộp hồ sơ
+                                </div>
+                                <div class="text-[14px] sm:px-[16px] sm:text-[16px] items-center justify-end hidden sm:flex">
+                                    {{ 'HOC_PHI' | transloco }}
+                                </div>
+                            </div>
+                            <div [attr.keyLabel]="'DANG_KY'" class="flex items-center justify-center">
+                                {{ 'DANG_KY' | transloco }}
+                            </div>
+                        </div>
+                        <asc-course-item *ngFor="let item of courses.items; trackBy: trackByFunc" [item]="item"></asc-course-item>
+                    </div>
+                </ng-template>
+            </div>
+            <ng-template #noDataTpl>
+                <div class="flex flex-col items-center">
+                    <img class="max-h-[400px]" src="./assets/web/course-empty.svg" />
+                    <div class="text-[18px] font-nomal text-[#435267] px-[15px]">{{ 'NO_DATA' | transloco }}</div>
+                </div>
+            </ng-template>
+        </ng-container>
+    </div>
+    <div *ngIf="isShowPaging$ | async" class="flex justify-center items-center mt-[100px] relative z-10">
+        <nz-pagination
+            class="pagination"
+            [nzPageIndex]="pageNumber$ | async"
+            [nzPageSize]="pageSize$ | async"
+            [nzTotal]="total$ | async"
+            (nzPageIndexChange)="onPageChanged($event)"
+        >
+        </nz-pagination>
+    </div>
+</section>

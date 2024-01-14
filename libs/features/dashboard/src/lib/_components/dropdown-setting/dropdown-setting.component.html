@@ -1,0 +1,18 @@
+<div class="cursor-pointer">
+    <div
+        class="w-[44px] h-[44px] flex items-center justify-center rounded-[8px] my-2.5 hover:bg-white hover:bg-opacity-20"
+        nz-dropdown
+        nzTrigger="click"
+        [nzDropdownMenu]="dropdownSetting"
+        [nzOverlayClassName]="classOverlay"
+    >
+        <svg-icon key="setting" class="text-white" fontSize="24px"></svg-icon>
+    </div>
+    <nz-dropdown-menu #dropdownSetting="nzDropdownMenu">
+        <div nz-menu class="w-[245px]">
+            <ui-language></ui-language>
+            <ui-theme></ui-theme>
+            <ui-font-family></ui-font-family>
+        </div>
+    </nz-dropdown-menu>
+</div>

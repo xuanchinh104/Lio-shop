@@ -1,0 +1,47 @@
+<!--<form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">-->
+<!--    <div class="modal-body scrollbar">-->
+<!--        <div class="grid grid-cols-12 gap-4 mb-4">-->
+<!--            <div class="col-span-8">-->
+<!--                <div class="grid grid-cols-12 gap-4">-->
+<!--                    <div class="col-span-6">-->
+<!--                        <asc-form-control [label]="'USER.FIRSTNAME' | transloco" formControlName="lastName"> </asc-form-control>-->
+<!--                    </div>-->
+<!--                    <div class="col-span-6">-->
+<!--                        <asc-form-control [label]="'USER.LASTNAME' | transloco" formControlName="firstName"> </asc-form-control>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <asc-form-control [label]="'USER.EMAIL' | transloco" formControlName="email"></asc-form-control>-->
+<!--                <asc-form-control [label]="'USER.PHONE_NUMBER' | transloco" formControlName="mobileNumber"> </asc-form-control>-->
+<!--                <asc-form-control-->
+<!--                    type="textarea"-->
+<!--                    [label]="'USER.ADDRESS' | transloco"-->
+<!--                    formControlName="address"-->
+<!--                    [rows]="5"-->
+<!--                ></asc-form-control>-->
+<!--            </div>-->
+<!--            <div class="col-span-4">-->
+<!--                <asc-form-control [label]="'USER.USERNAME' | transloco" formControlName="userName"></asc-form-control>-->
+<!--                <asc-form-control [label]="'USER.PASSWORD' | transloco" type="password" formControlName="password"></asc-form-control>-->
+<!--                <div class="mb-4" formGroupName="coSo">-->
+<!--                    <label class="inline-block mb-2 text-[13px] text-[#201e1e] font-medium">{{ 'LB.CO_SO' | transloco }}</label>-->
+<!--                    <select-control formControlName="idCoSo" appSDTCDataSource [type]="selectControlEnum.SDTC_CO_SO"> </select-control>-->
+<!--                </div>-->
+<!--                <div class="mb-4" formGroupName="phongBan">-->
+<!--                    <label class="inline-block mb-2 text-[13px] text-[#201e1e] font-medium">{{ 'LB.PHONG_BAN' | transloco }}</label>-->
+<!--                    <nz-select formControlName="idPhongBan" nzPlaceHolder="Chọn">-->
+<!--                        <nz-option *ngFor="let item of phongBans" [nzValue]="item.id" [nzLabel]="item.tenPhongBan"></nz-option>-->
+<!--                    </nz-select>-->
+<!--                </div>-->
+<!--                <div formGroupName="chucVu">-->
+<!--                    <label class="inline-block mb-2 text-[13px] text-[#201e1e] font-medium">{{ 'LB.CHUC_VU' | transloco }}</label>-->
+<!--                    <select-control formControlName="idChucVu" appCatalogDataSource [type]="selectControlEnum.DM_CHUC_VU"> </select-control>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="modal-footer">-->
+<!--        <asc-button (click)="closeForm()" [btnText]="'BTN.CANCEL' | transloco"> </asc-button>-->
+<!--        <asc-button [isSubmit]="true" [btnClass]="'btn-primary'" [btnText]="'BTN.SAVE' | transloco"> </asc-button>-->
+<!--    </div>-->
+<!--</form>-->

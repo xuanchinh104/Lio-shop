@@ -1,0 +1,26 @@
+{
+    "projectType": "library",
+    "root": "libs/shared/directives/contenteditable-accessor",
+    "sourceRoot": "libs/shared/directives/contenteditable-accessor/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/shared/directives/contenteditable-accessor"],
+            "options": {
+                "jestConfig": "libs/shared/directives/contenteditable-accessor/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/shared/directives/contenteditable-accessor/src/**/*.ts",
+                    "libs/shared/directives/contenteditable-accessor/src/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

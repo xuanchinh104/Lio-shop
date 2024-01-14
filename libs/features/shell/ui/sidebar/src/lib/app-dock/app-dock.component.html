@@ -1,0 +1,67 @@
+<div class="w-[40px] h-[40px] flex justify-center items-center text-white cursor-pointer" (click)="isShowApps = !isShowApps">
+    <i class="zmdi zmdi-apps text-[24px]"></i>
+</div>
+<ng-container *ngIf="isShowApps">
+    <div
+        class="app-content w-[320px] bg-white h-screen fixed top-0 left-0 z-[102] shadow-[rgba(0,0,0,0.22)_0px_25.6px_57.6px_0px,rgba(0,0,0,0.18)_0px_4.8px_14.4px_0]"
+    >
+        <div class="h-[64px] px-[18px] flex items-center justify-between">
+            <div
+                class="w-[30px] h-[30px] flex items-center justify-center hover:bg-[#F3F2F1] transition-all"
+                (click)="isShowApps = !isShowApps"
+            >
+                <i class="zmdi zmdi-apps text-[24px] cursor-pointer text-[#252423]"></i>
+            </div>
+            <a class="text-[#464FEB] text-[14px] flex items-center gap-4 px-[8px]" routerLink="/dashboard"
+                ><span>Tất cả ứng dụng</span> <i class="zmdi zmdi-long-arrow-right"></i
+            ></a>
+        </div>
+        <div class="h-[calc(100%-64px)] px-[24px] pb-[24px] scrollbar space-y-[16px]">
+            <div class="text-[#252423] text-[1.1rem] font-semibold">Ứng dụng</div>
+            <div class="w-full">
+                <a
+                    class="item relative cursor-pointer p-[8px] h-[48px] rounded-[12px] flex items-center gap-3 transition-all hover:bg-[#F3F2F1]"
+                    routerLink="/dashboard"
+                >
+                    <div class="relative shrink-0">
+                        <img class="w-[30px] h-[30px] relative z-[3]" src="./assets/images/dashboard/v2/icon_all.svg" alt="icon" />
+                    </div>
+                    <div class="text-[#1B2C43] text-[14px] flex-1">Trang chủ</div>
+                </a>
+                <a
+                    *ngFor="let item of modules$ | async; trackBy: trackByFun"
+                    class="item relative cursor-pointer p-[8px] h-[48px] rounded-[12px] flex items-center gap-3 transition-all hover:bg-[#F3F2F1]"
+                    (click)="redirectModule(item)"
+                    title="{{ item.title }}"
+                >
+                    <div class="relative shrink-0">
+                        <img class="w-[30px] h-[30px] transition-all relative z-[3]" [src]="item.icon" alt="icon" />
+                    </div>
+                    <div class="text-[#1B2C43] text-[14px] flex-1">{{ item.title }}</div>
+                </a>
+                <!-- <a class="text-[#464FEB] text-[14px] flex items-center gap-4 px-[8px] mt-2" routerLink="/dashboard"
+                    >Tất cả ứng dụng <i class="zmdi zmdi-long-arrow-right"></i
+                ></a> -->
+            </div>
+            <!-- <div class="text-[#252423] text-[1.1rem] font-semibold">Documents</div>
+            <div class="w-full">
+                <a
+                    class="item relative cursor-pointer p-[8px] h-[48px] rounded-[12px] flex items-center gap-4 transition-all hover:bg-[#F3F2F1]"
+                    routerLink="/dashboard"
+                >
+                    <div class="relative shrink-0">
+                        <img class="w-[30px] h-[30px] relative z-[3]" src="./assets/images/dashboard/v2/icon_all.svg" alt="icon" />
+                    </div>
+                    <div class="flex-1">
+                        <div class="text-[#1B2C43] text-[14px]">Document</div>
+                        <div class="text-[12px] italic">Dashboard - Đào tạo ngắn hạn</div>
+                    </div>
+                </a>
+                <a class="text-[#464FEB] text-[14px] flex items-center gap-4 px-[8px] mt-2"
+                    >See all My Content <i class="zmdi zmdi-long-arrow-right"></i
+                ></a>
+            </div> -->
+        </div>
+    </div>
+    <div class="fixed z-[100] w-full h-full left-0 top-0 bg-[rgba(0,0,0,0.1)]" (click)="isShowApps = !isShowApps"></div>
+</ng-container>

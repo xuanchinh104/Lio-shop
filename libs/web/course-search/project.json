@@ -1,0 +1,23 @@
+{
+    "projectType": "library",
+    "root": "libs/web/course-search",
+    "sourceRoot": "libs/web/course-search/src",
+    "prefix": "asc",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/web/course-search"],
+            "options": {
+                "jestConfig": "libs/web/course-search/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/web/course-search/src/**/*.ts", "libs/web/course-search/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

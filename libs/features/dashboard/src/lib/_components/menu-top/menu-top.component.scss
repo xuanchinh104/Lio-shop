@@ -1,0 +1,14 @@
+.nav-link {
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 2px 6px 0 rgb(0 0 0 / 10%);
+    }
+}
+:host::ng-deep {
+    .user {
+        .icon-svg {
+            width: 24px;
+            height: 24px;
+        }
+    }
+}
